@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador PCAD - UNES</title>
+    <style>
+        :root {
+            --azul-pcad: #003399;
+            --naranja-pcad: #FF6600;
+            --gris-fondo: #1a1a1a;
+            --blanco: #ffffff;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body {
+            background-color: var(--gris-fondo);
+            color: var(--blanco);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+        #app {
+            width: 100%;
+            max-width: 900px;
+            height: 95vh;
+            background: #222;
+            border: 4px solid var(--naranja-pcad);
+            border-radius: 15px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 0 20px rgba(255, 102, 0, 0.3);
+        }
+        header {
+            background: var(--azul-pcad);
+            padding: 15px;
+            text-align: center;
+            border-bottom: 4px solid var(--naranja-pcad);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+        /* Logo simulado con CSS */
+        .logo-pcad {
+            width: 40px; height: 40px;
+            background: var(--naranja-pcad);
+            border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+            font-weight: bold; color: white; font-size: 12px; border: 2px solid white;
+        }
+        header h1 { font-size: 1.5rem; text-transform: uppercase; letter-spacing: 2px; }
+        
+        .screen {
+            display: none;
+            flex: 1;
+            padding: 20px;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+        .screen.active { display: flex; }
+        
+        /* Menú Principal */
+        .menu-btn {
+            background: var(--azul-pcad);
+            color: white;
+            border: 2px solid var(--naranja-pcad);
+            padding: 20px;
+            margin: 10px 0;
+            font-size: 1.2rem;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: 0.3s;
+            text-align: left;
+        }
+        .menu-btn:hover { background: var(--naranja-pcad); transform: scale(1.02); }
+        
+        /* Pantalla de Juego */
+        .hud { display: flex; justify-content: space-between; margin-bottom: 15px; font-weight: bold; color: var(--naranja-pcad); }
+        .pregunta-box {
+            background: #333; padding: 20px; border-radius: 8px; border-left: 5px solid var(--naranja-pcad);
+            margin-bottom: 20px; font-size: 1.1rem;
+        }
+        .opcion {
+            background: #444; color: white; border: 1px solid #555;
+            padding: 15px; margin: 8px 0; border-radius: 8px; cursor: pointer;
+            transition: 0.2s; text-align: left;
+        }
+        .opcion:hover { background: #555; border-color: var(--naranja-pcad); }
+        .opcion.correcta { background: #27ae60; border-color: #2ecc71; }
+        .opcion.incorrecta { background: #c0392b; border-color: #e74c3c; }
+        .feedback { margin-top: 15px; padding: 15px; border-radius: 8px; display: none; }
+        .feedback.ok { background: rgba(46, 204, 113, 0.2); border: 1px solid #2ecc71; display: block; }
+        .feedback.fail { background: rgba(231, 76, 60, 0.2); border: 1px solid #e74c3c; display: block; }
+        
+        /* Chatbot */
+        #chat-container {
+            position: absolute; bottom: 20px; right: 20px; width: 300px; height: 400px;
+            background: #111; border: 2px solid var(--azul-pcad); border-radius: 10px;
+            display: none; flex-direction: column; z-index: 100;
+        }
+        #chat-header { background: var(--azul-pcad); padding: 10px; font-weight: bold; display: flex; justify-content: space-between; }
+        #chat-messages { flex: 1; padding: 10px; overflow-y: auto; font-size: 0.9rem; }
+        .msg-bot { background: #333; padding: 8px; border-radius: 5px; margin-bottom: 5px; border-left: 3px solid var(--naranja-pcad); }
+        #chat-input-area { display: flex; padding: 5px; }
+        #chat-input { flex: 1; padding: 8px; border: none; border-radius: 5px 0 0 5px; outline: none; }
+        #chat-send { background: var(--naranja-pcad); border: none; color: white; padding: 8px 15px; border-radius: 0 5px 5px 0; cursor: pointer; }
+        
+        /* Botón flotante chat */
+        #btn-chat { position: absolute; bottom: 20px; right: 20px; background: var(--naranja-pcad); color: white; border: none; padding: 15px; border-radius: 50%; font-size: 1.5rem; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.5); z-index: 99; }
+
+        /* Juego de Sismo / Estructuras */
+        .estructura-box {
+            text-align: center; margin: 20px 0; padding: 20px; background: #333; border-radius: 10px;
+        }
+        .icono-estructura { font-size: 5rem; margin-bottom: 10px; }
+        .btn-decision { padding: 15px 30px; font-size: 1.2rem; margin: 10px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; }
+        .btn-seguro { background: #27ae60; color: white; }
+        .btn-peligro { background: #c0392b; color: white; }
+        
+        /* Botones generales */
+        .btn-siguiente { background: var(--naranja-pcad); color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; margin-top: 10px; font-weight: bold; align-self: flex-end; display: none; }
+    </style>
+</head>
+<body>
+
+<div id="app">
+    <header>
+        <div class="logo-pcad">PCAD</div>
+        <h1>Simulador de Grado UNES</h1>
+    </header>
+
+    <!-- MENÚ PRINCIPAL -->
+    <div id="menu-screen" class="screen active">
+        <h2 style="color: var(--naranja-pcad); margin-bottom: 20px;">Selecciona un Módulo:</h2>
+        <button class="menu-btn" onclick="iniciarJuegoTeorico('dificil')">📚 Módulo Teórico: Guía 3 (Nivel Difícil)</button>
+        <button class="menu-btn" onclick="iniciarJuegoTeorico('experto')">📚 Módulo Teórico: Guía 4 (Nivel Experto)</button>
+        <button class="menu-btn" onclick="iniciarJuegoEstructuras()">🏠 Módulo Práctico: Inspección Post-Sismo</button>
+        <button class="menu-btn" onclick="abrirChat()">💬 Consultar Asistente Virtual (Pistas)</button>
+    </div>
+
+    <!-- PANTALLA DE JUEGO TEÓRICO -->
+    <div id="juego-screen" class="screen">
+        <div class="hud">
+            <span id="materia-txt">Materia</span>
+            <span id="progreso-txt">Pregunta 1/10</span>
+            <span id="puntos-txt">Puntos: 0</span>
+        </div>
+        <div id="pregunta-container" class="pregunta-box"></div>
+        <div id="opciones-container"></div>
+        <div id="feedback-container" class="feedback"></div>
+        <button id="btn-siguiente" class="btn-siguiente" onclick="siguientePregunta()">Siguiente Pregunta ➔</button>
+    </div>
+
+    <!-- PANTALLA JUEGO ESTRUCTURAS -->
+    <div id="estructuras-screen" class="screen">
+        <div class="hud">
+            <span>Evaluación Estructural</span>
+            <span id="estructuras-progreso">Escenario 1/5</span>
+        </div>
+        <div id="estructura-contenido" class="estructura-box">
+            <!-- Se llena con JS -->
+        </div>
+        <div style="display: flex; justify-content: center; gap: 20px;" id="estructuras-botones">
+            <button class="btn-decision btn-seguro" onclick="evaluarEstructura(false)">✅ SEGURO (No evacuar)</button>
+            <button class="btn-decision btn-peligro" onclick="evaluarEstructura(true)">⚠️ PELIGRO (Evacuar)</button>
+        </div>
+        <div id="estructuras-feedback" class="feedback"></div>
+        <button id="btn-siguiente-estructura" class="btn-siguiente" onclick="siguienteEstructura()">Siguiente ➔</button>
+    </div>
+
+    <!-- CHATBOT FLOTANTE -->
+    <button id="btn-chat" onclick="toggleChat()">💬</button>
+    <div id="chat-container">
+        <div id="chat-header">
+            <span>Asistente PCAD</span>
+            <span style="cursor:pointer;" onclick="toggleChat()">✖</span>
+        </div>
+        <div id="chat-messages">
+            <div class="msg-bot">¡Hola! Soy tu asistente. ¿En qué necesitas una pista? (Ej: "terremoto", "comunicación", "estructura")</div>
+        </div>
+        <div id="chat-input-area">
+            <input type="text" id="chat-input" placeholder="Escribe tu duda aquí..." onkeypress="if(event.key==='Enter') enviarMensajeChat()">
+            <button id="chat-send" onclick="enviarMensajeChat()">Enviar</button>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // --- DATOS DE LAS PREGUNTAS ---
+    // He seleccionado 20 preguntas representativas (10 Difíciles - Guía 3, 10 Expertas - Guía 4)
+    // Para que el juego sea infinito, solo debes agregar más objetos a estos arrays.
+    
+    const PREGUNTAS_DIFICIL = [
+        { materia: "Comunicación Pública", pregunta: "¿Cuál es la diferencia entre Información y Comunicación?", opciones: ["La información es unidireccional, la comunicación es bidireccional.", "Son lo mismo.", "La comunicación es solo escrita.", "La información exige diálogo."], correcta: 0, pista: "Piensa en la reciprocidad del diálogo." },
+        { materia: "Comunicación Pública", pregunta: "¿Qué rol ejerce el funcionario ante los medios en un desastre?", opciones: ["Moderador de entretenimiento", "Fuente informativa oficial", "Director de mercadeo", "Fiscalizador financiero"], correcta: 1, pista: "Debe dar información oficial y veraz." },
+        { materia: "Estructuras", pregunta: "Las columnas son elementos estructurales primarios porque:", opciones: ["Soportan cargas verticales hacia las fundaciones.", "Solo decoran.", "Sostienen las ventanas.", "No soportan peso."], correcta: 0, pista: "Piensa en el 'esqueleto' del edificio." },
+        { materia: "Estructuras", pregunta: "Las grietas a 45 grados en vigas indican falla por:", opciones: ["Flexión", "Esfuerzos de corte", "Corrosión", "Humedad"], correcta: 1, pista: "Se conoce como falla por cortante." },
+        { materia: "SAR", pregunta: "La fase INCERFA significa:", opciones: ["Certeza de accidente", "Incertidumbre o falta de información", "Alerta máxima", "Desastre confirmado"], correcta: 1, pista: "Viene de 'incertidumbre'." },
+        { materia: "SAR", pregunta: "¿Qué significa la fase DESTREFA?", opciones: ["Desastre o siniestro confirmado", "Falsa alarma", "Búsqueda terminada", "Aterrizaje exitoso"], correcta: 0, pista: "Es la fase de mayor gravedad." },
+        { materia: "Sociología", pregunta: "El desastre se considera un fenómeno principalmente:", opciones: ["Astronómico", "Social", "Religioso", "Natural puro"], correcta: 1, pista: "Interacción entre amenaza y vulnerabilidad social." },
+        { materia: "Estadística", pregunta: "El valor que más se repite se llama:", opciones: ["Media", "Mediana", "Moda", "Varianza"], correcta: 2, pista: "Es el más 'popular' o frecuente." },
+        { materia: "Salud Laboral", pregunta: "El color AZUL en el diamante NFPA 704 indica:", opciones: ["Inflamabilidad", "Peligro para la Salud", "Reactividad", "Riesgo Especial"], correcta: 1, pista: "Piensa en salud (azul = médico)." },
+        { materia: "Salud Laboral", pregunta: "¿Qué es un incidente de trabajo?", opciones: ["Accidente con lesión grave", "Suceso sin lesiones ni daños", "Enfermedad ocupacional", "Muerte"], correcta: 1, pista: "No deja consecuencias físicas." }
+    ];
+
+    const PREGUNTAS_EXPERTO = [
+        { materia: "Gerencia Proyectos", pregunta: "En Marco Lógico, los 'Supuestos' son:", opciones: ["Errores de cálculo", "Factores externos no controlables", "Sanciones al personal", "Tareas aisladas"], correcta: 1, pista: "Están fuera del control del gerente." },
+        { materia: "Gerencia Proyectos", pregunta: "Una ruta crítica (CPM) se caracteriza por:", opciones: ["Holgura cero", "Ser la más barata", "Tener mucha holgura", "No necesitar aprobación"], correcta: 0, pista: "Cualquier retraso afecta el proyecto." },
+        { materia: "Tecnología SIG", pregunta: "El MDE (Modelo Digital de Elevaciones) sirve para:", opciones: ["Ver colores reales", "Calcular vectores de flujo de agua", "Medir la presión", "Rastrear vehículos"], correcta: 1, pista: "Contiene la altitud del terreno." },
+        { materia: "Tecnología SIG", pregunta: "La banda NIR y SWIR son útiles para detectar:", opciones: ["Cuerpos de agua", "Incendios", "Edificios", "Calles"], correcta: 0, pista: "La vegetación sana refleja NIR, el agua lo absorbe." },
+        { materia: "Tecnología", pregunta: "El sensor de nivel tipo RADAR se prefiere porque:", opciones: ["Está sumergido", "Mide sin contacto y resiste crecidas", "Es más barato", "No necesita energía"], correcta: 1, pista: "Evita ser arrastrado por el lodo." },
+        { materia: "Tecnología", pregunta: "La cámara en drones con solape del 70-80% sirve para:", opciones: ["Volar más rápido", "Fotogrametría y volumen 3D", "Grabar video", "Ahorrar batería"], correcta: 1, pista: "Permite reconstruir el terreno en 3D." },
+        { materia: "Gestión de Riesgo", pregunta: "El enfoque holístico de gestión de riesgo busca:", opciones: ["Aislamiento", "Articulación nacional e intervención social", "Solo cuantificar", "Excluir funcionarios"], correcta: 1, pista: "Involucra a todos los actores sociales." },
+        { materia: "Gestión de Riesgo", pregunta: "La gestión prospectiva de riesgo promueve:", opciones: ["Competencia individual", "Trabajo coordinado", "Reducción de planes", "Aislamiento municipal"], correcta: 1, pista: "Requiere coordinación interinstitucional." },
+        { materia: "Riesgo y Desarrollo", pregunta: "¿Qué busca el presupuesto participativo?", opciones: ["Excluir comunidades", "Integrar a la ciudadanía en decisiones", "Eliminar proyectos", "Centralizar recursos"], correcta: 1, pista: "Fomenta la participación social." },
+        { materia: "Riesgo y Desarrollo", pregunta: "¿Cuál es uno de los principales factores de vulnerabilidad social?", opciones: ["Educación preventiva", "Organización comunitaria", "Pobreza", "Sistemas de alerta"], correcta: 2, pista: "Es una carencia socioeconómica." }
+    ];
+
+    const ESCENARIOS_ESTRUCTURA = [
+        { titulo: "La Piel", descripcion: "Observas una pared de bloques con grieta en 'X'. El esqueleto (columnas) está intacto.", icono: "🧱", esPeligro: false, feedback: "¡Correcto! Es daño en tabiquería. Disipa energía, no hay colapso inminente." },
+        { titulo: "El Esqueleto", descripcion: "Columna con grieta diagonal a 45 grados y concreto triturado en el nodo.", icono: "🏢", esPeligro: true, feedback: "¡Peligro! Falla por corte. La estructura perdió capacidad de carga. Evacuar." },
+        { titulo: "Prueba de Moneda", descripcion: "Grieta fina en pared. El borde de una moneda NO entra en la abertura.", icono: "🔍", esPeligro: false, feedback: "¡Correcto! Fisura superficial (menos de 1mm). No es peligro." },
+        { titulo: "Acero Expuesto", descripcion: "El recubrimiento de una viga se cayó y las cabillas están dobladas.", icono: "🔩", esPeligro: true, feedback: "¡Peligro Inminente! El acero expuesto indica falla estructural. Evacuar." },
+        { titulo: "Hundimiento", descripcion: "El terreno bajo la fundación cedió asimétricamente y la casa está inclinada.", icono: "🏚️", esPeligro: true, feedback: "¡Peligro! Hundimiento diferencial. Riesgo de colapso." }
+    ];
+
+    // --- LÓGICA DEL JUEGO ---
+    let estadoJuego = {
+        modo: '',
+        preguntas: [],
+        indice: 0,
+        puntos: 0,
+        respondida: false,
+        escenarios: [],
+        indiceEscenario: 0,
+        aciertosEstructura: 0
+    };
+
+    function cambiarPantalla(id) {
+        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+    }
+
+    // --- JUEGO TEÓRICO ---
+    function iniciarJuegoTeorico(nivel) {
+        estadoJuego.modo = nivel;
+        let banco = nivel === 'dificil' ? [...PREGUNTAS_DIFICIL] : [...PREGUNTAS_EXPERTO];
+        // Barajar y tomar 10
+        estadoJuego.preguntas = banco.sort(() => 0.5 - Math.random()).slice(0, 10);
+        estadoJuego.indice = 0;
+        estadoJuego.puntos = 0;
+        cambiarPantalla('juego-screen');
+        cargarPregunta();
+    }
+
+    function cargarPregunta() {
+        estadoJuego.respondida = false;
+        const p = estadoJuego.preguntas[estadoJuego.indice];
+        
+        document.getElementById('materia-txt').innerText = p.materia;
+        document.getElementById('progreso-txt').innerText = `Pregunta ${estadoJuego.indice + 1}/10`;
+        document.getElementById('puntos-txt').innerText = `Puntos: ${estadoJuego.puntos}`;
+        document.getElementById('pregunta-container').innerText = p.pregunta;
+        
+        const contenedorOpciones = document.getElementById('opciones-container');
+        contenedorOpciones.innerHTML = '';
+        
+        p.opciones.forEach((opcion, index) => {
+            const btn = document.createElement('div');
+            btn.className = 'opcion';
+            btn.innerText = opcion;
+            btn.onclick = () => seleccionarOpcion(index, btn);
+            contenedorOpciones.appendChild(btn);
+        });
+
+        document.getElementById('feedback-container').className = 'feedback';
+        document.getElementById('feedback-container').innerText = '';
+        document.getElementById('btn-siguiente').style.display = 'none';
+    }
+
+    function seleccionarOpcion(index, btnElement) {
+        if (estadoJuego.respondida) return;
+        estadoJuego.respondida = true;
+        
+        const p = estadoJuego.preguntas[estadoJuego.indice];
+        const opcionesDOM = document.getElementById('opciones-container').children;
+        const feedbackDiv = document.getElementById('feedback-container');
+        
+        if (index === p.correcta) {
+            btnElement.classList.add('correcta');
+            estadoJuego.puntos += 10;
+            feedbackDiv.className = 'feedback ok';
+            feedbackDiv.innerText = "¡Correcto! Has sumado 10 puntos.";
+        } else {
+            btnElement.classList.add('incorrecta');
+            opcionesDOM[p.correcta].classList.add('correcta');
+            feedbackDiv.className = 'feedback fail';
+            feedbackDiv.innerText = "Incorrecto. La respuesta correcta está marcada en verde.";
+        }
+        
+        document.getElementById('puntos-txt').innerText = `Puntos: ${estadoJuego.puntos}`;
+        document.getElementById('btn-siguiente').style.display = 'block';
+    }
+
+    function siguientePregunta() {
+        estadoJuego.indice++;
+        if (estadoJuego.indice < estadoJuego.preguntas.length) {
+            cargarPregunta();
+        } else {
+            alert(`¡Módulo Completado!\nPuntuación final: ${estadoJuego.puntos} / 100\n\n${estadoJuego.puntos >= 70 ? '¡Felicidades, has aprobado!' : 'Sigue estudiando el manual.'}`);
+            cambiarPantalla('menu-screen');
+        }
+    }
+
+    // --- JUEGO ESTRUCTURAS ---
+    function iniciarJuegoEstructuras() {
+        estadoJuego.escenarios = [...ESCENARIOS_ESTRUCTURA].sort(() => 0.5 - Math.random());
+        estadoJuego.indiceEscenario = 0;
+        estadoJuego.aciertosEstructura = 0;
+        cambiarPantalla('estructuras-screen');
+        cargarEscenario();
+    }
+
+    function cargarEscenario() {
+        const esc = estadoJuego.escenarios[estadoJuego.indiceEscenario];
+        document.getElementById('estructuras-progreso').innerText = `Escenario ${estadoJuego.indiceEscenario + 1}/5`;
+        document.getElementById('estructura-contenido').innerHTML = `
+            <div class="icono-estructura">${esc.icono}</div>
+            <h3 style="color: var(--naranja-pcad); margin-bottom:10px;">${esc.titulo}</h3>
+            <p>${esc.descripcion}</p>
+        `;
+        document.getElementById('estructuras-feedback').className = 'feedback';
+        document.getElementById('estructuras-feedback').innerText = '';
+        document.getElementById('estructuras-botones').style.display = 'flex';
+        document.getElementById('btn-siguiente-estructura').style.display = 'none';
+    }
+
+    function evaluarEstructura(decisionJugador) {
+        const esc = estadoJuego.escenarios[estadoJuego.indiceEscenario];
+        const feedbackDiv = document.getElementById('estructuras-feedback');
+        
+        if (decisionJugador === esc.esPeligro) {
+            feedbackDiv.className = 'feedback ok';
+            feedbackDiv.innerText = esc.feedback;
+            estadoJuego.aciertosEstructura++;
+        } else {
+            feedbackDiv.className = 'feedback fail';
+            feedbackDiv.innerText = "Decisión incorrecta. " + esc.feedback;
+        }
+        
+        document.getElementById('estructuras-botones').style.display = 'none';
+        document.getElementById('btn-siguiente-estructura').style.display = 'block';
+    }
+
+    function siguienteEstructura() {
+        estadoJuego.indiceEscenario++;
+        if (estadoJuego.indiceEscenario < estadoJuego.escenarios.length) {
+            cargarEscenario();
+        } else {
+            alert(`Evaluación terminada.\nAciertos: ${estadoJuego.aciertosEstructura} de 5.`);
+            cambiarPantalla('menu-screen');
+        }
+    }
+
+    // --- LÓGICA CHATBOT ---
+    function toggleChat() {
+        const chat = document.getElementById('chat-container');
+        chat.style.display = chat.style.display === 'flex' ? 'none' : 'flex';
+    }
+    
+    function abrirChat() { document.getElementById('chat-container').style.display = 'flex'; }
+
+    function enviarMensajeChat() {
+        const input = document.getElementById('chat-input');
+        const texto = input.value.trim().toLowerCase();
+        if (!texto) return;
+
+        agregarMensajeAlChat("Tú: " + texto, "msg-user");
+        input.value = "";
+
+        // Lógica simple de respuestas (Pistas)
+        let respuesta = "No encontré una pista exacta. Intenta buscar palabras clave como: 'terremoto', 'grieta', 'comunicación', 'SAR', 'proyecto' o 'estadística'.";
+        
+        if (texto.includes('terremoto') || texto.includes('sismo') || texto.includes('grieta')) {
+            respuesta = "Pista: Recuerda el Paso 3 del manual de estructuras. Si ves grietas en 'X' o acero expuesto, es falla del esqueleto. ¡Evacúa!";
+        } else if (texto.includes('comunicación') || texto.includes('medios')) {
+            respuesta = "Pista: La comunicación es bidireccional. Como funcionario eres la 'Fuente Informativa Oficial'. No des opiniones personales.";
+        } else if (texto.includes('sar') || texto.includes('rescate')) {
+            respuesta = "Pista: Revisa las fases SAR. INCERFA es incertidumbre, ALERFA es alerta y DESTREFA es desastre confirmado.";
+        } else if (texto.includes('proyecto') || texto.includes('gerencia')) {
+            respuesta = "Pista: En el Marco Lógico, los 'Supuestos' son factores externos. Si no se cumplen, el proyecto puede fallar.";
+        } else if (texto.includes('estadística') || texto.includes('dato')) {
+            respuesta = "Pista: Si buscas el valor más repetido, eso es la MODA. La MEDIA es el promedio.";
+        } else if (texto.includes('riesgo') || texto.includes('vulnerabilidad')) {
+            respuesta = "Pista: La vulnerabilidad es social (pobreza, falta de planificación). La gestión debe ser holística y participativa.";
+        }
+        setTimeout(() => {
+            agregarMensajeAlChat("Asistente: " + respuesta, "msg-bot");
+        }, 500);
+    }
+
+    function agregarMensajeAlChat(texto, clase) {
+        const cont = document.getElementById('chat-messages');
+        const div = document.createElement('div');
+        div.className = clase;
+        div.style.padding = "8px";
+        div.style.margin = "5px 0";
+        div.style.borderRadius = "5px";
+        if (clase === "msg-user") {
+            div.style.background = "#444";
+            div.style.textAlign = "right";
+        } else {
+            div.style.background = "#333";
+            div.style.borderLeft = "3px solid var(--naranja-pcad)";
+        }
+        div.innerText = texto;
+        cont.appendChild(div);
+        cont.scrollTop = cont.scrollHeight;
+    }
+</script>
+</body>
+</html>
