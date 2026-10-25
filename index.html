@@ -1,11 +1,10 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="theme-color" content="#0a1a30">
-    <meta name="description" content="Simulador Táctico PCAD - Basado en Guías UNES III y IV.">
+    <meta name="description" content="Simulador Táctico PCAD - Evaluación de Operaciones y Rescate.">
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%9A%91%3C/text%3E%3C/svg%3E">
     <title>Simulador de Operaciones PCAD | UNES</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -382,7 +381,7 @@
             border-color: var(--azul-borde); cursor: not-allowed;
         }
 
-        /* ESTILOS DE IMÁGENES REALES (CON OVERLAY INSTITUCIONAL) */
+        /* ESTILOS DE IMÁGENES REALES */
         .ilus {
             border: 1px solid var(--azul-borde); border-radius: 10px;
             overflow: hidden; background: #0d1f38;
@@ -554,7 +553,7 @@
             #despacho-screen.active > .ilus {
                 grid-column: 1; grid-row: 3 / span 6;
                 position: sticky; top: 0; align-self: start;
-                height: 350px; /* Más alto en desktop */
+                height: 350px;
             }
             #despacho-screen.active > .ilus { grid-row: 2 / span 6; }
             #despacho-screen .despacho-grid { grid-template-columns: 1fr; }
@@ -578,7 +577,7 @@
             #chat-container { width: calc(100vw - 16px); right: 8px; bottom: calc(76px + env(safe-area-inset-bottom)); height: min(70dvh, 500px); }
             .action-row { position: sticky; bottom: 0; z-index: 15; padding: 12px 0 calc(12px + env(safe-area-inset-bottom)); background: linear-gradient(transparent, var(--azul-superficie) 30%); gap: 12px; }
             .action-row button { flex: 1; min-height: 48px; font-size: .85rem; }
-            .ilus { height: 180px; } /* Más bajo en móvil */
+            .ilus { height: 180px; }
         }
     </style>
 </head>
@@ -612,7 +611,7 @@
         <div class="banner-intro">
             <div>
                 <h2>CENTRO DE MANDO Y SIMULACIÓN</h2>
-                <p>Evaluación Teórica - Trayectos III y IV PCAD.</p>
+                <p>Evaluación Teórica y Operativa - Trayectos III y IV PCAD.</p>
             </div>
             <div class="stats-badge-group">
                 <div class="stat-pill">RÉCORD: <span id="menu-record-txt">0 pts</span></div>
@@ -806,14 +805,14 @@
             <span style="cursor:pointer; font-size: 1.2rem; color: var(--texto-suave);" onclick="toggleChat()">✖</span>
         </div>
         <div id="chat-chips">
-            <div class="chip" onclick="enviarChip('Comunicación')">Comunicación</div>
+            <div class="chip" onclick="enviarChip('RCP')">RCP</div>
             <div class="chip" onclick="enviarChip('Estructuras')">Estructuras</div>
             <div class="chip" onclick="enviarChip('SAR')">SAR</div>
-            <div class="chip" onclick="enviarChip('Tecnología')">Tecnología</div>
+            <div class="chip" onclick="enviarChip('Triage')">Triage</div>
         </div>
         <div id="chat-messages">
             <div class="msg msg-bot">
-                Bienvenido. Soy su instructor de PCAD. Consúlteme sobre las guías de estudio.
+                Bienvenido. Soy su instructor de PCAD. Consúlteme sobre primeros auxilios, sismos o rescate.
             </div>
         </div>
         <div id="chat-input-area">
@@ -831,16 +830,21 @@
             </div>
             <div class="modal-body">
                 <div class="manual-section">
-                    <h4>Comunicación Pública</h4>
-                    <p>• Información vs Comunicación: La información es unidireccional, la comunicación exige retroalimentación.</p>
+                    <h4>RCP y Primeros Auxilios</h4>
+                    <p>• Frecuencia: 100-120 compresiones/min.<br>
+                    • Relación: 30 compresiones / 2 ventilaciones.<br>
+                    • Hemorragias: Presión directa primero.</p>
                 </div>
                 <div class="manual-section">
-                    <h4>Seguridad Estructural</h4>
-                    <p>• Columnas son primarias. Grietas a 45° indican falla por corte. Columna corta es falla frágil.</p>
+                    <h4>Sismos y Estructuras</h4>
+                    <p>• Columnas son elementos primarios.<br>
+                    • Grietas a 45° indican falla por corte.<br>
+                    • Cabillas expuestas = Evacuación inmediata.</p>
                 </div>
                 <div class="manual-section">
-                    <h4>SAR y Supervivencia</h4>
-                    <p>• INCERFA: Incertidumbre. ALERFA: Alerta. DESTREFA: Desastre.</p>
+                    <h4>SAR y Triage</h4>
+                    <p>• INCERFA: Incertidumbre. ALERFA: Alerta. DESTREFA: Desastre.<br>
+                    • Triage Rojo: Riesgo vital. Negro: Fallecido.</p>
                 </div>
             </div>
         </div>
@@ -906,111 +910,65 @@ function toggleSonido() {
 }
 
 /* =======================================================
-   BANCO DE PREGUNTAS (EXTRAÍDO DE GUÍAS III y IV)
+   BANCO DE PREGUNTAS (ENFOCADO EN PCAD, RCP Y RESCATE)
    ======================================================= */
 const PREGUNTAS_TRAYECTO3 = [
     {
-        id: "t3_com_1",
-        materia: "Comunicación Pública",
-        pregunta: "¿Cuál es la diferencia conceptual determinante entre el proceso de 'Información' y el de 'Comunicación'?",
-        opciones: [
-            "La información implica diálogo mutuo y la comunicación es exclusivamente escrita.",
-            "La información es una transmisión unidireccional de datos, mientras que la comunicación exige reciprocidad e intercambio (bidireccionalidad).",
-            "La comunicación solo se da a través de computadores.",
-            "No existe diferencia alguna entre ambos términos."
-        ],
+        id: "rcp_1",
+        materia: "RCP / Primeros Auxilios",
+        pregunta: "¿Cuál es la frecuencia correcta de compresiones torácicas en un RCP para adultos?",
+        opciones: ["60 a 80 por minuto.", "80 a 100 por minuto.", "100 a 120 por minuto.", "140 a 160 por minuto."],
+        correcta: 2,
+        justificacion: "Las guías internacionales establecen 100-120 compresiones por minuto.",
+        pista: "Piense en el ritmo de 'Stayin' Alive'."
+    },
+    {
+        id: "hemorragia_1",
+        materia: "Primeros Auxilios",
+        pregunta: "Ante una hemorragia externa severa en una extremidad, ¿cuál es la primera acción?",
+        opciones: ["Aplicar torniquete inmediato.", "Presión directa con apósito estéril.", "Lavar con agua y jabón.", "Dar agua al paciente."],
         correcta: 1,
-        justificacion: "La comunicación exige retroalimentación y comprensión mutua; la información solo transmite datos.",
-        pista: "Piense en la bidireccionalidad."
+        justificacion: "La presión directa es el método más rápido y efectivo. El torniquete es el último recurso.",
+        pista: "Lo primero es tapar el sangrado presionando."
     },
     {
-        id: "t3_com_2",
-        materia: "Comunicación Pública",
-        pregunta: "Durante un desastre, la prioridad del discurso comunicacional institucional debe centrarse en:",
-        opciones: [
-            "Promocionar la imagen corporativa de las autoridades.",
-            "Transmitir calma, instrucciones de seguridad, información veraz y orientación para salvaguardar vidas.",
-            "Generar alarma desmedida para evacuar rápido.",
-            "Ocultar la realidad del evento."
-        ],
+        id: "rcp_2",
+        materia: "RCP",
+        pregunta: "En RCP adulto con un reanimador, ¿cuál es la relación compresiones/ventilaciones?",
+        opciones: ["15:1", "30:2", "5:1", "10:2"],
         correcta: 1,
-        justificacion: "El objetivo primordial es salvar vidas mediante información veraz y orientación.",
-        pista: "El objetivo principal es salvar vidas."
+        justificacion: "La relación estándar es 30 compresiones por 2 ventilaciones.",
+        pista: "30 compresiones, 2 ventilaciones."
     },
     {
-        id: "t3_com_3",
-        materia: "Comunicación Pública",
-        pregunta: "El uso irresponsable de rumores o informaciones no verificadas en redes sociales durante un evento adverso puede ocasionar:",
-        opciones: [
-            "Mejor coordinación de los equipos de rescate.",
-            "Pánico e interferencia negativa en las labores de socorro.",
-            "Mayor participación ciudadana.",
-            "Ningún efecto en la gestión de desastres."
-        ],
-        correcta: 1,
-        justificacion: "Los rumores generan pánico y entorpecen la respuesta oficial.",
-        pista: "Piense en el efecto negativo del pánico."
-    },
-    {
-        id: "t3_com_4",
-        materia: "Comunicación Pública",
-        pregunta: "Las Tecnologías de la Información y la Comunicación (TIC) facilitan la difusión rápida de información y mejoran la coordinación en la administración de desastres.",
-        esVF: true,
-        opciones: ["Verdadero", "Falso"],
-        correcta: 0,
-        justificacion: "Las TIC agilizan la difusión de alertas y la coordinación interinstitucional.",
-        pista: "Las TIC son herramientas clave de coordinación."
-    },
-    {
-        id: "t3_est_1",
-        materia: "Seguridad Estructural",
-        pregunta: "Las columnas de una edificación se consideran elementos estructurales primarios debido a que:",
-        opciones: [
-            "Sirven de marco para puertas y ventanas.",
-            "Soportan y transmiten las cargas verticales hacia las fundaciones.",
-            "Son las más económicas de construir.",
-            "Protegen las tuberías."
-        ],
-        correcta: 1,
-        justificacion: "Las columnas constituyen el esqueleto resistente que transmite cargas al suelo.",
-        pista: "Son el esqueleto de transmisión de cargas."
-    },
-    {
-        id: "t3_est_2",
-        materia: "Seguridad Estructural",
+        id: "sismo_1",
+        materia: "Sismos / Estructuras",
         pregunta: "El fenómeno de 'columna corta' ocurre con frecuencia en centros educativos cuando:",
-        esVF: true,
-        opciones: ["Verdadero", "Falso"],
+        opciones: ["Las ventanas restringen el libre desplazamiento lateral de la columna durante un sismo.", "Se construyen columnas muy largas.", "El suelo es blando.", "Hay exceso de humedad."],
         correcta: 0,
-        justificacion: "Las ventanas restringen el libre desplazamiento lateral de la columna, causando falla frágil.",
-        pista: "Las ventanas actúan como restricciones."
+        justificacion: "Las ventanas actúan como restricciones, causando falla frágil por corte.",
+        pista: "Piense en las ventanas de las escuelas."
     },
     {
-        id: "t3_est_3",
-        materia: "Seguridad Estructural",
+        id: "sismo_2",
+        materia: "Sismos / Estructuras",
         pregunta: "Las grietas diagonales a 45 grados en vigas de concreto armado suelen ser un indicador directo de:",
-        opciones: [
-            "Fallas por tracción moderada.",
-            "Fallas por esfuerzos de corte (cizallamiento).",
-            "Desprendimiento de pintura.",
-            "Exceso de humedad."
-        ],
+        opciones: ["Fallas por tracción moderada.", "Fallas por esfuerzos de corte (cizallamiento).", "Desprendimiento de pintura.", "Exceso de humedad."],
         correcta: 1,
         justificacion: "Las fisuras a 45° son signo clásico de esfuerzo cortante crítico.",
         pista: "Esfuerzo de cortante diagonal."
     },
     {
-        id: "t3_est_4",
-        materia: "Seguridad Estructural",
-        pregunta: "La adición informal de nuevos pisos sobre una vivienda originalmente diseñada para un solo nivel incrementa la masa de la estructura, aumentando las fuerzas sísmicas que actuarán sobre ella.",
-        esVF: true,
-        opciones: ["Verdadero", "Falso"],
-        correcta: 0,
-        justificacion: "El aumento de masa no calculado multiplica las fuerzas sísmicas.",
-        pista: "Más peso = más fuerza sísmica."
+        id: "sismo_3",
+        materia: "Sismos / Estructuras",
+        pregunta: "Las columnas de una edificación se consideran elementos estructurales primarios debido a que:",
+        opciones: ["Sirven de marco para puertas y ventanas.", "Soportan y transmiten las cargas verticales hacia las fundaciones.", "Son las más económicas de construir.", "Protegen las tuberías."],
+        correcta: 1,
+        justificacion: "Las columnas constituyen el esqueleto resistente que transmite cargas al suelo.",
+        pista: "Son el esqueleto de transmisión de cargas."
     },
     {
-        id: "t3_sar_1",
+        id: "sar_1",
         materia: "SAR",
         pregunta: "La fase de alerta (ALERFA) indica aprensión por la seguridad de una aeronave, mientras que la fase de incertidumbre (INCERFA) implica que solo existe duda o falta de información.",
         esVF: true,
@@ -1020,118 +978,91 @@ const PREGUNTAS_TRAYECTO3 = [
         pista: "ALERFA es más grave que INCERFA."
     },
     {
-        id: "t3_sar_2",
+        id: "sar_2",
         materia: "SAR",
         pregunta: "Una de las medidas de seguridad obligatorias al realizar maniobras con cuerdas desde un helicóptero es:",
-        opciones: [
-            "No usar guantes.",
-            "Descargar la electricidad estática generada por los rotores antes de que el rescatista o la cuerda toquen tierra.",
-            "Saltar desde gran altura.",
-            "No usar casco."
-        ],
+        opciones: ["No usar guantes.", "Descargar la electricidad estática generada por los rotores antes de que el rescatista o la cuerda toquen tierra.", "Saltar desde gran altura.", "No usar casco."],
         correcta: 1,
         justificacion: "La estática del rotor puede electrocutar al rescatista si no se hace grounding.",
         pista: "Riesgo de descarga eléctrica estática."
     },
     {
-        id: "t3_sup_1",
-        materia: "Supervivencia",
-        pregunta: "¿Cuál es el refugio más apropiado para alta montaña y por qué?",
-        opciones: [
-            "Cueva de nieve o trinchera, porque la nieve actúa como excelente aislante térmico contra el viento y el frío.",
-            "Hamaca elevada, para evitar el contacto con insectos.",
-            "Cobertizo abierto de ramas, para permitir la ventilación cruzada.",
-            "Tienda de campaña de malla."
-        ],
-        correcta: 0,
-        justificacion: "La nieve es un excelente aislante. Una cueva protege del viento.",
-        pista: "Use el material del entorno (nieve) como aislante."
+        id: "tri_1",
+        materia: "Triage",
+        pregunta: "En el sistema de Triage START, ¿qué color se asigna a un paciente con compromiso respiratorio severo pero que puede ser salvado con intervención inmediata?",
+        opciones: ["Verde", "Amarillo", "Rojo", "Negro"],
+        correcta: 2,
+        justificacion: "El Rojo (Prioridad 1) es para pacientes críticos que requieren atención inmediata.",
+        pista: "El color de la urgencia vital."
     },
     {
-        id: "t3_sup_2",
-        materia: "Supervivencia",
-        pregunta: "¿Cuál es el manejo inicial correcto para la hipotermia en campo?",
-        opciones: [
-            "Frotar la piel vigorosamente y acercar a fuego directo.",
-            "Aislar del suelo, retirar ropa húmeda, abrigar gradualmente y dar bebidas tibias dulces si está consciente.",
-            "Dar alcohol para calentar el cuerpo.",
-            "Meterlo en agua hirviendo."
-        ],
+        id: "tri_2",
+        materia: "Triage",
+        pregunta: "En un incidente con múltiples víctimas, ¿qué significa el color Negro en el triage?",
+        opciones: ["Herido leve.", "Herido grave.", "Fallecido o lesión incompatible con la vida.", "No quiere atención."],
+        correcta: 2,
+        justificacion: "El Negro es para fallecidos o lesiones mortales.",
+        pista: "Es el color de la muerte."
+    },
+    {
+        id: "com_1",
+        materia: "Comunicación Pública",
+        pregunta: "Durante un desastre, la prioridad del discurso comunicacional institucional debe centrarse en:",
+        opciones: ["Promocionar la imagen corporativa de las autoridades.", "Transmitir calma, instrucciones de seguridad, información veraz y orientación para salvaguardar vidas.", "Generar alarma desmedida para evacuar rápido.", "Ocultar la realidad del evento."],
         correcta: 1,
-        justificacion: "Calentamiento gradual, aislar del suelo y no frotar vigorosamente.",
-        pista: "Aislar, retirar ropa húmeda y abrigar gradualmente."
+        justificacion: "El objetivo primordial es salvar vidas mediante información veraz y orientación.",
+        pista: "El objetivo principal es salvar vidas."
+    },
+    {
+        id: "com_2",
+        materia: "Comunicación Pública",
+        pregunta: "El uso irresponsable de rumores o informaciones no verificadas en redes sociales durante un evento adverso puede ocasionar:",
+        opciones: ["Mejor coordinación de los equipos de rescate.", "Pánico e interferencia negativa en las labores de socorro.", "Mayor participación ciudadana.", "Ningún efecto en la gestión de desastres."],
+        correcta: 1,
+        justificacion: "Los rumores generan pánico y entorpecen la respuesta oficial.",
+        pista: "Piense en el efecto negativo del pánico."
     }
 ];
 
 const PREGUNTAS_TRAYECTO4 = [
     {
-        id: "t4_ger_1",
+        id: "ger_1",
         materia: "Gerencia de Proyectos",
         pregunta: "En la Matriz de Marco Lógico, ¿qué representan los 'Supuestos' ubicados en la última columna de la estructura?",
-        opciones: [
-            "Las actividades que el director puede ejecutar unilateralmente.",
-            "Los factores externos no controlables por la gerencia que deben cumplirse para asegurar el éxito del proyecto.",
-            "Las sanciones administrativas.",
-            "Los errores matemáticos del presupuesto."
-        ],
+        opciones: ["Las actividades que el director puede ejecutar unilateralmente.", "Los factores externos no controlables por la gerencia que deben cumplirse para asegurar el éxito del proyecto.", "Las sanciones administrativas.", "Los errores matemáticos del presupuesto."],
         correcta: 1,
         justificacion: "Los supuestos son condiciones externas fuera del control de la gerencia.",
         pista: "Son factores externos que deben cumplirse."
     },
     {
-        id: "t4_ger_2",
+        id: "ger_2",
         materia: "Gerencia de Proyectos",
         pregunta: "En la gestión del valor ganado (EVM), si un proyecto muestra un Índice de Desempeño del Costo (CPI) de 0.75, el diagnóstico es:",
-        opciones: [
-            "El presupuesto se triplicó.",
-            "El cronograma está adelantado.",
-            "El proyecto sufre un sobrecosto, obteniendo solo 75 céntimos de valor por cada unidad monetaria invertida.",
-            "El proyecto gasta menos de lo previsto."
-        ],
+        opciones: ["El presupuesto se triplicó.", "El cronograma está adelantado.", "El proyecto sufre un sobrecosto, obteniendo solo 75 céntimos de valor por cada unidad monetaria invertida.", "El proyecto gasta menos de lo previsto."],
         correcta: 2,
         justificacion: "Un CPI < 1 indica sobrecosto. Se obtiene menos valor por lo invertido.",
         pista: "CPI menor a 1 significa sobrecosto."
     },
     {
-        id: "t4_ger_3",
-        materia: "Gerencia de Proyectos",
-        pregunta: "La metodología de Marco Lógico es una herramienta clave en Protección Civil porque permite alinear las actividades operativas con el Fin superior de salvaguardar vidas y bienes.",
-        esVF: true,
-        opciones: ["Verdadero", "Falso"],
-        correcta: 0,
-        justificacion: "El Marco Lógico alinea la operación con los objetivos estratégicos.",
-        pista: "Alinea la operación con los objetivos."
-    },
-    {
-        id: "t4_tec_1",
+        id: "tec_1",
         materia: "Tecnología SIG",
         pregunta: "Al procesar imágenes multiespectrales para delimitar el mapa de afectación por inundaciones, ¿qué par de bandas es el más adecuado para resaltar cuerpos de agua?",
-        opciones: [
-            "Banda del Azul y Banda de Infrarrojo Térmico.",
-            "Banda del Infrarrojo Cercano (NIR) y Banda del Infrarrojo de Onda Corta (SWIR).",
-            "Banda del Ultravioleta y Banda del Rojo Lejano.",
-            "Banda del Rojo y Banda del Verde."
-        ],
+        opciones: ["Banda del Azul y Banda de Infrarrojo Térmico.", "Banda del Infrarrojo Cercano (NIR) y Banda del Infrarrojo de Onda Corta (SWIR).", "Banda del Ultravioleta y Banda del Rojo Lejano.", "Banda del Rojo y Banda del Verde."],
         correcta: 1,
         justificacion: "NIR y SWIR resaltan la presencia de agua frente a suelo y vegetación.",
         pista: "El agua absorbe NIR y SWIR."
     },
     {
-        id: "t4_tec_2",
+        id: "tec_2",
         materia: "Tecnología SIG",
         pregunta: "En la instrumentación de un talud con alto riesgo de deslizamiento, ¿cuál dispositivo proporciona lecturas milimétricas continuas de desplazamientos internos horizontales?",
-        opciones: [
-            "Anemómetro ultrasónico.",
-            "Sensor pirométrico.",
-            "Inclinómetro digital de pozo profundo.",
-            "Barómetro."
-        ],
+        opciones: ["Anemómetro ultrasónico.", "Sensor pirométrico.", "Inclinómetro digital de pozo profundo.", "Barómetro."],
         correcta: 2,
         justificacion: "El inclinómetro mide desplazamientos internos horizontales en pozos.",
         pista: "Mide inclinaciones internas del suelo."
     },
     {
-        id: "t4_tec_3",
+        id: "tec_3",
         materia: "Tecnología SIG",
         pregunta: "Las imágenes de radar de apertura sintética (SAR) poseen la ventaja técnica de poder registrar datos de la superficie terrestre incluso a través de una cobertura densa de nubes o durante tormentas severas.",
         esVF: true,
@@ -1141,35 +1072,16 @@ const PREGUNTAS_TRAYECTO4 = [
         pista: "Las microondas atraviesan las nubes."
     },
     {
-        id: "t4_tec_4",
-        materia: "Tecnología SIG",
-        pregunta: "El uso de la Inteligencia Artificial para el análisis automatizado de redes sociales durante una inundación (Minería de Datos de Crisis) permite:",
-        opciones: [
-            "Cartografiar de forma indirecta las solicitudes de rescate urbano mediante técnicas de geocodificación de texto.",
-            "Predecir terremotos.",
-            "Sustituir a los rescatistas.",
-            "Cortar la señal telefónica."
-        ],
-        correcta: 0,
-        justificacion: "La minería de datos geocodifica textos para mapear necesidades de rescate.",
-        pista: "Geocodifica texto para mapear rescates."
-    },
-    {
-        id: "t4_est_1",
+        id: "est_1",
         materia: "Estadística",
         pregunta: "La estadística que se encarga de organizar, resumir y presentar los datos de una muestra se denomina:",
-        opciones: [
-            "Estadística Inferencial.",
-            "Estadística de Probabilidad.",
-            "Estadística Descriptiva.",
-            "Estadística Decisional."
-        ],
+        opciones: ["Estadística Inferencial.", "Estadística de Probabilidad.", "Estadística Descriptiva.", "Estadística Decisional."],
         correcta: 2,
         justificacion: "La descriptiva resume y presenta datos.",
         pista: "Describe los datos."
     },
     {
-        id: "t4_est_2",
+        id: "est_2",
         materia: "Estadística",
         pregunta: "La medida de tendencia central que representa el valor que más se repite es:",
         opciones: ["La media.", "La mediana.", "La moda.", "La varianza."],
@@ -1178,7 +1090,7 @@ const PREGUNTAS_TRAYECTO4 = [
         pista: "Es el valor más frecuente."
     },
     {
-        id: "t4_est_3",
+        id: "est_3",
         materia: "Estadística",
         pregunta: "Un evento es un subconjunto del espacio muestral.",
         esVF: true,
@@ -1186,6 +1098,43 @@ const PREGUNTAS_TRAYECTO4 = [
         correcta: 0,
         justificacion: "Un evento es cualquier subconjunto de resultados posibles.",
         pista: "Es parte del espacio muestral."
+    },
+    {
+        id: "rcp_3",
+        materia: "RCP",
+        pregunta: "En RCP pediátrico, ¿cómo se realizan las compresiones torácicas?",
+        opciones: ["Una mano o dos dedos, dependiendo del tamaño, a una profundidad aproximada de 5 cm.", "Dos manos entrelazadas y mucha fuerza.", "Solo con los dedos índice y pulgar.", "Con el puño cerrado."],
+        correcta: 0,
+        justificacion: "En niños se usa una o dos manos (bebés dos dedos), con profundidad de 5 cm.",
+        pista: "En niños se usa menos fuerza que en adultos."
+    },
+    {
+        id: "hemorragia_2",
+        materia: "Primeros Auxilios",
+        pregunta: "Si una persona tiene un objeto clavado (como un cuchillo) en el abdomen, ¿qué debes hacer?",
+        opciones: ["Retirar el objeto cuidadosamente.", "Dejarlo clavado y estabilizarlo con apósitos alrededor, buscando ayuda quirúrgica urgente.", "Empujar el objeto más adentro.", "Intentar sacarlo y vendar la herida."],
+        correcta: 1,
+        justificacion: "El objeto clavado está taponando la hemorragia. Si lo retiras, puede desangrarse.",
+        pista: "Nunca retires un objeto empalado."
+    },
+    {
+        id: "sismo_4",
+        materia: "Sismos / Estructuras",
+        pregunta: "La adición informal de nuevos pisos sobre una vivienda originalmente diseñada para un solo nivel incrementa la masa de la estructura, aumentando las fuerzas sísmicas que actuarán sobre ella.",
+        esVF: true,
+        opciones: ["Verdadero", "Falso"],
+        correcta: 0,
+        justificacion: "El aumento de masa no calculado multiplica las fuerzas sísmicas.",
+        pista: "Más peso = más fuerza sísmica."
+    },
+    {
+        id: "extintor_1",
+        materia: "Siniestros / Incendios",
+        pregunta: "¿Qué tipo de extintor se debe usar para apagar un fuego en un equipo eléctrico energizado (Clase C)?",
+        opciones: ["Extintor de agua presurizada.", "Extintor de polvo químico seco (PQS) o Dióxido de Carbono (CO2).", "Extintor de espuma.", "Cualquier extintor sirve."],
+        correcta: 1,
+        justificacion: "El agua y la espuma conducen electricidad. Se debe usar PQS o CO2.",
+        pista: "No puedes usar agua en fuegos eléctricos."
     }
 ];
 
@@ -1304,12 +1253,12 @@ function enviarMensajeChat() {
     sonido.rogerBip();
 
     const q = raw.toLowerCase();
-    let r = "No poseo directriz exacta. Consulte: Comunicación, Estructuras, SAR, Tecnología o Estadística.";
-    if (q.includes('comunicacion') || q.includes('informacion')) r = "COMUNICACIÓN:\nLa información es unidireccional. La comunicación exige reciprocidad e intercambio (bidireccionalidad).";
-    else if (q.includes('estructura') || q.includes('columna')) r = "ESTRUCTURAS:\n• Columnas: elementos primarios.\n• Grietas a 45°: falla por corte.\n• Columna corta: falla frágil por restricción de ventanas.";
-    else if (q.includes('sar') || q.includes('incerfa') || q.includes('alerfa')) r = "SAR:\n• INCERFA: Incertidumbre (falta de info).\n• ALERFA: Alerta (aprensión fundada).\n• DESTREFA: Desastre (certeza de siniestro).";
-    else if (q.includes('tecnologia') || q.includes('sig') || q.includes('satelite')) r = "TECNOLOGÍA:\n• SIG: capas vectoriales/raster.\n• SAR: radar que atraviesa nubes.\n• NIR/SWIR: detectan agua y vegetación.";
-    else if (q.includes('estadistica') || q.includes('media') || q.includes('moda')) r = "ESTADÍSTICA:\n• Descriptiva: resume datos.\n• Inferencial: infiere de muestras.\n• Moda: valor más frecuente.";
+    let r = "No poseo directriz exacta. Consulte: RCP, Estructuras, SAR, Triage o Incendios.";
+    if (q.includes('rcp') || q.includes('reanimacion')) r = "RCP:\n• Frecuencia: 100-120/min.\n• Relación: 30 compresiones / 2 ventilaciones.";
+    else if (q.includes('estructura') || q.includes('columna') || q.includes('sismo')) r = "ESTRUCTURAS:\n• Columnas: elementos primarios.\n• Grietas a 45°: falla por corte.\n• Columna corta: falla frágil.";
+    else if (q.includes('sar') || q.includes('incerfa') || q.includes('alerfa')) r = "SAR:\n• INCERFA: Incertidumbre.\n• ALERFA: Alerta.\n• DESTREFA: Desastre.";
+    else if (q.includes('triage') || q.includes('rojo') || q.includes('negro')) r = "TRIAGE:\n• Rojo: Riesgo vital.\n• Negro: Fallecido.";
+    else if (q.includes('extintor') || q.includes('fuego') || q.includes('incendio')) r = "INCENDIOS:\n• Clase C (eléctrico): PQS o CO2. NUNCA agua.";
 
     setTimeout(() => agregarMensajeChat(r, 'msg-bot'), 450);
 }
@@ -1379,9 +1328,9 @@ function cargarPregunta() {
     feedback.innerHTML = '';
     document.getElementById('btn-siguiente').disabled = true;
 
-    // LLAMADA A LA IMAGEN REAL
+    // LLAMADA A LA IMAGEN REAL ESPECÍFICA
     if (typeof ponerImagenJuego === 'function') {
-        ponerImagenJuego(p.materia);
+        ponerImagenJuego(p.id, p.materia);
     }
     iniciarTimerPregunta();
 }
@@ -1736,42 +1685,61 @@ function reiniciarModuloActual() {
 }
 
 /* =======================================================
-   MOTOR DE IMÁGENES REALES (FOTOGRAFÍAS CON TINTE)
+   MOTOR DE IMÁGENES REALES DINÁMICAS (FOTOGRAFÍAS)
    ======================================================= */
 (function () {
-    // Banco de imágenes reales (vía Unsplash) vinculadas a la temática
+    // Banco de imágenes de alta calidad vinculadas a cada ID de pregunta específica
     const IMAGENES = {
-        com: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=800&auto=format&fit=crop", // Persona en laptop/comunicación
-        est: "https://images.unsplash.com/photo-1590069261209-f8e9b8642343?q=80&w=800&auto=format&fit=crop", // Ingeniería/Estructura
-        sar: "https://images.unsplash.com/photo-1521618755572-156ae0cdd74d?q=80&w=800&auto=format&fit=crop", // Rescate aéreo
-        tec: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=800&auto=format&fit=crop", // Tecnología/Satélite
-        ger: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=800&auto=format&fit=crop", // Gerencia/Gráficos
-        def: "https://images.unsplash.com/photo-1587293852726-70cdb56c2866?q=80&w=800&auto=format&fit=crop"  // Bomberos/Emergencia
+        // RCP y Primeros Auxilios
+        "rcp_1": "https://images.unsplash.com/photo-1516574187841-cb9cc2ca948b?q=80&w=800&auto=format&fit=crop", // Reanimación
+        "rcp_2": "https://images.unsplash.com/photo-1516574187841-cb9cc2ca948b?q=80&w=800&auto=format&fit=crop",
+        "rcp_3": "https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?q=80&w=800&auto=format&fit=crop", // Pediátrico
+        "hemorragia_1": "https://images.unsplash.com/photo-1603398938378-e54eab446dde?q=80&w=800&auto=format&fit=crop", // Vendas
+        "hemorragia_2": "https://images.unsplash.com/photo-1583324113626-70df0f4deaab?q=80&w=800&auto=format&fit=crop",
+        
+        // Sismos y Estructuras
+        "sismo_1": "https://images.unsplash.com/photo-1590069261209-f8e9b8642343?q=80&w=800&auto=format&fit=crop", // Grieta
+        "sismo_2": "https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?q=80&w=800&auto=format&fit=crop", // Escombros
+        "sismo_3": "https://images.unsplash.com/photo-1503387762-592deb58ef4e?q=80&w=800&auto=format&fit=crop", // Edificio
+        "sismo_4": "https://images.unsplash.com/photo-1531834685032-c34bf0d84c77?q=80&w=800&auto=format&fit=crop", // Construcción
+        
+        // SAR y Triage
+        "sar_1": "https://images.unsplash.com/photo-1521618755572-156ae0cdd74d?q=80&w=800&auto=format&fit=crop", // Rescate
+        "sar_2": "https://images.unsplash.com/photo-1527977966376-1c8408f9f108?q=80&w=800&auto=format&fit=crop", // Helicóptero
+        "tri_1": "https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?q=80&w=800&auto=format&fit=crop", // Ambulancia
+        "tri_2": "https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?q=80&w=800&auto=format&fit=crop",
+
+        // Comunicación
+        "com_1": "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=800&auto=format&fit=crop", // Laptop
+        "com_2": "https://images.unsplash.com/photo-1611162617474-5b21e879e113?q=80&w=800&auto=format&fit=crop", // Redes
+
+        // Trayecto 4 (Gerencia, SIG, Estadística)
+        "ger_1": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=800&auto=format&fit=crop", // Gráficos
+        "ger_2": "https://images.unsplash.com/photo-1554224155-6726b3ff858f?q=80&w=800&auto=format&fit=crop",
+        "tec_1": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=800&auto=format&fit=crop", // Satélite
+        "tec_2": "https://images.unsplash.com/photo-1581092160562-40aa08e78837?q=80&w=800&auto=format&fit=crop", // Ingeniería
+        "tec_3": "https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?q=80&w=800&auto=format&fit=crop", // Radar
+        "est_1": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=800&auto=format&fit=crop", // Datos
+        "est_2": "https://images.unsplash.com/photo-1543286386-713bdd548da4?q=80&w=800&auto=format&fit=crop",
+        "est_3": "https://images.unsplash.com/photo-1509228468518-180dd4864904?q=80&w=800&auto=format&fit=crop",
+
+        // Otros (Incendios)
+        "extintor_1": "https://images.unsplash.com/photo-1587567272597-6e4e4c9f09c3?q=80&w=800&auto=format&fit=crop"
     };
 
-    const CAPTIONS = {
-        com: "Entorno de Comunicación de Riesgos",
-        est: "Análisis de Infraestructura",
-        sar: "Operaciones de Búsqueda y Rescate",
-        tec: "Tecnología Geoespacial Aplicada",
-        ger: "Gestión de Proyectos y Recursos",
-        def: "Sala Situacional y Despacho"
-    };
-
-    function ponerImagenJuego(materia) {
+    function ponerImagenJuego(idPregunta, materia) {
         const el = document.getElementById('ilus-juego');
         if (!el) return;
-        const m = materia.toLowerCase();
-        let k = 'def';
-        if (m.includes('comunicaci')) k = 'com';
-        else if (m.includes('estructur')) k = 'est';
-        else if (m.includes('sar') || m.includes('supervivencia')) k = 'sar';
-        else if (m.includes('tecnolog') || m.includes('sig')) k = 'tec';
-        else if (m.includes('gerencia') || m.includes('estadistica')) k = 'ger';
+        
+        // Buscar imagen por ID, si no existe usar una por defecto
+        let url = IMAGENES[idPregunta];
+        if (!url) {
+            url = "https://images.unsplash.com/photo-1587293852726-70cdb56c2866?q=80&w=800&auto=format&fit=crop"; // Default bomberos
+        }
         
         el.innerHTML = `
-            <img src="${IMAGENES[k]}" alt="${CAPTIONS[k]}" loading="lazy">
-            <div class="ilus-tag">${CAPTIONS[k]}</div>
+            <img src="${url}" alt="${materia}" loading="lazy">
+            <div class="ilus-tag">${materia}</div>
         `;
     }
 
