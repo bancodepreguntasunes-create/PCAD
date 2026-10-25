@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="theme-color" content="#0a1a30">
-    <meta name="description" content="Simulador Táctico PCAD - Evaluación de Operaciones y Rescate.">
+    <meta name="description" content="Simulador Táctico PCAD - Evaluación de Operaciones de Protección Civil y Rescate.">
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%9A%91%3C/text%3E%3C/svg%3E">
     <title>Simulador de Operaciones PCAD | UNES</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -381,22 +381,22 @@
             border-color: var(--azul-borde); cursor: not-allowed;
         }
 
-        /* ESTILOS DE IMÁGENES REALES */
+        /* ESTILOS DE IMÁGENES REALES (SIN FILTROS AZULES) */
         .ilus {
             border: 1px solid var(--azul-borde); border-radius: 10px;
             overflow: hidden; background: #0d1f38;
             margin-bottom: 20px; position: relative;
-            height: 240px; /* Altura fija para encuadre */
+            height: 240px;
         }
         .ilus:empty { display: none; }
         .ilus img {
             width: 100%; height: 100%; object-fit: cover;
             display: block;
-            filter: sepia(0.3) hue-rotate(190deg) saturate(1.5) brightness(0.7); /* Tinte azulado institucional */
+            /* Sin filtros de color para que se vean naturales y realistas */
         }
         .ilus::after {
             content: ""; position: absolute; inset: 0;
-            background: linear-gradient(to top, rgba(10, 26, 48, 0.9) 0%, transparent 60%);
+            background: linear-gradient(to top, rgba(10, 26, 48, 0.95) 0%, transparent 40%);
             pointer-events: none;
         }
         .ilus-tag {
@@ -404,11 +404,12 @@
             z-index: 2; color: #fff; font-weight: 700; font-size: 0.85rem;
             letter-spacing: 0.5px; text-transform: uppercase;
             display: flex; align-items: center; gap: 8px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
         }
         .ilus-tag::before {
             content: ""; display: inline-block;
             width: 8px; height: 8px; background: var(--naranja-pcad);
-            border-radius: 50%;
+            border-radius: 50%; border: 1px solid #000;
         }
 
         .resultado-box {
@@ -611,7 +612,7 @@
         <div class="banner-intro">
             <div>
                 <h2>CENTRO DE MANDO Y SIMULACIÓN</h2>
-                <p>Evaluación Teórica y Operativa - Trayectos III y IV PCAD.</p>
+                <p>Evaluación Teórica de Operaciones de Protección Civil.</p>
             </div>
             <div class="stats-badge-group">
                 <div class="stat-pill">RÉCORD: <span id="menu-record-txt">0 pts</span></div>
@@ -632,10 +633,10 @@
             </div>
 
             <div class="menu-card" onclick="iniciarJuegoTeorico('trayecto4')">
-                <div class="menu-icon-wrap">📊</div>
-                <span class="menu-tag">TRAYECTO IV</span>
-                <div class="menu-title">Gerencia y Tecnología</div>
-                <div class="menu-desc">Gerencia de proyectos (Marco Lógico), tecnologías aplicadas (SIG, satélites) y estadística.</div>
+                <div class="menu-icon-wrap">🚑</div>
+                <span class="menu-tag">OPERACIONES TÁCTICAS</span>
+                <div class="menu-title">Rescate y Siniestros</div>
+                <div class="menu-desc">RCP, primeros auxilios, triage START, manejo de incendios y extricación vehicular.</div>
                 <div class="menu-footer">
                     <span>Simulación de Preguntas</span>
                     <span class="arrow">➔</span>
@@ -671,7 +672,7 @@
         <div class="hud">
             <div class="hud-group">
                 <div class="hud-item" id="materia-txt">Materia</div>
-                <div class="hud-item">Pregunta: <span id="progreso-txt">1/15</span></div>
+                <div class="hud-item">Pregunta: <span id="progreso-txt">1/10</span></div>
             </div>
             <div class="hud-group">
                 <div class="hud-item">Puntos: <span id="puntos-txt">0</span></div>
@@ -910,7 +911,7 @@ function toggleSonido() {
 }
 
 /* =======================================================
-   BANCO DE PREGUNTAS (ENFOCADO EN PCAD, RCP Y RESCATE)
+   BANCO DE PREGUNTAS (100% PCAD, RCP Y RESCATE)
    ======================================================= */
 const PREGUNTAS_TRAYECTO3 = [
     {
@@ -1026,80 +1027,6 @@ const PREGUNTAS_TRAYECTO3 = [
 
 const PREGUNTAS_TRAYECTO4 = [
     {
-        id: "ger_1",
-        materia: "Gerencia de Proyectos",
-        pregunta: "En la Matriz de Marco Lógico, ¿qué representan los 'Supuestos' ubicados en la última columna de la estructura?",
-        opciones: ["Las actividades que el director puede ejecutar unilateralmente.", "Los factores externos no controlables por la gerencia que deben cumplirse para asegurar el éxito del proyecto.", "Las sanciones administrativas.", "Los errores matemáticos del presupuesto."],
-        correcta: 1,
-        justificacion: "Los supuestos son condiciones externas fuera del control de la gerencia.",
-        pista: "Son factores externos que deben cumplirse."
-    },
-    {
-        id: "ger_2",
-        materia: "Gerencia de Proyectos",
-        pregunta: "En la gestión del valor ganado (EVM), si un proyecto muestra un Índice de Desempeño del Costo (CPI) de 0.75, el diagnóstico es:",
-        opciones: ["El presupuesto se triplicó.", "El cronograma está adelantado.", "El proyecto sufre un sobrecosto, obteniendo solo 75 céntimos de valor por cada unidad monetaria invertida.", "El proyecto gasta menos de lo previsto."],
-        correcta: 2,
-        justificacion: "Un CPI < 1 indica sobrecosto. Se obtiene menos valor por lo invertido.",
-        pista: "CPI menor a 1 significa sobrecosto."
-    },
-    {
-        id: "tec_1",
-        materia: "Tecnología SIG",
-        pregunta: "Al procesar imágenes multiespectrales para delimitar el mapa de afectación por inundaciones, ¿qué par de bandas es el más adecuado para resaltar cuerpos de agua?",
-        opciones: ["Banda del Azul y Banda de Infrarrojo Térmico.", "Banda del Infrarrojo Cercano (NIR) y Banda del Infrarrojo de Onda Corta (SWIR).", "Banda del Ultravioleta y Banda del Rojo Lejano.", "Banda del Rojo y Banda del Verde."],
-        correcta: 1,
-        justificacion: "NIR y SWIR resaltan la presencia de agua frente a suelo y vegetación.",
-        pista: "El agua absorbe NIR y SWIR."
-    },
-    {
-        id: "tec_2",
-        materia: "Tecnología SIG",
-        pregunta: "En la instrumentación de un talud con alto riesgo de deslizamiento, ¿cuál dispositivo proporciona lecturas milimétricas continuas de desplazamientos internos horizontales?",
-        opciones: ["Anemómetro ultrasónico.", "Sensor pirométrico.", "Inclinómetro digital de pozo profundo.", "Barómetro."],
-        correcta: 2,
-        justificacion: "El inclinómetro mide desplazamientos internos horizontales en pozos.",
-        pista: "Mide inclinaciones internas del suelo."
-    },
-    {
-        id: "tec_3",
-        materia: "Tecnología SIG",
-        pregunta: "Las imágenes de radar de apertura sintética (SAR) poseen la ventaja técnica de poder registrar datos de la superficie terrestre incluso a través de una cobertura densa de nubes o durante tormentas severas.",
-        esVF: true,
-        opciones: ["Verdadero", "Falso"],
-        correcta: 0,
-        justificacion: "El radar opera en microondas, atravesando nubes y operando de noche.",
-        pista: "Las microondas atraviesan las nubes."
-    },
-    {
-        id: "est_1",
-        materia: "Estadística",
-        pregunta: "La estadística que se encarga de organizar, resumir y presentar los datos de una muestra se denomina:",
-        opciones: ["Estadística Inferencial.", "Estadística de Probabilidad.", "Estadística Descriptiva.", "Estadística Decisional."],
-        correcta: 2,
-        justificacion: "La descriptiva resume y presenta datos.",
-        pista: "Describe los datos."
-    },
-    {
-        id: "est_2",
-        materia: "Estadística",
-        pregunta: "La medida de tendencia central que representa el valor que más se repite es:",
-        opciones: ["La media.", "La mediana.", "La moda.", "La varianza."],
-        correcta: 2,
-        justificacion: "La moda es el valor que más se repite.",
-        pista: "Es el valor más frecuente."
-    },
-    {
-        id: "est_3",
-        materia: "Estadística",
-        pregunta: "Un evento es un subconjunto del espacio muestral.",
-        esVF: true,
-        opciones: ["Verdadero", "Falso"],
-        correcta: 0,
-        justificacion: "Un evento es cualquier subconjunto de resultados posibles.",
-        pista: "Es parte del espacio muestral."
-    },
-    {
         id: "rcp_3",
         materia: "RCP",
         pregunta: "En RCP pediátrico, ¿cómo se realizan las compresiones torácicas?",
@@ -1135,6 +1062,78 @@ const PREGUNTAS_TRAYECTO4 = [
         correcta: 1,
         justificacion: "El agua y la espuma conducen electricidad. Se debe usar PQS o CO2.",
         pista: "No puedes usar agua en fuegos eléctricos."
+    },
+    {
+        id: "atragantamiento_1",
+        materia: "Primeros Auxilios",
+        pregunta: "Si una persona se está atragantando y puede toser con fuerza, ¿qué debes hacer?",
+        opciones: ["Darle 5 golpes en la espalda inmediatamente.", "Realizar la maniobra de Heimlich sin esperar.", "Animarle a seguir tosiendo y vigilarla.", "Darle un vaso de agua para empujar el objeto."],
+        correcta: 2,
+        justificacion: "Si la persona tose eficazmente, la vía aérea no está completamente obstruida. La tos es el mejor mecanismo.",
+        pista: "Si puede toser, el aire está pasando. Déjalo toser."
+    },
+    {
+        id: "shock_1",
+        materia: "Primeros Auxilios",
+        pregunta: "¿Cuál es la posición recomendada para una víctima que está en estado de shock (palidez, sudoración fría, pulso rápido)?",
+        opciones: ["Sentado en una silla.", "Acostado boca abajo.", "Acostado boca arriba con las piernas elevadas unos 30 cm.", "De pie para mejorar la circulación."],
+        correcta: 2,
+        justificacion: "Elevar las piernas favorece el retorno venoso hacia el corazón y el cerebro, combatiendo la hipotensión.",
+        pista: "Elevar las piernas ayuda a que la sangre llegue al cerebro."
+    },
+    {
+        id: "convulsion_1",
+        materia: "Primeros Auxilios",
+        pregunta: "Durante una convulsión, ¿qué acción es la correcta?",
+        opciones: ["Sujetar fuertemente a la persona para que no se mueva.", "Meterle un objeto en la boca para que no se muerda la lengua.", "Proteger la cabeza y apartar objetos peligrosos, dejando que la convulsión siga su curso.", "Darle agua para que se le pase."],
+        correcta: 2,
+        justificacion: "Nunca se debe inmovilizar a alguien durante una convulsión ni meterle cosas en la boca. Solo hay que proteger la cabeza.",
+        pista: "Solo protege la cabeza, no sujetes ni metas nada en la boca."
+    },
+    {
+        id: "quemadura_1",
+        materia: "Primeros Auxilios",
+        pregunta: "Ante una quemadura térmica de primer grado (enrojecimiento), ¿cuál es el tratamiento inicial?",
+        opciones: ["Aplicar hielo directamente sobre la piel.", "Romper las ampollas si se forman.", "Enfriar la zona con agua corriente a temperatura ambiente durante 10-15 minutos.", "Untar mantequilla o pasta de dientes."],
+        correcta: 2,
+        justificacion: "El enfriamiento con agua corriente detiene el proceso de quemadura en los tejidos. Nunca se debe aplicar hielo directo.",
+        pista: "Usa agua a temperatura ambiente, nunca hielo directo."
+    },
+    {
+        id: "sismo_5",
+        materia: "Sismos / Estructuras",
+        pregunta: "Si en una inspección tras un sismo encuentras cabillas de refuerzo expuestas y flectadas (dobladas) en un nodo estructural:",
+        opciones: ["Indicar friso correctivo de cemento para cubrir el acero.", "Declarar inmediatamente riesgo de colapso, aplicar la Regla de Oro y desalojar el inmueble.", "Autorizar el uso de los pisos superiores.", "Clasificar la estructura como habitable con daños leves."],
+        correcta: 1,
+        justificacion: "Las cabillas flectadas implican pérdida total de la ductilidad y capacidad de carga del nodo.",
+        pista: "Aplica la Regla de Oro: ¡Evacuación inmediata!"
+    },
+    {
+        id: "sismo_6",
+        materia: "Sismos / Estructuras",
+        pregunta: "Según la metodología de evaluación rápida de edificaciones, una 'Fisura' se distingue de una grieta porque:",
+        opciones: ["Atraviesa de lado a lado la pared estructural.", "Es una rotura superficial menor a 1 mm (no entra el borde de una moneda) que suele limitarse al acabado o pintura.", "Tiene una inclinación obligatoria de 45 grados.", "Solo se produce en estructuras de madera."],
+        correcta: 1,
+        justificacion: "Las fisuras capilares (< 1 mm) corresponden a retracción del friso o pintura, a diferencia de grietas estructurales profundas.",
+        pista: "Si el borde de una moneda no penetra, es una fisura superficial inofensiva."
+    },
+    {
+        id: "sar_3",
+        materia: "SAR",
+        pregunta: "¿Qué situación operativa marca la activación inmediata de la fase DESTREFA?",
+        opciones: ["Simple falla de radio en una nave.", "Evidencia irrefutable de que la nave y sus ocupantes se encuentran en peligro grave e inminente o han zozobrado.", "Cancelación definitiva de la misión por condiciones meteorológicas.", "Reabastecimiento de combustible en helipuerto alterno."],
+        correcta: 1,
+        justificacion: "DESTREFA (Distress Phase) es la fase máxima de socorro cuando el accidente es un hecho o el peligro es letal e inminente.",
+        pista: "Es la fase más crítica: 'Desastre o Peligro Inminente'."
+    },
+    {
+        id: "nfpa_1",
+        materia: "Siniestros / Materiales Peligrosos",
+        pregunta: "En el diamante o rombo de materiales peligrosos NFPA 704, ¿qué representa el cuadrante de color AZUL?",
+        opciones: ["Riesgo de Inflamabilidad.", "Nivel de Peligro para la Salud.", "Inestabilidad química y reactividad.", "Reactividad especial con el agua."],
+        correcta: 1,
+        justificacion: "En el estándar NFPA 704: Azul = Salud, Rojo = Inflamabilidad, Amarillo = Reactividad/Inestabilidad, Blanco = Riesgos especiales.",
+        pista: "El azul identifica la toxicidad y el daño a la salud humana."
     }
 ];
 
@@ -1696,32 +1695,29 @@ function reiniciarModuloActual() {
         "rcp_3": "https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?q=80&w=800&auto=format&fit=crop", // Pediátrico
         "hemorragia_1": "https://images.unsplash.com/photo-1603398938378-e54eab446dde?q=80&w=800&auto=format&fit=crop", // Vendas
         "hemorragia_2": "https://images.unsplash.com/photo-1583324113626-70df0f4deaab?q=80&w=800&auto=format&fit=crop",
+        "atragantamiento_1": "https://images.unsplash.com/photo-1584362917165-526a968579e8?q=80&w=800&auto=format&fit=crop",
+        "shock_1": "https://images.unsplash.com/photo-1587745416684-47953f16f02f?q=80&w=800&auto=format&fit=crop",
+        "convulsion_1": "https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?q=80&w=800&auto=format&fit=crop",
+        "quemadura_1": "https://images.unsplash.com/photo-1603398938378-e54eab446dde?q=80&w=800&auto=format&fit=crop",
         
         // Sismos y Estructuras
         "sismo_1": "https://images.unsplash.com/photo-1590069261209-f8e9b8642343?q=80&w=800&auto=format&fit=crop", // Grieta
         "sismo_2": "https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?q=80&w=800&auto=format&fit=crop", // Escombros
         "sismo_3": "https://images.unsplash.com/photo-1503387762-592deb58ef4e?q=80&w=800&auto=format&fit=crop", // Edificio
         "sismo_4": "https://images.unsplash.com/photo-1531834685032-c34bf0d84c77?q=80&w=800&auto=format&fit=crop", // Construcción
+        "sismo_5": "https://images.unsplash.com/photo-1590069261209-f8e9b8642343?q=80&w=800&auto=format&fit=crop",
+        "sismo_6": "https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?q=80&w=800&auto=format&fit=crop",
         
         // SAR y Triage
         "sar_1": "https://images.unsplash.com/photo-1521618755572-156ae0cdd74d?q=80&w=800&auto=format&fit=crop", // Rescate
         "sar_2": "https://images.unsplash.com/photo-1527977966376-1c8408f9f108?q=80&w=800&auto=format&fit=crop", // Helicóptero
+        "sar_3": "https://images.unsplash.com/photo-1521618755572-156ae0cdd74d?q=80&w=800&auto=format&fit=crop",
         "tri_1": "https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?q=80&w=800&auto=format&fit=crop", // Ambulancia
         "tri_2": "https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?q=80&w=800&auto=format&fit=crop",
 
         // Comunicación
         "com_1": "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=800&auto=format&fit=crop", // Laptop
         "com_2": "https://images.unsplash.com/photo-1611162617474-5b21e879e113?q=80&w=800&auto=format&fit=crop", // Redes
-
-        // Trayecto 4 (Gerencia, SIG, Estadística)
-        "ger_1": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=800&auto=format&fit=crop", // Gráficos
-        "ger_2": "https://images.unsplash.com/photo-1554224155-6726b3ff858f?q=80&w=800&auto=format&fit=crop",
-        "tec_1": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=800&auto=format&fit=crop", // Satélite
-        "tec_2": "https://images.unsplash.com/photo-1581092160562-40aa08e78837?q=80&w=800&auto=format&fit=crop", // Ingeniería
-        "tec_3": "https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?q=80&w=800&auto=format&fit=crop", // Radar
-        "est_1": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=800&auto=format&fit=crop", // Datos
-        "est_2": "https://images.unsplash.com/photo-1543286386-713bdd548da4?q=80&w=800&auto=format&fit=crop",
-        "est_3": "https://images.unsplash.com/photo-1509228468518-180dd4864904?q=80&w=800&auto=format&fit=crop",
 
         // Otros (Incendios)
         "extintor_1": "https://images.unsplash.com/photo-1587567272597-6e4e4c9f09c3?q=80&w=800&auto=format&fit=crop"
