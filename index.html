@@ -1513,7 +1513,39 @@ const appState = {
 };
 
 /* =======================================================
-   RÉCORD (con try/catch para file:// y modo privado)
+   UTILIDAD: BARAJAR OPCIONES DINÁMICAMENTE
+   ======================================================= */
+function barajarPregunta(preguntaObj) {
+    // Creamos un arreglo con los índices originales [0, 1, 2, 3]
+    const indices = preguntaObj.opciones.map((_, i) => i);
+    // Lo barajamos (Algoritmo de Fisher-Yates)
+    for (let i = indices.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [indices[i], indices[j]] = [indices[j], indices[i]];
+    }
+    
+    // Construimos las nuevas opciones desordenadas
+    const nuevasOpciones = indices.map(i => preguntaObj.opciones[i]);
+    
+    // Buscamos en qué nueva posición quedó la respuesta correcta original
+    const nuevaPosCorrecta = indices.indexOf(preguntaObj.correcta);
+    
+    return {
+        ...preguntaObj,
+        opciones: nuevasOpciones,
+        correcta: nuevaPosCorrecta
+    };
+}
+
+function prepararBanco(basePreguntas) {
+    // 1. Barajamos el orden de las preguntas
+    const bancoBarajado = [...basePreguntas].sort(() => 0.5 - Math.random());
+    // 2. Barajamos las opciones de cada pregunta
+    return bancoBarajado.map(p => barajarPregunta(p));
+}
+
+/* =======================================================
+   RÉCORD (con try/catch)
    ======================================================= */
 function cargarRecordLocal() {
     try {
@@ -1523,9 +1555,7 @@ function cargarRecordLocal() {
         const ranEl = document.getElementById('menu-rango-txt');
         if (recEl) recEl.innerText = `${record} pts`;
         if (ranEl) ranEl.innerText = rango;
-    } catch (e) {
-        // file://, modo privado o localStorage bloqueado
-    }
+    } catch (e) {}
 }
 
 function guardarRecord(totalPuntos, rango) {
@@ -1648,7 +1678,10 @@ function iniciarJuegoTeorico(nivel) {
     sonido.click();
     appState.modo = nivel;
     const base = (nivel === 'dificil') ? PREGUNTAS_DIFICIL : PREGUNTAS_EXPERTO;
-    appState.banco = [...base].sort(() => 0.5 - Math.random());
+    
+    // AQUI SE APLICA EL BARAJADO DE PREGUNTAS Y OPCIONES
+    appState.banco = prepararBanco(base);
+    
     appState.indice = 0;
     appState.puntos = 0;
     appState.racha = 0;
@@ -1990,7 +2023,9 @@ function siguienteEstructura() {
 function iniciarDespachoEDAN() {
     sonido.click();
     appState.modo = 'despacho';
-    appState.escenariosDespacho = [...ESCENARIOS_DESPACHO].sort(() => 0.5 - Math.random());
+    // Barajamos las opciones del despacho también
+    const preparados = ESCENARIOS_DESPACHO.map(esc => barajarPregunta(esc));
+    appState.escenariosDespacho = preparados.sort(() => 0.5 - Math.random());
     appState.indiceDespacho = 0;
     appState.puntosDespacho = 0;
     appState.tiempoInicio = Date.now();
