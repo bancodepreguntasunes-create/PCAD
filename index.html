@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -25,7 +26,6 @@
             --verde-suave: rgba(16, 185, 129, 0.15);
             --rojo-alerta: #EF4444;
             --rojo-suave: rgba(239, 68, 68, 0.15);
-            --amarillo: #F59E0B;
             
             --fuente-principal: 'Inter', sans-serif;
             --fuente-mono: 'Roboto Mono', monospace;
@@ -315,7 +315,6 @@
         .opcion.incorrecta .letra { background: var(--rojo-alerta); color: #fff; border-color: var(--rojo-alerta); }
         .opcion.bloqueada { cursor: default; }
 
-        /* Estilos específicos para botones Verdadero / Falso */
         .opciones-vf {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -383,14 +382,35 @@
             border-color: var(--azul-borde); cursor: not-allowed;
         }
 
+        /* ESTILOS DE IMÁGENES REALES (CON OVERLAY INSTITUCIONAL) */
         .ilus {
             border: 1px solid var(--azul-borde); border-radius: 10px;
             overflow: hidden; background: #0d1f38;
-            margin-bottom: 20px; line-height: 0;
-            display: flex; justify-content: center; align-items: center;
+            margin-bottom: 20px; position: relative;
+            height: 240px; /* Altura fija para encuadre */
         }
         .ilus:empty { display: none; }
-        .ilus svg { width: 100%; height: auto; max-height: 280px; display: block; }
+        .ilus img {
+            width: 100%; height: 100%; object-fit: cover;
+            display: block;
+            filter: sepia(0.3) hue-rotate(190deg) saturate(1.5) brightness(0.7); /* Tinte azulado institucional */
+        }
+        .ilus::after {
+            content: ""; position: absolute; inset: 0;
+            background: linear-gradient(to top, rgba(10, 26, 48, 0.9) 0%, transparent 60%);
+            pointer-events: none;
+        }
+        .ilus-tag {
+            position: absolute; bottom: 12px; left: 16px;
+            z-index: 2; color: #fff; font-weight: 700; font-size: 0.85rem;
+            letter-spacing: 0.5px; text-transform: uppercase;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .ilus-tag::before {
+            content: ""; display: inline-block;
+            width: 8px; height: 8px; background: var(--naranja-pcad);
+            border-radius: 50%;
+        }
 
         .resultado-box {
             background: var(--azul-tarjeta);
@@ -534,6 +554,7 @@
             #despacho-screen.active > .ilus {
                 grid-column: 1; grid-row: 3 / span 6;
                 position: sticky; top: 0; align-self: start;
+                height: 350px; /* Más alto en desktop */
             }
             #despacho-screen.active > .ilus { grid-row: 2 / span 6; }
             #despacho-screen .despacho-grid { grid-template-columns: 1fr; }
@@ -557,6 +578,7 @@
             #chat-container { width: calc(100vw - 16px); right: 8px; bottom: calc(76px + env(safe-area-inset-bottom)); height: min(70dvh, 500px); }
             .action-row { position: sticky; bottom: 0; z-index: 15; padding: 12px 0 calc(12px + env(safe-area-inset-bottom)); background: linear-gradient(transparent, var(--azul-superficie) 30%); gap: 12px; }
             .action-row button { flex: 1; min-height: 48px; font-size: .85rem; }
+            .ilus { height: 180px; } /* Más bajo en móvil */
         }
     </style>
 </head>
@@ -662,6 +684,7 @@
             <div class="timer-bar" id="timer-bar"></div>
         </div>
 
+        <!-- IMAGEN REAL DE ALTA CALIDAD -->
         <div class="ilus" id="ilus-juego" aria-live="polite"></div>
 
         <div class="pregunta-container">
@@ -1180,7 +1203,6 @@ const appState = {
    UTILIDAD: BARAJAR
    ======================================================= */
 function barajarPregunta(preguntaObj) {
-    // Si es Verdadero/Falso, no barajar las opciones (siempre V=Falso en posiciones fijas)
     if (preguntaObj.esVF) return preguntaObj;
 
     const indices = preguntaObj.opciones.map((_, i) => i);
@@ -1331,7 +1353,6 @@ function cargarPregunta() {
     const cont = document.getElementById('opciones-container');
     cont.innerHTML = '';
     
-    // LÓGICA PARA VERDADERO / FALSO O MÚLTIPLE OPCIÓN
     if (p.esVF) {
         cont.className = 'opciones-vf';
         p.opciones.forEach((opc, idx) => {
@@ -1358,8 +1379,9 @@ function cargarPregunta() {
     feedback.innerHTML = '';
     document.getElementById('btn-siguiente').disabled = true;
 
-    if (typeof ponerIlustracionJuego === 'function') {
-        ponerIlustracionJuego(p.materia);
+    // LLAMADA A LA IMAGEN REAL
+    if (typeof ponerImagenJuego === 'function') {
+        ponerImagenJuego(p.materia);
     }
     iniciarTimerPregunta();
 }
@@ -1630,7 +1652,7 @@ function cargarEscenarioDespacho() {
     fb.className = 'feedback-box';
     fb.innerHTML = '';
     document.getElementById('btn-siguiente-despacho').disabled = true;
-    if (typeof ponerIlustracionDespacho === 'function') ponerIlustracionDespacho();
+    if (typeof ponerImagenDespacho === 'function') ponerImagenDespacho();
 }
 
 function seleccionarDespacho(idx, btnElem) {
@@ -1714,97 +1736,56 @@ function reiniciarModuloActual() {
 }
 
 /* =======================================================
-   MOTOR DE ILUSTRACIONES (SIN RESPUESTAS)
+   MOTOR DE IMÁGENES REALES (FOTOGRAFÍAS CON TINTE)
    ======================================================= */
 (function () {
-    const SVG = {
-        com: `<svg viewBox="0 0 500 280" xmlns="http://www.w3.org/2000/svg">
-            <rect width="500" height="280" fill="#0d1f38"/>
-            <!-- Bocinas / Medios -->
-            <rect x="150" y="100" width="60" height="80" rx="5" fill="#64748B"/>
-            <circle cx="180" cy="140" r="20" fill="#1E293B"/>
-            <path d="M230 120 Q260 140 230 160" stroke="#FF6B00" stroke-width="6" fill="none"/>
-            <path d="M250 100 Q300 140 250 180" stroke="#FF6B00" stroke-width="6" fill="none"/>
-            <!-- Micrófono -->
-            <rect x="330" y="110" width="20" height="60" rx="10" fill="#64748B"/>
-            <line x1="340" y1="170" x2="340" y2="200" stroke="#64748B" stroke-width="4"/>
-            <circle cx="340" cy="200" r="10" fill="#64748B"/>
-            <text x="250" y="250" fill="#fff" font-family="Inter,sans-serif" font-weight="700" font-size="16" text-anchor="middle">COMUNICACIÓN PÚBLICA</text>
-        </svg>`,
-        est: `<svg viewBox="0 0 500 280" xmlns="http://www.w3.org/2000/svg">
-            <rect width="500" height="280" fill="#0d1f38"/>
-            <!-- Edificio / Columna -->
-            <rect x="200" y="40" width="100" height="180" fill="#64748B" rx="4"/>
-            <rect x="190" y="30" width="120" height="20" fill="#64748B"/>
-            <rect x="190" y="220" width="120" height="20" fill="#64748B"/>
-            <line x1="200" y1="100" x2="300" y2="140" stroke="#FF6B00" stroke-width="4" stroke-dasharray="5 5"/>
-            <text x="250" y="260" fill="#fff" font-family="Inter,sans-serif" font-weight="700" font-size="16" text-anchor="middle">SEGURIDAD ESTRUCTURAL</text>
-        </svg>`,
-        sar: `<svg viewBox="0 0 500 280" xmlns="http://www.w3.org/2000/svg">
-            <rect width="500" height="280" fill="#0d1f38"/>
-            <!-- Helicóptero / Radar -->
-            <circle cx="250" cy="140" r="60" fill="none" stroke="#64748B" stroke-width="4"/>
-            <circle cx="250" cy="140" r="40" fill="none" stroke="#64748B" stroke-width="4"/>
-            <circle cx="250" cy="140" r="20" fill="#64748B"/>
-            <path d="M250 140 L310 110" stroke="#FF6B00" stroke-width="4"/>
-            <text x="250" y="250" fill="#fff" font-family="Inter,sans-serif" font-weight="700" font-size="16" text-anchor="middle">BÚSQUEDA Y RESCATE (SAR)</text>
-        </svg>`,
-        tec: `<svg viewBox="0 0 500 280" xmlns="http://www.w3.org/2000/svg">
-            <rect width="500" height="280" fill="#0d1f38"/>
-            <!-- Satélite / SIG -->
-            <rect x="220" y="100" width="60" height="60" fill="#64748B"/>
-            <rect x="150" y="110" width="60" height="40" fill="#1E293B"/>
-            <rect x="290" y="110" width="60" height="40" fill="#1E293B"/>
-            <line x1="250" y1="100" x2="250" y2="60" stroke="#64748B" stroke-width="4"/>
-            <circle cx="250" cy="60" r="10" fill="#FF6B00"/>
-            <text x="250" y="250" fill="#fff" font-family="Inter,sans-serif" font-weight="700" font-size="16" text-anchor="middle">TECNOLOGÍA Y SIG</text>
-        </svg>`,
-        ger: `<svg viewBox="0 0 500 280" xmlns="http://www.w3.org/2000/svg">
-            <rect width="500" height="280" fill="#0d1f38"/>
-            <!-- Gráfico de gerencia -->
-            <rect x="150" y="180" width="40" height="60" fill="#64748B"/>
-            <rect x="210" y="140" width="40" height="100" fill="#64748B"/>
-            <rect x="270" y="100" width="40" height="140" fill="#FF6B00"/>
-            <rect x="330" y="60" width="40" height="180" fill="#64748B"/>
-            <path d="M150 80 L250 50 L350 70 L400 30" stroke="#FF6B00" stroke-width="4" fill="none"/>
-            <text x="250" y="260" fill="#fff" font-family="Inter,sans-serif" font-weight="700" font-size="16" text-anchor="middle">GERENCIA DE PROYECTOS</text>
-        </svg>`,
-        default: `<svg viewBox="0 0 500 280" xmlns="http://www.w3.org/2000/svg">
-            <rect width="500" height="280" fill="#0d1f38"/>
-            <text x="250" y="150" fill="#FF6B00" font-family="Inter,sans-serif" font-weight="800" font-size="24" text-anchor="middle">PCAD</text>
-            <text x="250" y="190" fill="#94A3B8" font-family="Inter,sans-serif" font-weight="600" font-size="16" text-anchor="middle">EVALUACIÓN TÁCTICA</text>
-        </svg>`
+    // Banco de imágenes reales (vía Unsplash) vinculadas a la temática
+    const IMAGENES = {
+        com: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=800&auto=format&fit=crop", // Persona en laptop/comunicación
+        est: "https://images.unsplash.com/photo-1590069261209-f8e9b8642343?q=80&w=800&auto=format&fit=crop", // Ingeniería/Estructura
+        sar: "https://images.unsplash.com/photo-1521618755572-156ae0cdd74d?q=80&w=800&auto=format&fit=crop", // Rescate aéreo
+        tec: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=800&auto=format&fit=crop", // Tecnología/Satélite
+        ger: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=800&auto=format&fit=crop", // Gerencia/Gráficos
+        def: "https://images.unsplash.com/photo-1587293852726-70cdb56c2866?q=80&w=800&auto=format&fit=crop"  // Bomberos/Emergencia
     };
 
-    function ponerIlustracionJuego(materia) {
+    const CAPTIONS = {
+        com: "Entorno de Comunicación de Riesgos",
+        est: "Análisis de Infraestructura",
+        sar: "Operaciones de Búsqueda y Rescate",
+        tec: "Tecnología Geoespacial Aplicada",
+        ger: "Gestión de Proyectos y Recursos",
+        def: "Sala Situacional y Despacho"
+    };
+
+    function ponerImagenJuego(materia) {
         const el = document.getElementById('ilus-juego');
         if (!el) return;
         const m = materia.toLowerCase();
-        let k = 'default';
+        let k = 'def';
         if (m.includes('comunicaci')) k = 'com';
         else if (m.includes('estructur')) k = 'est';
         else if (m.includes('sar') || m.includes('supervivencia')) k = 'sar';
         else if (m.includes('tecnolog') || m.includes('sig')) k = 'tec';
         else if (m.includes('gerencia') || m.includes('estadistica')) k = 'ger';
         
-        el.innerHTML = SVG[k];
+        el.innerHTML = `
+            <img src="${IMAGENES[k]}" alt="${CAPTIONS[k]}" loading="lazy">
+            <div class="ilus-tag">${CAPTIONS[k]}</div>
+        `;
     }
 
-    function ponerIlustracionDespacho() {
+    function ponerImagenDespacho() {
         const el = document.getElementById('ilus-despacho');
         if (!el) return;
-        el.innerHTML = `<svg viewBox="0 0 500 280" xmlns="http://www.w3.org/2000/svg">
-            <rect width="500" height="280" fill="#0d1f38"/>
-            <rect x="150" y="80" width="200" height="120" rx="10" fill="#1E3A8A"/>
-            <circle cx="250" cy="140" r="30" fill="#FF6B00"/>
-            <path d="M250 110 Q280 110 280 140" stroke="#F8FAFC" stroke-width="4" fill="none"/>
-            <path d="M250 90 Q310 90 310 140" stroke="#F8FAFC" stroke-width="4" fill="none"/>
-            <text x="250" y="260" fill="#fff" font-family="Inter,sans-serif" font-weight="700" font-size="16" text-anchor="middle">COMUNICACIONES DE EMERGENCIA</text>
-        </svg>`;
+        el.innerHTML = `
+            <img src="https://images.unsplash.com/photo-1573164713988-8665fc963095?q=80&w=800&auto=format&fit=crop" alt="Sala de Control" loading="lazy">
+            <div class="ilus-tag">SALA DE CONTROL Y DESPACHO</div>
+        `;
     }
 
-    window.ponerIlustracionJuego = ponerIlustracionJuego;
-    window.ponerIlustracionDespacho = ponerIlustracionDespacho;
+    window.ponerImagenJuego = ponerImagenJuego;
+    window.ponerImagenDespacho = ponerImagenDespacho;
 })();
 
 /* =======================================================
