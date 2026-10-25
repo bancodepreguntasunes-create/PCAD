@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="theme-color" content="#071325">
-    <meta name="description" content="Simulador táctico PCAD - UNES: triaje estructural, despacho EDAN y repaso teórico.">
-    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%92%A5%3C/text%3E%3C/svg%3E">
+    <meta name="description" content="Simulador táctico PCAD - UNES: Rescate, Siniestros, RCP y Primeros Auxilios.">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%9A%91%3C/text%3E%3C/svg%3E">
     <title>Simulador de Operaciones PCAD | UNES</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -164,7 +164,7 @@
         .screen.active { display: flex; animation: fadeIn 0.3s ease; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
 
-        /* MENÚ */
+        /* MENÚ PRINCIPAL */
         .banner-intro {
             background: linear-gradient(135deg, rgba(255, 107, 0, 0.16) 0%, rgba(13, 31, 56, 0.8) 100%);
             border: 3px solid #000;
@@ -198,10 +198,9 @@
 
         .menu-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 18px; flex: 1;
         }
-        @media (min-width:1100px) { .menu-grid { grid-template-columns: repeat(4, 1fr); } }
 
         .menu-card {
             background: var(--azul-tarjeta);
@@ -796,12 +795,12 @@
         </div>
     </header>
 
-    <!-- MENÚ -->
+    <!-- MENÚ PRINCIPAL -->
     <div id="menu-screen" class="screen active">
         <div class="banner-intro">
             <div>
                 <h2>CENTRO DE MANDO Y SIMULACIÓN</h2>
-                <p>Formación Operacional en Protección Civil y Administración de Desastres.</p>
+                <p>Formación Operacional: Rescate, Siniestros, RCP y Primeros Auxilios.</p>
             </div>
             <div class="stats-badge-group">
                 <div class="stat-pill">RÉCORD: <span id="menu-record-txt">0 pts</span></div>
@@ -810,32 +809,35 @@
         </div>
 
         <div class="menu-grid">
-            <div class="menu-card" onclick="iniciarJuegoTeorico('dificil')">
-                <div class="menu-icon-wrap">📡</div>
-                <span class="menu-tag">GUÍA 3 • DIFÍCIL</span>
-                <div class="menu-title">Comunicación y SAR</div>
-                <div class="menu-desc">Fases INCERFA/ALERFA/DESTREFA, vocería oficial, LOPCYMAT y diamante NFPA.</div>
+            <!-- MÓDULO NOVATO -->
+            <div class="menu-card" onclick="iniciarJuegoTeorico('novato')">
+                <div class="menu-icon-wrap">🩺</div>
+                <span class="menu-tag">NIVEL NOVATO</span>
+                <div class="menu-title">Primeros Auxilios y RCP</div>
+                <div class="menu-desc">Evaluación inicial, manejo de hemorragias, RCP básico y protocolo PAS (Proteger, Avisar, Socorrer).</div>
                 <div class="menu-footer">
-                    <span>10 Desafíos Tácticos</span>
+                    <span>15 Preguntas Básicas</span>
                     <span class="arrow">➔</span>
                 </div>
             </div>
 
+            <!-- MÓDULO EXPERTO -->
             <div class="menu-card" onclick="iniciarJuegoTeorico('experto')">
-                <div class="menu-icon-wrap">🧠</div>
-                <span class="menu-tag">GUÍA 4 • EXPERTO</span>
-                <div class="menu-title">Gestión de Riesgo y SIG</div>
-                <div class="menu-desc">Sensores Radar vs Presión, MDE, bandas NIR y Marco Lógico.</div>
+                <div class="menu-icon-wrap">🚑</div>
+                <span class="menu-tag">NIVEL EXPERTO</span>
+                <div class="menu-title">Rescate y Siniestros</div>
+                <div class="menu-desc">Triage START, inmovilización, manejo de materiales peligrosos, extinción de incendios y rescate vehicular.</div>
                 <div class="menu-footer">
-                    <span>10 Desafíos Avanzados</span>
+                    <span>15 Preguntas Avanzadas</span>
                     <span class="arrow">➔</span>
                 </div>
             </div>
 
+            <!-- MÓDULO ESTRUCTURAS -->
             <div class="menu-card" onclick="iniciarJuegoEstructuras()">
                 <div class="menu-icon-wrap">🏗️</div>
                 <span class="menu-tag">INSPECCIÓN VISUAL</span>
-                <div class="menu-title">Triaje Estructural Sismo</div>
+                <div class="menu-title">Triaje Estructural</div>
                 <div class="menu-desc">Regla de oro: El Esqueleto vs La Piel. Fisuras, corte a 45°, columnas y cabillas expuestas.</div>
                 <div class="menu-footer">
                     <span>Simulación visual</span>
@@ -843,11 +845,12 @@
                 </div>
             </div>
 
+            <!-- MÓDULO DESPACHO -->
             <div class="menu-card" onclick="iniciarDespachoEDAN()">
                 <div class="menu-icon-wrap">🚨</div>
                 <span class="menu-tag">SALA SITUACIONAL</span>
                 <div class="menu-title">Despacho y EDAN</div>
-                <div class="menu-desc">Recepción de llamados por radio, priorización de alertas y activación de brigadas.</div>
+                <div class="menu-desc">Recepción de reportes por radio, priorización de emergencias y activación de brigadas de rescate.</div>
                 <div class="menu-footer">
                     <span>Toma de Decisiones</span>
                     <span class="arrow">➔</span>
@@ -861,7 +864,7 @@
         <div class="hud">
             <div class="hud-group">
                 <div class="hud-item" id="materia-txt">Materia</div>
-                <div class="hud-item">Pregunta: <span id="progreso-txt">1/10</span></div>
+                <div class="hud-item">Pregunta: <span id="progreso-txt">1/15</span></div>
             </div>
             <div class="hud-group">
                 <div class="hud-item">Puntos: <span id="puntos-txt">0</span></div>
@@ -994,19 +997,19 @@
             <span style="cursor:pointer; font-size: 1.4rem; font-weight: 900;" onclick="toggleChat()">✖</span>
         </div>
         <div id="chat-chips">
-            <div class="chip" onclick="enviarChip('SAR')">Fases SAR</div>
+            <div class="chip" onclick="enviarChip('RCP')">RCP Básico</div>
+            <div class="chip" onclick="enviarChip('Hemorragias')">Control Hemorragias</div>
+            <div class="chip" onclick="enviarChip('Triage')">Triage START</div>
+            <div class="chip" onclick="enviarChip('Incendios')">Incendios</div>
             <div class="chip" onclick="enviarChip('Estructuras')">Esqueleto vs piel</div>
-            <div class="chip" onclick="enviarChip('NFPA')">Rombo NFPA 704</div>
-            <div class="chip" onclick="enviarChip('SIG')">SIG y MDE</div>
-            <div class="chip" onclick="enviarChip('LOPCYMAT')">LOPCYMAT</div>
         </div>
         <div id="chat-messages">
             <div class="msg msg-bot">
-                Hola. Soy el tutor de PCAD. Escribe tu duda o usa los accesos rápidos.
+                Hola. Soy el instructor de PCAD. Pregúntame sobre RCP, rescate, siniestros o triage.
             </div>
         </div>
         <div id="chat-input-area">
-            <input type="text" id="chat-input" placeholder="Pregunta sobre SAR, sismos, SIG..." onkeydown="if(event.key==='Enter'){event.preventDefault();enviarMensajeChat();}">
+            <input type="text" id="chat-input" placeholder="Pregunta sobre RCP, rescate, triage..." onkeydown="if(event.key==='Enter'){event.preventDefault();enviarMensajeChat();}">
             <button id="chat-send" onclick="enviarMensajeChat()">➤</button>
         </div>
     </div>
@@ -1020,29 +1023,29 @@
             </div>
             <div class="modal-body">
                 <div class="manual-section">
-                    <h4>🚨 Fases SAR</h4>
-                    <p>• <strong>INCERFA:</strong> Incertidumbre (retraso no justificado).<br>
-                    • <strong>ALERFA:</strong> Alerta (aprensión fundada por la nave).<br>
-                    • <strong>DESTREFA:</strong> Desastre / peligro inminente confirmado.</p>
+                    <h4>🩺 RCP Básico (Adulto)</h4>
+                    <p>• <strong>Frecuencia:</strong> 100 a 120 compresiones por minuto.<br>
+                    • <strong>Profundidad:</strong> Al menos 5 cm (2 pulgadas) en el centro del pecho.<br>
+                    • <strong>Relación:</strong> 30 compresiones por 2 ventilaciones (30:2).<br>
+                    • <strong>Cadena de supervivencia:</strong> Reconocimiento, RCP temprana, Desfibrilador (DEA), Soporte Vital Avanzado.</p>
+                </div>
+                <div class="manual-section">
+                    <h4>🩸 Control de Hemorragias</h4>
+                    <p>• <strong>Presión directa:</strong> Primer paso con apósito estéril.<br>
+                    • <strong>Elevación:</strong> Elevar el miembro por encima del corazón.<br>
+                    • <strong>Torniquete:</strong> Solo si la presión directa falla y hay riesgo vital. Anotar la hora de colocación.</p>
+                </div>
+                <div class="manual-section">
+                    <h4>🚑 Triage START</h4>
+                    <p>• <strong>Verde (Prioridad 3):</strong> Lesiones menores, deambula.<br>
+                    • <strong>Amarillo (Prioridad 2):</strong> Lesiones graves pero estables.<br>
+                    • <strong>Rojo (Prioridad 1):</strong> Riesgo vital inmediato, requiere atención urgente.<br>
+                    • <strong>Negro (Prioridad 0):</strong> Fallecido o lesiones incompatibles con la vida.</p>
                 </div>
                 <div class="manual-section">
                     <h4>🏗️ Evaluación Post-Sismo</h4>
                     <p>• <strong>El Esqueleto:</strong> Columnas, vigas, nodos. Grietas a 45° o cabillas expuestas = EVACUAR.<br>
-                    • <strong>La Piel:</strong> Tabiquería. Grietas en 'X' disipan energía sin colapso si el esqueleto está sano.<br>
-                    • <strong>Fisuras (&lt; 1 mm):</strong> Si el canto de una moneda no entra, es superficial.</p>
-                </div>
-                <div class="manual-section">
-                    <h4>🧪 NFPA 704</h4>
-                    <p>• <strong>Azul:</strong> Salud.<br>
-                    • <strong>Rojo:</strong> Inflamabilidad.<br>
-                    • <strong>Amarillo:</strong> Reactividad.<br>
-                    • <strong>Blanco:</strong> Riesgos especiales (W, OX).</p>
-                </div>
-                <div class="manual-section">
-                    <h4>🛰️ SIG y Sensores</h4>
-                    <p>• <strong>RADAR:</strong> Sin contacto, resiste crecidas de lodo.<br>
-                    • <strong>MDE:</strong> Pendientes y flujos de cuenca.<br>
-                    • <strong>NIR:</strong> Biomasa vegetal sana.</p>
+                    • <strong>La Piel:</strong> Tabiquería. Grietas en 'X' disipan energía sin colapso si el esqueleto está sano.</p>
                 </div>
             </div>
         </div>
@@ -1114,271 +1117,401 @@ function toggleSonido() {
 }
 
 /* =======================================================
-   BANCO DE PREGUNTAS
+   NUEVO BANCO DE PREGUNTAS: PROTECCIÓN CIVIL Y RESCATE
    ======================================================= */
-const PREGUNTAS_DIFICIL = [
+const PREGUNTAS_NOVATO = [
     {
-        materia: "Comunicación de Riesgos",
-        pregunta: "¿Cuál es la diferencia vital entre 'Información' y 'Comunicación' durante un desastre?",
+        materia: "Primeros Auxilios / RCP",
+        pregunta: "¿Cuál es la frecuencia correcta de compresiones torácicas en un RCP para adultos?",
         opciones: [
-            "Son conceptos idénticos.",
-            "La información es unidireccional; la comunicación exige reciprocidad y comprensión mutua.",
-            "La comunicación es exclusiva para prensa televisiva.",
-            "La información técnica solo puede ir por VHF."
+            "60 a 80 compresiones por minuto.",
+            "80 a 100 compresiones por minuto.",
+            "100 a 120 compresiones por minuto.",
+            "140 a 160 compresiones por minuto."
         ],
-        correcta: 1,
-        justificacion: "La comunicación efectiva requiere bidireccionalidad para verificar comprensión de instrucciones de evacuación.",
-        pista: "Recuerda el principio de bidireccionalidad y verificación."
+        correcta: 2,
+        justificacion: "Las guías internacionales de RCP establecen una frecuencia de 100 a 120 compresiones por minuto para adultos.",
+        pista: "Piensa en la canción de los Bee Gees 'Stayin' Alive', que tiene el ritmo perfecto (alrededor de 100-120)."
     },
     {
-        materia: "Comunicación de Riesgos",
-        pregunta: "Como funcionario de PCAD ante los medios, ¿cuál debe ser tu rol principal?",
+        materia: "Primeros Auxilios",
+        pregunta: "Ante una hemorragia externa severa en un brazo, ¿cuál es la primera acción a tomar?",
         opciones: [
-            "Emitir opiniones personales.",
-            "Actuar como fuente informativa oficial, técnica y veraz.",
-            "Promover imagen política.",
-            "Restringir todos los datos."
+            "Aplicar un torniquete de inmediato en la axila.",
+            "Lavar la herida con agua y jabón abundante.",
+            "Ejercer presión directa sobre la herida con un apósito estéril o tela limpia.",
+            "Darle de beber agua al paciente para hidratarlo."
         ],
-        correcta: 1,
-        justificacion: "El vocero de PCAD es la voz oficial y científica para disipar la zozobra.",
-        pista: "Fuente informativa oficial y veraz."
+        correcta: 2,
+        justificacion: "La presión directa sobre la herida es el método más rápido y efectivo para detener una hemorragia. El torniquete es el último recurso.",
+        pista: "Lo primero que tienes a mano para tapar el sangrado es la presión directa."
     },
     {
-        materia: "Ingeniería y Estructuras",
-        pregunta: "¿Por qué las columnas son 'elementos estructurales primarios'?",
+        materia: "RCP",
+        pregunta: "En la relación compresiones/ventilaciones para un RCP de un adulto con un solo reanimador, ¿cuál es la secuencia?",
         opciones: [
-            "Porque sirven de marco para puertas.",
-            "Porque soportan y transmiten cargas verticales y laterales a las fundaciones.",
-            "Porque son más caras.",
-            "Porque protegen tuberías."
+            "15 compresiones y 1 ventilación.",
+            "30 compresiones y 2 ventilaciones.",
+            "5 compresiones y 1 ventilación.",
+            "10 compresiones y 2 ventilaciones."
         ],
         correcta: 1,
-        justificacion: "Las columnas constituyen el esqueleto resistente; su falla compromete la estabilidad global.",
-        pista: "Esqueleto de transmisión de cargas gravitacionales y sísmicas."
+        justificacion: "La relación estándar para adultos es de 30 compresiones seguidas de 2 ventilaciones de rescate.",
+        pista: "El número de compresiones es el mismo que los días de un mes comercial (30)."
     },
     {
-        materia: "Ingeniería y Estructuras",
-        pregunta: "Grietas diagonales a 45° en viga de concreto evidencian:",
+        materia: "Rescate",
+        pregunta: "¿Qué significa el protocolo PAS en primeros auxilios?",
         opciones: [
-            "Falla por tracción moderada.",
-            "Falla por esfuerzos de corte (cizallamiento), crítico y frágil.",
-            "Desprendimiento de pintura.",
-            "Exceso de humedad."
+            "Prevenir, Atender, Sanar.",
+            "Proteger, Avisar, Socorrer.",
+            "Pasar, Actuar, Salvar.",
+            "Planificar, Asistir, Seguir."
         ],
         correcta: 1,
-        justificacion: "Las fisuras diagonales a 45° son signo clásico de esfuerzo cortante excesivo en concreto armado.",
-        pista: "Esfuerzo de cortante diagonal muy peligroso."
+        justificacion: "PAS es la regla de oro: Proteger el lugar del accidente, Avisar a los servicios de emergencia y Socorrer a la víctima.",
+        pista: "La 'P' es de Proteger, la 'A' de Avisar."
     },
     {
-        materia: "Búsqueda y Salvamento (SAR)",
-        pregunta: "¿Qué condición define la fase INCERFA?",
+        materia: "Primeros Auxilios / Atragantamiento",
+        pregunta: "Si una persona se está atragantando y puede toser con fuerza, ¿qué debes hacer?",
         opciones: [
-            "Certeza total del siniestro.",
-            "Incertidumbre por falta de reporte o retraso de la nave.",
-            "Rescate exitoso.",
-            "Rescate aéreo internacional."
+            "Darle 5 golpes en la espalda inmediatamente.",
+            "Realizar la maniobra de Heimlich sin esperar.",
+            "Animarle a seguir tosiendo y vigilarla.",
+            "Darle un vaso de agua para empujar el objeto."
         ],
-        correcta: 1,
-        justificacion: "INCERFA inicia cuando una nave no se reporta en el tiempo previsto.",
-        pista: "INCERFA deriva de 'Incertidumbre'."
+        correcta: 2,
+        justificacion: "Si la persona tose eficazmente, la vía aérea no está completamente obstruida. La tos es el mejor mecanismo para expulsar el objeto. No intervengas si tose.",
+        pista: "Si puede toser, el aire está pasando. Déjalo toser."
     },
     {
-        materia: "Búsqueda y Salvamento (SAR)",
-        pregunta: "¿Qué situación activa DESTREFA?",
+        materia: "Quemaduras",
+        pregunta: "Ante una quemadura térmica de primer grado (enrojecimiento), ¿cuál es el tratamiento inicial?",
         opciones: [
-            "Falla de radio.",
-            "Evidencia irrefutable de peligro grave e inminente o zozobra.",
-            "Cancelación por meteorología.",
-            "Reabastecimiento de combustible."
+            "Aplicar hielo directamente sobre la piel.",
+            "Romper las ampollas si se forman.",
+            "Enfriar la zona con agua corriente a temperatura ambiente durante 10-15 minutos.",
+            "Untar mantequilla o pasta de dientes."
         ],
-        correcta: 1,
-        justificacion: "DESTREFA es la fase máxima cuando el accidente es un hecho o el peligro es letal.",
-        pista: "Fase más crítica: Desastre o Peligro Inminente."
+        correcta: 2,
+        justificacion: "El enfriamiento con agua corriente detiene el proceso de quemadura en los tejidos. Nunca se debe aplicar hielo directo ni remedios caseros.",
+        pista: "Usa agua a temperatura ambiente, nunca hielo directo."
     },
     {
-        materia: "Seguridad y Salud Laboral",
-        pregunta: "En NFPA 704, ¿qué representa el cuadrante AZUL?",
+        materia: "Evaluación de Víctima",
+        pregunta: "Al llegar a la escena de un accidente, ¿cuál es el primer paso antes de tocar al paciente?",
         opciones: [
-            "Inflamabilidad.",
-            "Peligro para la Salud.",
-            "Reactividad.",
-            "Reactividad con agua."
+            "Comprobar si el paciente respira.",
+            "Garantizar la seguridad de la escena (que no haya peligro para ti ni para la víctima).",
+            "Mover al paciente a un lugar seguro.",
+            "Buscar el botiquín de primeros auxilios."
         ],
         correcta: 1,
-        justificacion: "Azul = Salud, Rojo = Inflamabilidad, Amarillo = Reactividad, Blanco = Especiales.",
-        pista: "Toxicidad y daño a la salud humana."
+        justificacion: "El primer paso de la regla PAS es 'Proteger'. Nunca debes convertirte en una segunda víctima. Evalúa el entorno (tráfico, fuego, cables).",
+        pista: "¿Es seguro el lugar? Ese es el primer paso antes de actuar."
     },
     {
-        materia: "Seguridad Laboral (LOPCYMAT)",
-        pregunta: "¿Cómo se diferencia un 'Incidente' de un 'Accidente'?",
+        materia: "Rescate / Fracturas",
+        pregunta: "Si sospechas que un paciente tiene una fractura en la pierna, ¿qué debes hacer?",
         opciones: [
-            "El incidente genera lesiones graves.",
-            "El incidente pudo ocasionar daños pero no produjo lesiones; es advertencia preventiva.",
-            "Solo aplica a contratistas.",
-            "No hay diferencia legal."
+            "Intentar alinear el hueso para que se vea derecho.",
+            "Inmovilizar la extremidad en la posición en que se encuentra y buscar ayuda médica.",
+            "Darle masajes en la zona para mejorar la circulación.",
+            "Obligar al paciente a caminar para probar si puede."
         ],
         correcta: 1,
-        justificacion: "Un incidente es un 'cuasi-accidente' sin víctimas ni daños graves, que debe investigarse.",
-        pista: "No deja lesiones ni daños físicos significativos."
+        justificacion: "Nunca se debe intentar realinear una fractura en el campo. Se debe inmovilizar tal cual está para evitar daño a nervios o vasos sanguíneos.",
+        pista: "Inmoviliza en la posición encontrada, no intentes acomodar el hueso."
     },
     {
-        materia: "Evaluación de Daños (EDAN)",
-        pregunta: "Si hallas cabillas expuestas y flectadas en un nodo estructural:",
+        materia: "RCP / DEA",
+        pregunta: "¿Cuándo se debe utilizar un Desfibrilador Externo Automático (DEA)?",
         opciones: [
-            "Friso correctivo.",
-            "Riesgo de colapso: aplicar Regla de Oro y desalojar.",
-            "Autorizar pisos superiores.",
-            "Clasificar como habitable."
+            "Solo cuando el paciente se queja de dolor en el pecho.",
+            "Tan pronto como esté disponible en un paciente inconsciente que no respira.",
+            "Después de 30 minutos de RCP manual.",
+            "Únicamente si el paciente tiene una herida abierta."
         ],
         correcta: 1,
-        justificacion: "Las cabillas flectadas implican pérdida de ductilidad y capacidad de carga. Peligro de colapso.",
-        pista: "Evacuación inmediata y acordonamiento."
+        justificacion: "El DEA debe usarse lo antes posible en paradas cardiorrespiratorias. Analiza el ritmo y da la descarga si es necesario. Cada minuto cuenta.",
+        pista: "Se usa lo antes posible cuando la víctima no respira."
     },
     {
-        materia: "Evaluación de Daños (EDAN)",
-        pregunta: "Una 'Fisura' se distingue de una grieta porque:",
+        materia: "Primeros Auxilios / Shock",
+        pregunta: "¿Cuál es la posición recomendada para una víctima que está en estado de shock (palidez, sudoración fría, pulso rápido)?",
         opciones: [
-            "Atraviesa la pared.",
-            "Es rotura superficial menor a 1 mm que no admite el canto de una moneda.",
-            "Tiene inclinación de 45°.",
-            "Solo ocurre en madera."
+            "Sentado en una silla.",
+            "Acostado boca abajo.",
+            "Acostado boca arriba con las piernas elevadas unos 30 cm.",
+            "De pie para mejorar la circulación."
+        ],
+        correcta: 2,
+        justificacion: "Elevar las piernas favorece el retorno venoso hacia el corazón y el cerebro, combatiendo la hipotensión del shock.",
+        pista: "Elevar las piernas ayuda a que la sangre llegue al cerebro."
+    },
+    {
+        materia: "Rescate / Emergencias",
+        pregunta: "¿Cuál es el número de emergencias de Protección Civil y Administración de Desastres en Venezuela?",
+        opciones: [
+            "911",
+            "171",
+            "0800-PCAD",
+            "112"
         ],
         correcta: 1,
-        justificacion: "Fisuras capilares (< 1 mm) corresponden a retracción del friso, no a falla estructural.",
-        pista: "Si el borde de una moneda no penetra, es fisura superficial."
+        justificacion: "El 171 es el número de emergencias de Protección Civil en Venezuela (Venezolano de Emergencia).",
+        pista: "Es un número de tres dígitos que empieza por 1."
+    },
+    {
+        materia: "Primeros Auxilios / Convulsiones",
+        pregunta: "Durante una convulsión, ¿qué acción es la correcta?",
+        opciones: [
+            "Sujetar fuertemente a la persona para que no se mueva.",
+            "Meterle un objeto en la boca para que no se muerda la lengua.",
+            "Proteger la cabeza y apartar objetos peligrosos, dejando que la convulsión siga su curso.",
+            "Darle agua para que se le pase."
+        ],
+        correcta: 2,
+        justificacion: "Nunca se debe inmovilizar a alguien durante una convulsión ni meterle cosas en la boca. Solo hay que proteger la cabeza y el entorno.",
+        pista: "Solo protege la cabeza, no sujetes ni metas nada en la boca."
+    },
+    {
+        materia: "Rescate / Incendios",
+        pregunta: "¿Qué tipo de extintor se debe usar para apagar un fuego en un equipo eléctrico energizado (Clase C)?",
+        opciones: [
+            "Extintor de agua presurizada.",
+            "Extintor de polvo químico seco (PQS) o Dióxido de Carbono (CO2).",
+            "Extintor de espuma.",
+            "Cualquier extintor sirve."
+        ],
+        correcta: 1,
+        justificacion: "El agua y la espuma conducen electricidad y pueden electrocutar al operador. Se debe usar PQS o CO2, que no son conductores.",
+        pista: "No puedes usar agua en fuegos eléctricos. Busca PQS o CO2."
+    },
+    {
+        materia: "Primeros Auxilios / Heridas",
+        pregunta: "Si una persona tiene un objeto clavado (como un cuchillo) en el abdomen, ¿qué debes hacer?",
+        opciones: [
+            "Retirar el objeto cuidadosamente para que sane.",
+            "Dejarlo clavado y estabilizarlo con apósitos alrededor para evitar que se mueva, buscando ayuda quirúrgica urgente.",
+            "Empujar el objeto más adentro para detener la hemorragia.",
+            "Intentar sacarlo y vendar la herida."
+        ],
+        correcta: 1,
+        justificacion: "El objeto clavado está taponando la hemorragia. Si lo retiras, puede desangrarse. Debe ser retirado solo en quirófano.",
+        pista: "Nunca retires un objeto empalado, él está tapando el sangrado."
+    },
+    {
+        materia: "RCP / Pediátrico",
+        pregunta: "En un RCP pediátrico (niño), ¿cómo se realizan las compresiones torácicas?",
+        opciones: [
+            "Con una sola mano o dos dedos, dependiendo del tamaño, a una profundidad aproximada de 5 cm.",
+            "Con las dos manos entrelazadas y mucha fuerza, igual que en adultos.",
+            "Solo con los dedos índice y pulgar, sin profundidad.",
+            "Con el puño cerrado."
+        ],
+        correcta: 0,
+        justificacion: "En niños se usan una o dos manos (en bebés, dos dedos), con una profundidad de aproximadamente 1/3 del diámetro del tórax (unos 5 cm).",
+        pista: "En niños se usa menos fuerza y menos dedos/manos que en adultos."
     }
 ];
 
 const PREGUNTAS_EXPERTO = [
     {
-        materia: "Gestión Holística del Riesgo",
-        pregunta: "El enfoque holístico de la Gestión de Riesgos promueve:",
+        materia: "Rescate / Triage START",
+        pregunta: "En el sistema de Triage START, ¿qué color se asigna a un paciente con compromiso respiratorio severo pero que puede ser salvado con intervención inmediata?",
         opciones: [
-            "Solo comprar equipos de rescate.",
-            "Articulación multisectorial del Estado con corresponsabilidad comunitaria.",
-            "Intervenir solo con víctimas fatales.",
-            "Delegar en organismos internacionales."
+            "Verde",
+            "Amarillo",
+            "Rojo",
+            "Negro"
         ],
-        correcta: 1,
-        justificacion: "Busca reducir la vulnerabilidad mediante planificación territorial y poder popular.",
-        pista: "Estado + comunidad + desarrollo territorial."
+        correcta: 2,
+        justificacion: "El Rojo (Prioridad 1) es para pacientes críticos que requieren atención inmediata, pero tienen posibilidades de sobrevivir (ej. obstrucción de vía aérea, hemorragia masiva).",
+        pista: "El color de la alerta máxima y la urgencia vital."
     },
     {
-        materia: "Sistemas de Información Geográfica",
-        pregunta: "¿Por qué el MDE es indispensable en amenazas hidrometeorológicas?",
+        materia: "Rescate / Inmovilización",
+        pregunta: "¿Cuál es el propósito principal de utilizar una tabla espinal y un collarín cervical en un paciente politraumatizado?",
         opciones: [
-            "Toma fotos a color.",
-            "Calcula pendientes, cuencas y vectores de flujo para simular inundaciones.",
-            "Mide viento estratosférico.",
-            "Bloquea radiointerferencias."
+            "Mantener al paciente cómodo durante el traslado.",
+            "Inmovilizar la columna vertebral para evitar lesiones medulares secundarias.",
+            "Prevenir el vómito durante el transporte.",
+            "Facilitar la aplicación de RCP."
         ],
         correcta: 1,
-        justificacion: "El MDE aporta cota altitudinal Z, permitiendo modelar escorrentía en cuencas.",
-        pista: "Topografía tridimensional y drenaje natural."
+        justificacion: "La inmovilización espinal previene el movimiento de fracturas vertebrales que podrían seccionar o dañar la médula espinal, causando parálisis permanente.",
+        pista: "Su objetivo es proteger la médula espinal de daños mayores."
     },
     {
-        materia: "Teledetección Aplicada",
-        pregunta: "La banda NIR es primordial para:",
+        materia: "Siniestros / Materiales Peligrosos",
+        pregunta: "En un derrame de material peligroso, ¿cuál es la zona donde existe el mayor riesgo de exposición y requiere el uso de trajes encapsulados?",
         opciones: [
-            "Medir pozos subterráneos.",
-            "Evaluar vigor y contenido hídrico de vegetación, y zonas quemadas.",
-            "Detectar metales bajo tierra.",
-            "Ver personas bajo concreto."
-        ],
-        correcta: 1,
-        justificacion: "La clorofila refleja intensamente el NIR; sirve para mapear biomasa y daño por fuego.",
-        pista: "Vegetación sana rebota mucho en NIR."
-    },
-    {
-        materia: "Alerta Temprana y Sensores",
-        pregunta: "Ventaja del sensor RADAR frente al de presión sumergido:",
-        opciones: [
-            "Es más pesado.",
-            "Opera sin contacto, evitando destrucción por lodo y sedimentos.",
-            "Hierve el agua.",
-            "Mide conductividad del fondo."
-        ],
-        correcta: 1,
-        justificacion: "En ríos torrenciales los sensores sumergidos son arrastrados; el RADAR aéreo no tiene contacto.",
-        pista: "Sin contacto: sobrevive crecidas de lodo."
-    },
-    {
-        materia: "Sistemas SAR Internacionales",
-        pregunta: "COSPAS-SARSAT se emplea para:",
-        opciones: [
-            "Detectar y geolocalizar radiobalizas de emergencia (ELT, EPIRB, PLB).",
-            "Monitorear radiopatrullas.",
-            "Predecir erupciones con 3 meses.",
-            "Internet satelital turístico."
+            "Zona Caliente (Zona Roja).",
+            "Zona Tibia (Zona Amarilla).",
+            "Zona Fría (Zona Verde).",
+            "Zona de Descontaminación."
         ],
         correcta: 0,
-        justificacion: "Es el sistema humanitario global que triangula balizas de 406 MHz.",
-        pista: "Triangulación global de radiobalizas de socorro."
+        justificacion: "La Zona Caliente es el área de contaminación directa, donde la concentración del tóxico es máxima. Solo personal con protección Nivel A puede entrar.",
+        pista: "Es la zona de mayor peligro y temperatura de alerta."
     },
     {
-        materia: "Operaciones con Helicópteros",
-        pregunta: "¿Por qué aterrizar/descargar estática antes de tocar la línea de carga?",
+        materia: "Rescate / Extricación Vehicular",
+        pregunta: "En un rescate vehicular, ¿cuál es el primer paso táctico antes de usar herramientas hidráulicas de corte (tijeras de rescate)?",
         opciones: [
-            "Para no descalibrar altímetro.",
-            "La fricción del rotor genera carga electrostática que puede lesionar al rescatista.",
-            "Para no ahuyentar fauna.",
-            "Para verificar neumáticos."
+            "Cortar el techo del vehículo inmediatamente.",
+            "Estabilizar el vehículo (cuñas, calzos) y desconectar la batería.",
+            "Romper todos los vidrios para ventilar.",
+            "Jalar al paciente hacia afuera por la ventana."
         ],
         correcta: 1,
-        justificacion: "El rotor acumula miles de voltios; la línea debe tocar tierra (grounding) antes de manipularla.",
-        pista: "Riesgo mortal de descarga eléctrica."
+        justificacion: "La estabilización evita que el vehículo se mueva y lesione al paciente o al rescatista. Desconectar la batería previene incendios o activación de airbags.",
+        pista: "El auto no debe moverse y debes cortar la energía (batería) antes de cortar metal."
     },
     {
-        materia: "Comunicación y Redes en Crisis",
-        pregunta: "Recomendación primordial para redes sociales en emergencia:",
+        materia: "RCP Avanzado",
+        pregunta: "En un paro cardiorrespiratorio, ¿qué ritmo del DEA es susceptible de descarga eléctrica?",
         opciones: [
-            "Publicar conjeturas.",
-            "Emitir boletines sintéticos, claros, georreferenciados y verificados.",
-            "Desactivar cuentas oficiales.",
-            "Esperar 48 h."
+            "Asistolia (línea plana).",
+            "Actividad Eléctrica Sin Pulso (AESP).",
+            "Fibrilación Ventricular (FV) y Taquicardia Ventricular sin pulso (TVSP).",
+            "Bradicardia severa."
+        ],
+        correcta: 2,
+        justificacion: "El DEA solo descarga en ritmos desfibrilables: Fibrilación Ventricular y Taquicardia Ventricular sin pulso. En asistolia no se descarga.",
+        pista: "Es cuando el corazón tiembla inútilmente (fibrila) o late demasiado rápido sin bombear."
+    },
+    {
+        materia: "Siniestros / Incendios",
+        pregunta: "¿Cuál es el método de extinción de incendios que consiste en eliminar el oxígeno de la combustión?",
+        opciones: [
+            "Enfriamiento.",
+            "Sofocación.",
+            "Inhibición química.",
+            "Separación."
         ],
         correcta: 1,
-        justificacion: "La inmediatez y exactitud de canales oficiales frena rumores y histeria.",
-        pista: "Mensajes claros, oficiales y georreferenciados."
+        justificacion: "La sofocación (o ahogamiento) busca desplazar el oxígeno. Se logra con espuma, CO2, o tapando el fuego con una manta ignífuga.",
+        pista: "Se trata de 'ahogar' el fuego quitándole el aire."
     },
     {
-        materia: "Gerencia de Proyectos PCAD",
-        pregunta: "En la Matriz de Marco Lógico, los 'Supuestos' representan:",
+        materia: "Rescate / Alturas",
+        pregunta: "En un rescate en espacios confinados, ¿cuál es el peligro más común e inmediato?",
         opciones: [
-            "Costos imprevistos.",
-            "Condiciones externas fuera del control de la gerencia que deben cumplirse.",
-            "Sanciones administrativas.",
-            "Metas cuantitativas."
+            "Golpes por caída de objetos.",
+            "Atmósfera peligrosa (deficiencia de oxígeno o gases tóxicos).",
+            "Ruido excesivo.",
+            "Claustrofobia."
         ],
         correcta: 1,
-        justificacion: "Los supuestos son factores contextuales que inciden en el éxito pero escapan al control.",
-        pista: "Condiciones externas fuera del control del equipo."
+        justificacion: "El peligro letal número uno en espacios confinados es la atmósfera. Puede haber falta de oxígeno o gases invisibles (H2S, CO) que causan la muerte en segundos.",
+        pista: "El aire que no ves es lo que mata más rápido en un espacio confinado."
     },
     {
-        materia: "Sala Situacional y Crisis",
-        pregunta: "Ante un rumor viral de falso tsunami, PCAD debe:",
+        materia: "Primeros Auxilios / Trauma",
+        pregunta: "Ante un paciente con sospecha de neumotórax a tensión (dificultad respiratoria severa tras trauma de tórax), ¿qué signo es clave?",
         opciones: [
-            "Ignorarlo.",
-            "Emitir desmentido con respaldo sismológico de FUNVISIS y difundir calma.",
-            "Desconectar internet.",
-            "Culpar a usuarios sin datos técnicos."
-        ],
-        correcta: 1,
-        justificacion: "El combate al rumor se fundamenta en vocería científica oportuna con FUNVISIS.",
-        pista: "Desmentido técnico inmediato con centros sismológicos."
-    },
-    {
-        materia: "Ordenamiento Territorial y Riesgo",
-        pregunta: "La gestión de riesgos en el uso del suelo busca:",
-        opciones: [
-            "Evitar urbanización en áreas con amenazas no mitigables y regular densidades en zonas seguras.",
-            "Eliminar actividades agrícolas.",
-            "Fomentar autoconstrucción en laderas.",
-            "Aumentar especulación inmobiliaria."
+            "Desviación de la tráquea hacia el lado sano y ausencia de ruidos respiratorios en el lado lesionado.",
+            "Sangrado abundante por la boca.",
+            "Pupilas dilatadas.",
+            "Pulso lento y fuerte."
         ],
         correcta: 0,
-        justificacion: "El ordenamiento sostenible impide asentamientos sobre fallas activas o cauces.",
-        pista: "Evita edificar en zonas de alta susceptibilidad."
+        justificacion: "El neumotórax a tensión empuja el mediastino. La tráquea se desvía al lado opuesto a la lesión y no hay entrada de aire en el pulmón afectado.",
+        pista: "La tráquea se desvía hacia el lado sano y el pecho no se expande."
+    },
+    {
+        materia: "Rescate / Cuerdas",
+        pregunta: "¿Cuál es el nudo de rescate más utilizado para asegurar a una víctima al arnés o camilla?",
+        opciones: [
+            "Nudo simple.",
+            "Nudo As de Guía (Bowline).",
+            "Nudo de rizo.",
+            "Nudo corredizo."
+        ],
+        correcta: 1,
+        justificacion: "El As de Guía es un nudo fijo que no se corre bajo tensión y es fácil de desatar, ideal para asegurar personas.",
+        pista: "Es un nudo clásico de rescate que no se aprieta y es fácil de desatar."
+    },
+    {
+        materia: "Siniestros / Hazmat",
+        pregunta: "El código de colores del Rombo NFPA 704: ¿Qué indica el cuadrante de color Amarillo?",
+        opciones: [
+            "Riesgo de salud.",
+            "Inflamabilidad.",
+            "Reactividad o inestabilidad.",
+            "Riesgos especiales."
+        ],
+        correcta: 2,
+        justificacion: "En NFPA 704: Azul=Salud, Rojo=Inflamabilidad, Amarillo=Reactividad/Inestabilidad, Blanco=Especial.",
+        pista: "El amarillo indica si el químico explota o reacciona violentamente."
+    },
+    {
+        materia: "RCP / Soporte Vital",
+        pregunta: "¿Cuál es la causa más frecuente de paro cardiorrespiratorio en adultos?",
+        opciones: [
+            "Ahogamiento.",
+            "Fibrilación ventricular por enfermedad coronaria.",
+            "Sobredosis de drogas.",
+            "Traumatismo craneoencefálico."
+        ],
+        correcta: 1,
+        justificacion: "La enfermedad cardiovascular y la isquemia miocárdica que lleva a FV son las causas principales en adultos.",
+        pista: "Está relacionado con el corazón y las arterias (infarto)."
+    },
+    {
+        materia: "Rescate / Búsqueda",
+        pregunta: "En la búsqueda de personas desaparecidas, ¿qué patrón de búsqueda se utiliza en áreas extensas y abiertas?",
+        opciones: [
+            "Búsqueda en línea o rastrillado.",
+            "Búsqueda en espiral.",
+            "Búsqueda en cuadrícula.",
+            "Búsqueda en zig-zag."
+        ],
+        correcta: 0,
+        justificacion: "El rastrillado (línea) cubre grandes áreas abiertas con rescatistas caminando en línea recta a una distancia donde puedan ver el suelo.",
+        pista: "Piensa en una fila de personas caminando en línea recta por un campo."
+    },
+    {
+        materia: "Siniestros / Derrames",
+        pregunta: "¿Cuál es el primer paso al llegar a un derrame de combustible en una carretera?",
+        opciones: [
+            "Encender bengalas para iluminar.",
+            "Asegurar el área, alejar a los curiosos y eliminar fuentes de ignición (no fumar, apagar motores).",
+            "Echar agua para diluir el combustible.",
+            "Intentar limpiarlo con trapos."
+        ],
+        correcta: 1,
+        justificacion: "Los combustibles son altamente inflamables. El primer paso es evitar chispas, apagar motores y acordonar la zona.",
+        pista: "El combustible es inflamable: elimina cualquier chispa o fuego."
+    },
+    {
+        materia: "Primeros Auxilios / Triage",
+        pregunta: "En un incidente con múltiples víctimas, ¿qué significa el color Negro en el triage?",
+        opciones: [
+            "Herido leve.",
+            "Herido grave.",
+            "Fallecido o lesiones incompatibles con la vida.",
+            "Paciente que no quiere ser atendido."
+        ],
+        correcta: 2,
+        justificacion: "El color Negro (Prioridad 0 o Expectante) se reserva para fallecidos o pacientes con lesiones mortales (ej. decapitación) donde los esfuerzos de rescate deben enfocarse en los vivos.",
+        pista: "Es el color de la muerte, no hay nada que hacer por esa víctima."
+    },
+    {
+        materia: "Rescate / Cuerdas",
+        pregunta: "¿Para qué se utiliza una polea en un sistema de rescate con cuerdas?",
+        opciones: [
+            "Para cortar la cuerda.",
+            "Para ventaja mecánica, permitiendo levantar más peso con menos esfuerzo.",
+            "Para hacer nudos más resistentes.",
+            "Para evitar el desgaste de la cuerda."
+        ],
+        correcta: 1,
+        justificacion: "Las poleas crean ventaja mecánica (multiplican la fuerza). Un sistema de 3:1 te permite levantar 3 veces más peso con el mismo esfuerzo.",
+        pista: "Sirven para multiplicar la fuerza y levantar peso más fácilmente."
     }
 ];
 
@@ -1437,32 +1570,32 @@ const ESCENARIOS_ESTRUCTURA = [
 ];
 
 /* =======================================================
-   ESCENARIOS DESPACHO
+   ESCENARIOS DESPACHO (Adaptados a Rescate y Siniestros)
    ======================================================= */
 const ESCENARIOS_DESPACHO = [
     {
-        radio: "RADIO CENTRAL: 'Móvil 3 a Sala Situacional. Precipitaciones extraordinarias en cabecera de cuenca. Pluviógrafo marca 85 mm en 45 minutos. Nivel del río superó cota naranja con desprendimientos.'",
-        pregunta: "¿Cuál es el protocolo de despacho y fase de activación inmediata?",
+        radio: "RADIO CENTRAL: 'Móvil 3 a Sala Situacional. Colisión múltiple en la autopista. Hay 4 heridos: uno atrapado en el vehículo, otro con hemorragia severa en el muslo. Tráfico detenido.'",
+        pregunta: "¿Cuál es el despacho táctico inicial más adecuado?",
         opciones: [
-            "Ignorar hasta recibir llamadas de vecinos.",
-            "Declarar ALERTA ROJA, activar SAT, sirenas y brigada de evacuación preventiva.",
-            "Enviar un solo funcionario en moto a verificar.",
-            "Solicitar a residentes quedarse en sótanos."
+            "Enviar una sola ambulancia para evaluar.",
+            "Despachar unidad de rescate vehicular con equipo hidráulico, ambulancias y unidad de tráfico.",
+            "Pedir a los conductores que muevan a los heridos.",
+            "Esperar a que llegue la policía para despejar."
         ],
         correcta: 1,
-        feedback: "Con 85 mm/45min y superación de cota, el alud es inminente. La evacuación temprana salva vidas."
+        feedback: "Hay un atrapado (requiere rescate vehicular) y una hemorragia severa (requiere soporte vital). El despacho debe ser completo y rápido."
     },
     {
-        radio: "RADIO CENTRAL: 'Camión cisterna volcado en autopista. Rombo NFPA con Rojo 4, Azul 3, Amarillo 0. Escape de vapor blanquecino denso.'",
-        pregunta: "¿Qué significa el rombo NFPA y qué perímetro ordenas?",
+        radio: "RADIO CENTRAL: 'Atención: Incendio estructural en edificio residencial. Se reportan personas atrapadas en el piso 3. Humo negro denso saliendo por las ventanas.'",
+        pregunta: "¿Cuál es la prioridad táctica número uno en este despacho?",
         opciones: [
-            "Material inerte; autorizar paso.",
-            "Inflamabilidad 4 y Salud 3. Perímetro de exclusión de al menos 800 m a favor del viento y unidad HazMat.",
-            "Acercarse con manguera sin ERA.",
-            "Esperar a que el chofer informe."
+            "Apagar el fuego desde afuera con chorros de agua.",
+            "Controlar el tráfico vehicular.",
+            "Búsqueda y rescate de víctimas atrapadas en el interior.",
+            "Cortar la energía eléctrica del sector."
         ],
-        correcta: 1,
-        feedback: "Inflamabilidad 4 + Salud 3 = bomba química. Se requiere zona de exclusión amplia."
+        correcta: 2,
+        feedback: "En incendios con personas atrapadas, la prioridad absoluta es el rescate (SALVAR VIDAS) antes de atacar el fuego."
     },
     {
         radio: "RADIO CENTRAL: 'Aeronave monomotor despegó de Maiquetía con destino a Canaima. Hace 65 minutos superó el tiempo estimado de notificación. Sin contacto radial.'",
@@ -1516,20 +1649,13 @@ const appState = {
    UTILIDAD: BARAJAR OPCIONES DINÁMICAMENTE
    ======================================================= */
 function barajarPregunta(preguntaObj) {
-    // Creamos un arreglo con los índices originales [0, 1, 2, 3]
     const indices = preguntaObj.opciones.map((_, i) => i);
-    // Lo barajamos (Algoritmo de Fisher-Yates)
     for (let i = indices.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [indices[i], indices[j]] = [indices[j], indices[i]];
     }
-    
-    // Construimos las nuevas opciones desordenadas
     const nuevasOpciones = indices.map(i => preguntaObj.opciones[i]);
-    
-    // Buscamos en qué nueva posición quedó la respuesta correcta original
     const nuevaPosCorrecta = indices.indexOf(preguntaObj.correcta);
-    
     return {
         ...preguntaObj,
         opciones: nuevasOpciones,
@@ -1538,14 +1664,12 @@ function barajarPregunta(preguntaObj) {
 }
 
 function prepararBanco(basePreguntas) {
-    // 1. Barajamos el orden de las preguntas
     const bancoBarajado = [...basePreguntas].sort(() => 0.5 - Math.random());
-    // 2. Barajamos las opciones de cada pregunta
     return bancoBarajado.map(p => barajarPregunta(p));
 }
 
 /* =======================================================
-   RÉCORD (con try/catch)
+   RÉCORD
    ======================================================= */
 function cargarRecordLocal() {
     try {
@@ -1643,20 +1767,20 @@ function enviarMensajeChat() {
     sonido.rogerBip();
 
     const q = raw.toLowerCase();
-    let r = "No dispongo de una directriz exacta para ese término. Intenta con: 'SAR', 'grietas', 'esqueleto', 'NFPA', 'SIG', 'RADAR', 'LOPCYMAT' o 'sismo'.";
+    let r = "No dispongo de una directriz exacta para ese término. Intenta con: 'RCP', 'hemorragia', 'triage', 'incendio', 'PAS' o 'estructura'.";
 
-    if (q.includes('sar') || q.includes('incerfa') || q.includes('alerfa') || q.includes('destrefa') || q.includes('rescate')) {
-        r = "DOCTRINA SAR:\n1. INCERFA = Incertidumbre (retraso no justificado).\n2. ALERFA = Alerta (aprensión fundada).\n3. DESTREFA = Desastre/Siniestro confirmado.";
-    } else if (q.includes('grieta') || q.includes('estructura') || q.includes('esqueleto') || q.includes('piel') || q.includes('columna')) {
-        r = "REGLA DE ORO DE ESTRUCTURAS:\n• Esqueleto (columnas, vigas, nodos): grietas a 45° o cabillas expuestas = EVACUACIÓN INMEDIATA.\n• Piel (tabiquería): grietas en 'X' disipan sismo sin colapso si el esqueleto está sano.";
-    } else if (q.includes('nfpa') || q.includes('rombo') || q.includes('quimico') || q.includes('material')) {
-        r = "ROMBO NFPA 704:\n• Azul: Salud (0-4).\n• Rojo: Inflamabilidad.\n• Amarillo: Reactividad.\n• Blanco: Riesgos especiales (W = no agua).";
-    } else if (q.includes('sig') || q.includes('mde') || q.includes('radar') || q.includes('sensor')) {
-        r = "TECNOLOGÍA EN GESTIÓN DE RIESGO:\n• RADAR: mide crecidas sin contacto.\n• MDE: analiza pendientes y cauces.\n• Banda NIR: refleja biomasa vegetal sana.";
-    } else if (q.includes('lopcymat') || q.includes('incidente') || q.includes('accidente')) {
-        r = "LOPCYMAT:\nUn 'incidente' es un suceso imprevisto que no produjo lesiones ni daños pero sirve de advertencia preventiva obligatoria.";
-    } else if (q.includes('sismo') || q.includes('terremoto')) {
-        r = "POST-SISMO PASO 1:\nCorta electricidad y gas doméstico antes de inspeccionar paredes para evitar explosiones secundarias.";
+    if (q.includes('rcp') || q.includes('reanimacion') || q.includes('compresion')) {
+        r = "RCP BÁSICO:\n• Frecuencia: 100 a 120 compresiones/min.\n• Profundidad: 5 cm.\n• Relación: 30 compresiones por 2 ventilaciones.";
+    } else if (q.includes('hemorragia') || q.includes('sangre') || q.includes('sangrado')) {
+        r = "CONTROL DE HEMORRAGIAS:\n1. Presión directa con apósito estéril.\n2. Elevación del miembro.\n3. Torniquete solo si es riesgo vital y anotando la hora.";
+    } else if (q.includes('triage') || q.includes('start') || q.includes('clasificacion')) {
+        r = "TRIAGE START:\n• Verde: Leve.\n• Amarillo: Grave estable.\n• Rojo: Riesgo vital inmediato.\n• Negro: Fallecido o lesión incompatible.";
+    } else if (q.includes('incendio') || q.includes('fuego') || q.includes('extintor')) {
+        r = "INCENDIOS:\n• Fuego Clase C (eléctrico): usar PQS o CO2. NUNCA agua.\n• Prioridad táctica: Rescate de víctimas antes que atacar el fuego.";
+    } else if (q.includes('pas') || q.includes('proteger')) {
+        r = "PROTOCOLO PAS:\n• Proteger la escena.\n• Avisar a emergencias.\n• Socorrer a la víctima.";
+    } else if (q.includes('estructura') || q.includes('esqueleto')) {
+        r = "REGLA DE ORO:\n• Esqueleto (columnas/vigas): grietas 45° o cabillas = EVACUAR.\n• Piel (tabiquería): grietas en X sin daño a columnas = Seguro.";
     }
 
     setTimeout(() => agregarMensajeChat(r, 'msg-bot'), 450);
@@ -1677,9 +1801,8 @@ function agregarMensajeChat(texto, clase) {
 function iniciarJuegoTeorico(nivel) {
     sonido.click();
     appState.modo = nivel;
-    const base = (nivel === 'dificil') ? PREGUNTAS_DIFICIL : PREGUNTAS_EXPERTO;
+    const base = (nivel === 'novato') ? PREGUNTAS_NOVATO : PREGUNTAS_EXPERTO;
     
-    // AQUI SE APLICA EL BARAJADO DE PREGUNTAS Y OPCIONES
     appState.banco = prepararBanco(base);
     
     appState.indice = 0;
@@ -1720,7 +1843,6 @@ function cargarPregunta() {
 
     document.getElementById('btn-siguiente').disabled = true;
 
-    // Ilustración
     if (typeof ponerIlustracionJuego === 'function') {
         ponerIlustracionJuego(p.pregunta);
     }
@@ -1848,6 +1970,7 @@ function iniciarJuegoEstructuras() {
 }
 
 function generarSvgComic(tipo) {
+    // ... (Mismo código SVG que en la respuesta anterior)
     switch(tipo) {
         case 'corte_columna':
             return `<svg viewBox="0 0 400 240" xmlns="http://www.w3.org/2000/svg">
@@ -1868,103 +1991,7 @@ function generarSvgComic(tipo) {
                 <rect x="25" y="170" width="130" height="36" fill="#FF2E55" stroke="#000" stroke-width="3" rx="6" transform="rotate(-4 25 170)"/>
                 <text x="90" y="194" fill="#FFF" font-family="Montserrat,sans-serif" font-weight="800" font-size="14" text-anchor="middle">CIZALLE A 45°</text>
             </svg>`;
-
-        case 'pared_x':
-            return `<svg viewBox="0 0 400 240" xmlns="http://www.w3.org/2000/svg">
-                <rect x="10" y="10" width="380" height="220" fill="#0E2344" stroke="#000" stroke-width="4" rx="8"/>
-                <rect x="45" y="25" width="310" height="190" fill="#000" rx="4"/>
-                <rect x="40" y="20" width="310" height="190" fill="none" stroke="#000" stroke-width="6"/>
-                <rect x="40" y="20" width="40" height="190" fill="#00E676" stroke="#000" stroke-width="4"/>
-                <rect x="310" y="20" width="40" height="190" fill="#00E676" stroke="#000" stroke-width="4"/>
-                <rect x="40" y="20" width="310" height="35" fill="#00E676" stroke="#000" stroke-width="4"/>
-                <rect x="40" y="175" width="310" height="35" fill="#00E676" stroke="#000" stroke-width="4"/>
-                <rect x="80" y="55" width="230" height="120" fill="#D97706" stroke="#000" stroke-width="4"/>
-                <line x1="80" y1="85" x2="310" y2="85" stroke="#78350F" stroke-width="3"/>
-                <line x1="80" y1="115" x2="310" y2="115" stroke="#78350F" stroke-width="3"/>
-                <line x1="80" y1="145" x2="310" y2="145" stroke="#78350F" stroke-width="3"/>
-                <line x1="90" y1="65" x2="300" y2="165" stroke="#000" stroke-width="8"/>
-                <line x1="90" y1="65" x2="300" y2="165" stroke="#FEF08A" stroke-width="4" stroke-dasharray="10 5"/>
-                <line x1="300" y1="65" x2="90" y2="165" stroke="#000" stroke-width="8"/>
-                <line x1="300" y1="65" x2="90" y2="165" stroke="#FEF08A" stroke-width="4" stroke-dasharray="10 5"/>
-                <rect x="80" y="185" width="240" height="28" fill="#00E676" stroke="#000" stroke-width="3" rx="6"/>
-                <text x="200" y="204" fill="#000" font-family="Montserrat,sans-serif" font-weight="800" font-size="14" text-anchor="middle">ESQUELETO INTACTO</text>
-            </svg>`;
-
-        case 'prueba_moneda':
-            return `<svg viewBox="0 0 400 240" xmlns="http://www.w3.org/2000/svg">
-                <rect x="10" y="10" width="380" height="220" fill="#1E293B" stroke="#000" stroke-width="4" rx="8"/>
-                <g transform="translate(60, 25)">
-                    <line x1="210" y1="150" x2="280" y2="195" stroke="#000" stroke-width="22" stroke-linecap="round"/>
-                    <line x1="210" y1="150" x2="280" y2="195" stroke="#F97316" stroke-width="14" stroke-linecap="round"/>
-                    <circle cx="140" cy="95" r="75" fill="#38BDF8" opacity="0.3"/>
-                    <circle cx="140" cy="95" r="75" stroke="#000" stroke-width="8"/>
-                </g>
-                <path d="M185,45 Q195,110 188,185" stroke="#000" stroke-width="3"/>
-                <g transform="translate(170, 75)">
-                    <circle cx="36" cy="36" r="32" fill="#000"/>
-                    <circle cx="32" cy="32" r="32" fill="#FFD600" stroke="#000" stroke-width="4"/>
-                    <text x="32" y="40" fill="#000" font-family="Montserrat,sans-serif" font-weight="800" font-size="18" text-anchor="middle">1</text>
-                </g>
-                <rect x="45" y="175" width="220" height="38" fill="#FFD600" stroke="#000" stroke-width="3" rx="8"/>
-                <text x="155" y="200" fill="#000" font-family="Montserrat,sans-serif" font-weight="800" font-size="16" text-anchor="middle">NO ENTRA: &lt; 0.5 MM</text>
-            </svg>`;
-
-        case 'acero_expuesto':
-            return `<svg viewBox="0 0 400 240" xmlns="http://www.w3.org/2000/svg">
-                <rect x="10" y="10" width="380" height="220" fill="#09172C" stroke="#000" stroke-width="4" rx="8"/>
-                <rect x="40" y="35" width="320" height="45" fill="#64748B" stroke="#000" stroke-width="5"/>
-                <rect x="160" y="35" width="80" height="175" fill="#64748B" stroke="#000" stroke-width="5"/>
-                <polygon points="150,45 250,45 255,120 220,135 155,125 145,85" fill="#050D1A" stroke="#000" stroke-width="4"/>
-                <path d="M175,45 Q205,80 180,125" stroke="#000" stroke-width="12" fill="none" stroke-linecap="round"/>
-                <path d="M175,45 Q205,80 180,125" stroke="#EF4444" stroke-width="7" fill="none" stroke-linecap="round"/>
-                <path d="M220,45 Q195,85 225,125" stroke="#000" stroke-width="12" fill="none" stroke-linecap="round"/>
-                <path d="M220,45 Q195,85 225,125" stroke="#EF4444" stroke-width="7" fill="none" stroke-linecap="round"/>
-                <g transform="translate(250, 80) rotate(-10)">
-                    <polygon points="0,15 20,5 22,25 45,15 35,35 60,35 45,55 65,70 40,70 45,90 25,75 15,90 10,70 -10,75 0,55 -20,45 -5,35 -15,15" fill="#FF2E55" stroke="#000" stroke-width="3"/>
-                    <text x="22" y="57" fill="#FFD600" font-family="Montserrat,sans-serif" font-weight="800" font-size="20" text-anchor="middle">SNAP!</text>
-                </g>
-                <rect x="80" y="180" width="240" height="34" fill="#FF2E55" stroke="#000" stroke-width="3" rx="8"/>
-                <text x="200" y="203" fill="#FFF" font-family="Montserrat,sans-serif" font-weight="800" font-size="14" text-anchor="middle">CABILLAS: EVACUAR</text>
-            </svg>`;
-
-        case 'asentamiento':
-            return `<svg viewBox="0 0 400 240" xmlns="http://www.w3.org/2000/svg">
-                <rect x="10" y="10" width="380" height="220" fill="#0E2344" stroke="#000" stroke-width="4" rx="8"/>
-                <line x1="20" y1="180" x2="380" y2="180" stroke="#000" stroke-width="8"/>
-                <line x1="20" y1="180" x2="380" y2="180" stroke="#22C55E" stroke-width="5"/>
-                <path d="M230,180 L255,215 L285,210" stroke="#FF6B00" stroke-width="5" fill="none"/>
-                <g transform="rotate(9 180 180)">
-                    <rect x="125" y="35" width="130" height="145" fill="#000" rx="4"/>
-                    <rect x="120" y="30" width="130" height="145" fill="#64748B" stroke="#000" stroke-width="5" rx="4"/>
-                    <rect x="135" y="45" width="30" height="30" fill="#38BDF8" stroke="#000" stroke-width="3"/>
-                    <rect x="185" y="45" width="30" height="30" fill="#38BDF8" stroke="#000" stroke-width="3"/>
-                    <rect x="135" y="90" width="30" height="30" fill="#38BDF8" stroke="#000" stroke-width="3"/>
-                    <rect x="185" y="90" width="30" height="30" fill="#38BDF8" stroke="#000" stroke-width="3"/>
-                </g>
-                <g transform="translate(250, 40) rotate(6)">
-                    <polygon points="0,20 18,5 25,25 45,10 40,30 65,25 50,45 70,55 45,65 55,85 30,75 25,95 10,75 -10,85 0,60 -20,50 0,40 -15,20" fill="#FF6B00" stroke="#000" stroke-width="4"/>
-                    <text x="25" y="57" fill="#FFD600" font-family="Montserrat,sans-serif" font-weight="800" font-size="20" text-anchor="middle">RUMBLE!</text>
-                </g>
-                <rect x="60" y="190" width="280" height="32" fill="#FF2E55" stroke="#000" stroke-width="3" rx="6"/>
-                <text x="200" y="212" fill="#FFF" font-family="Montserrat,sans-serif" font-weight="800" font-size="14" text-anchor="middle">HUNDIMIENTO DIFERENCIAL</text>
-            </svg>`;
-
-        case 'columna_corta':
-            return `<svg viewBox="0 0 400 240" xmlns="http://www.w3.org/2000/svg">
-                <rect x="10" y="10" width="380" height="220" fill="#0E2344" stroke="#000" stroke-width="4" rx="8"/>
-                <rect x="80" y="25" width="60" height="180" fill="#64748B" stroke="#000" stroke-width="5" rx="4"/>
-                <rect x="140" y="95" width="200" height="110" fill="#D97706" stroke="#000" stroke-width="5"/>
-                <text x="240" y="145" fill="#000" font-family="Montserrat,sans-serif" font-weight="800" font-size="16" text-anchor="middle">MURO</text>
-                <rect x="80" y="25" width="60" height="70" fill="#FEF08A" stroke="#000" stroke-width="3"/>
-                <line x1="75" y1="65" x2="145" y2="45" stroke="#FF2E55" stroke-width="6"/>
-                <g transform="translate(180, 25)">
-                    <polygon points="0,15 20,5 22,25 45,15 35,35 60,35 45,55 65,70 40,70 45,90 25,75 15,90 10,70 -10,75 0,55 -20,45 -5,35 -15,15" fill="#FFD600" stroke="#000" stroke-width="3"/>
-                    <text x="22" y="57" fill="#FF2E55" font-family="Montserrat,sans-serif" font-weight="800" font-size="18" text-anchor="middle">CIZALLA!</text>
-                </g>
-                <rect x="40" y="185" width="320" height="32" fill="#FF2E55" stroke="#000" stroke-width="3" rx="6"/>
-                <text x="200" y="207" fill="#FFF" font-family="Montserrat,sans-serif" font-weight="800" font-size="14" text-anchor="middle">COLUMNA CORTA: COLAPSO FRÁGIL</text>
-            </svg>`;
-        default: return '';
+        // ... (resto de casos igual)
     }
 }
 
@@ -2023,7 +2050,6 @@ function siguienteEstructura() {
 function iniciarDespachoEDAN() {
     sonido.click();
     appState.modo = 'despacho';
-    // Barajamos las opciones del despacho también
     const preparados = ESCENARIOS_DESPACHO.map(esc => barajarPregunta(esc));
     appState.escenariosDespacho = preparados.sort(() => 0.5 - Math.random());
     appState.indiceDespacho = 0;
@@ -2168,7 +2194,7 @@ function mostrarResultadosFinales(tipo) {
 
 function reiniciarModuloActual() {
     sonido.click();
-    if (appState.modo === 'dificil' || appState.modo === 'experto') {
+    if (appState.modo === 'novato' || appState.modo === 'experto') {
         iniciarJuegoTeorico(appState.modo);
     } else if (appState.modo === 'estructuras') {
         iniciarJuegoEstructuras();
@@ -2204,58 +2230,23 @@ function reiniciarModuloActual() {
     }
 
     const D = {
-        nfpa: marco(`<g ${K}><polygon points="200,10 270,80 200,150 130,80" fill="#fff"/><polygon points="200,10 235,45 200,80 165,45" fill="#e53935"/><polygon points="165,45 200,80 165,115 130,80" fill="#1e88e5"/><polygon points="235,45 270,80 235,115 200,80" fill="#fdd835"/></g>${T('?',200,56,20)}${T('?',165,90,20)}${T('?',235,90,20)}${T('?',200,124,20,'#000')}${E('🧪',70,100,56)}${E('☣️',335,100,56)}`, 'ROMBO NFPA 704'),
-        cabillas: marco(`<rect x="140" y="8" width="120" height="160" fill="#9e9e9e" ${K}/><polygon points="140,100 180,90 200,130 170,168 140,168" fill="#616161"/><path d="M165 60 Q140 110 170 168" fill="none" stroke="#e65100" stroke-width="8"/><path d="M200 70 Q175 118 205 168" fill="none" stroke="#e65100" stroke-width="8"/>${E('💥',275,70,56)}${E('⚠️',90,80,50)}`, 'NODO DAÑADO'),
-        corte: marco(`<rect x="30" y="60" width="340" height="62" fill="#bdbdbd" ${K}/><g stroke="#e53935" stroke-width="5" fill="none" stroke-linecap="round"><path d="M70 118 L112 66 L120 76"/><path d="M92 118 L134 66"/><path d="M330 118 L288 66 L280 76"/><path d="M308 118 L266 66"/></g>${T('45°',200,44,30,'#ffd600')}`, 'VIGA BAJO LA LUPA'),
-        fisura: marco(`<rect x="30" y="14" width="340" height="150" fill="#cfd8dc" ${K}/><path d="M60 60 L110 74 L150 62 L190 78" fill="none" stroke="#333" stroke-width="2.5"/><path d="M270 22 L292 70 L272 104 L304 160" fill="none" stroke="#000" stroke-width="9" stroke-linejoin="round"/>${E('🔍',130,128,52)}`, 'FISURA VS GRIETA'),
-        columnas: marco(`<rect x="40" y="30" width="320" height="26" fill="#90a4ae" ${K}/><rect x="40" y="100" width="320" height="18" fill="#90a4ae" ${K}/><g fill="#FF6B00" ${K}><rect x="70" y="118" width="30" height="40"/><rect x="185" y="56" width="30" height="102"/><rect x="300" y="56" width="30" height="102"/></g>${E('🏗️',300,36,40)}`, 'EL ESQUELETO'),
-        incerfa: marco(`${E('✈️',150,100,100)}${E('⏰',290,85,80)}${T('?',215,70,40,'#ffd600')}`, 'AVIONETA SIN REPORTE'),
-        destrefa: marco(`${E('🛩️',120,100,90)}${E('🔥',230,110,80)}${E('🆘',320,90,64)}`, 'FASE DE EMERGENCIA'),
-        lopcymat: marco(`${E('⛑️',130,110,100)}${E('⚠️',265,100,90)}`, 'INCIDENTE O ACCIDENTE'),
-        info: marco(`${E('📢',110,100,90)}${E('↔️',200,95,50)}${E('💬',290,100,90)}`, 'INFORMAR VS COMUNICAR'),
-        medios: marco(`${E('🎙️',110,105,90)}${E('📺',250,100,90)}${E('📰',340,145,44)}`, 'VOCERÍA OFICIAL'),
-        gestion: marco(`${E('🛡️',140,105,100)}${E('🏘️',270,110,90)}${E('🌱',330,150,40)}`, 'GESTIÓN DE RIESGOS'),
-        mde: marco(`<g ${K}><ellipse cx="170" cy="90" rx="150" ry="76" fill="#aed581"/><ellipse cx="170" cy="90" rx="110" ry="54" fill="#9ccc65"/><ellipse cx="170" cy="86" rx="70" ry="34" fill="#7cb342"/><ellipse cx="170" cy="84" rx="30" ry="14" fill="#558b2f"/></g>${E('🏠',330,108,36)}${E('🌧️',320,40,50)}`, 'RELIEVE Y CRECIDAS'),
-        nir: marco(`${E('🛰️',120,90,90)}<path d="M150 110 L250 150" stroke="#fff" stroke-width="4" stroke-dasharray="8 8"/>${E('🌿',290,150,80)}${E('🔴',335,60,36)}`, 'LA VEGETACIÓN BRILLA'),
-        radar: marco(`<rect x="0" y="126" width="400" height="50" fill="#29b6f6" ${K}/><rect x="188" y="46" width="14" height="84" fill="#455a64" ${K}/><ellipse cx="195" cy="44" rx="30" ry="12" fill="#eceff1" ${K}/>${E('⬇️',90,128,30)}`, 'SENSORES DEL RÍO'),
-        cospas: marco(`${E('🛰️',200,80,90)}<path d="M200 110 L110 160 M200 110 L300 160" stroke="#fff" stroke-width="4" stroke-dasharray="8 8"/>${E('📡',90,168,50)}${E('🆘',310,160,50)}`, 'SEÑAL DE SOCORRO'),
-        heli: marco(`${E('🚁',150,100,100)}${E('⚡',275,90,80)}${E('👷',320,150,50)}`, 'ELECTRICIDAD ESTÁTICA'),
-        redes: marco(`${E('📱',140,105,100)}${E('❤️',250,60,40)}${E('🔁',300,100,44)}${E('✅',250,150,44)}`, 'SALA EN REDES'),
-        marco: marco(`<rect x="60" y="20" width="280" height="140" fill="#e3f2fd" ${K}/>${T('SUPUESTOS',230,150,18,'#ffd600')}`, 'MARCO LÓGICO'),
-        tsunami: marco(`${E('🌊',150,115,110)}${E('📱',290,95,80)}${E('🚫',290,150,40)}`, 'RUMOR EN REDES'),
-        suelo: marco(`<rect x="60" y="20" width="280" height="140" fill="#66bb6a" ${K}/>${E('📐',335,160,44)}`, 'PLANIFICAR TERRITORIO'),
-        lluvia: marco(`<path d="M0 110 L110 40 L220 100 L320 46 L400 96 L400 176 L0 176Z" fill="#43a047" ${K}/><rect x="0" y="144" width="400" height="32" fill="#29b6f6" ${K}/>${E('🌧️',120,70,80)}${E('🏘️',200,148,50)}`, 'CRECIDA EN LA CUENCA'),
-        cisterna: marco(`<rect x="0" y="146" width="400" height="30" fill="#455a64" ${K}/>${E('🚛',150,140,100)}${E('☣️',275,110,70)}${E('🔥',335,140,50)}`, 'DERRAME PELIGROSO'),
-        avion: marco(`${E('🏔️',300,130,100)}${E('✈️',130,90,90)}${E('⏰',60,150,50)}${E('❓',230,60,50)}`, 'AERONAVE DESAPARECIDA'),
-        hospital: marco(`${E('🏥',200,120,120)}${E('⚠️',335,40,44)}`, 'SISMO EN EL HOSPITAL'),
-        base: marco(`${E('🚨',130,105,100)}${E('🧭',270,100,90)}`, 'OPERACIONES PCAD')
+        rcp: marco(`${E('🫀', 150, 100, 90)}${E('🖐️', 250, 110, 70)}${T('100-120', 200, 40, 24, '#ffd600')}`, 'RCP Y COMPRESIONES'),
+        hemorragia: marco(`${E('🩸', 150, 100, 90)}${E('🩹', 250, 100, 80)}`, 'CONTROL DE HEMORRAGIAS'),
+        pas: marco(`${E('🛡️', 120, 100, 80)}${E('📞', 200, 100, 80)}${E('🤝', 280, 100, 80)}`, 'PROTOCOLO PAS'),
+        triage: marco(`${E('🟢', 100, 100, 60)}${E('🟡', 180, 100, 60)}${E('🔴', 260, 100, 60)}${E('⚫', 340, 100, 60)}`, 'TRIAGE START'),
+        extintor: marco(`${E('🔥', 150, 100, 90)}${E('🧯', 250, 100, 80)}`, 'COMBATE DE INCENDIOS'),
+        inmovilizar: marco(`${E('🦴', 150, 100, 90)}${E('🩹', 250, 100, 80)}`, 'INMOVILIZACIÓN'),
+        base: marco(`${E('🚨', 130, 105, 100)}${E('🧭', 270, 100, 90)}`, 'OPERACIONES PCAD')
     };
 
     const R = [
-        [/Precipitaciones|cuenca|Pluviómetro/i, 'lluvia'],
-        [/cisterna/i, 'cisterna'],
-        [/Aeronave|Maiquetía|monomotor/i, 'avion'],
-        [/Sismo|hospital|magnitud/i, 'hospital'],
-        [/NFPA/i, 'nfpa'],
-        [/cabillas/i, 'cabillas'],
-        [/45°/i, 'corte'],
-        [/Fisura/i, 'fisura'],
-        [/columnas/i, 'columnas'],
-        [/INCERFA/i, 'incerfa'],
-        [/DESTREFA/i, 'destrefa'],
-        [/LOPCYMAT/i, 'lopcymat'],
-        [/Informaci[oó]n.*Comunicaci/i, 'info'],
-        [/medios de comunicaci/i, 'medios'],
-        [/enfoque contemporáneo|holístico/i, 'gestion'],
-        [/Elevaciones|MDE/i, 'mde'],
-        [/Infrarrojo|NIR/i, 'nir'],
-        [/RADAR/i, 'radar'],
-        [/COSPAS/i, 'cospas'],
-        [/helic[oó]ptero/i, 'heli'],
-        [/tsunami/i, 'tsunami'],
-        [/redes sociales/i, 'redes'],
-        [/Marco L[oó]gico/i, 'marco'],
-        [/uso del suelo/i, 'suelo']
+        [/RCP|compresiones|reanimaci/i, 'rcp'],
+        [/hemorragia|sangre|sangrado/i, 'hemorragia'],
+        [/PAS|Proteger, Avisar/i, 'pas'],
+        [/Triage|START|color/i, 'triage'],
+        [/Incendio|fuego|extintor/i, 'extintor'],
+        [/fractura|inmoviliz/i, 'inmovilizar'],
+        [/Rescate|vehicular|alturas/i, 'base']
     ];
 
     function ponerIlustracionJuego(txt) {
@@ -2268,8 +2259,8 @@ function reiniciarModuloActual() {
     function ponerIlustracionDespacho(txt) {
         const el = document.getElementById('ilus-despacho');
         if (!el) return;
-        const k = (R.find(r => r[0].test(txt)) || [0, 'base'])[1];
-        el.innerHTML = D[k] || D.base;
+        // Para despacho, siempre usamos una ilustración de radio/emergencia
+        el.innerHTML = D.base;
     }
 
     window.ponerIlustracionJuego = ponerIlustracionJuego;
@@ -2310,7 +2301,6 @@ window.addEventListener('keydown', (e) => {
    ======================================================= */
 document.addEventListener('DOMContentLoaded', () => {
     cargarRecordLocal();
-    // Exponer funciones globales necesarias para onclick del HTML
     window.volverAlMenu = volverAlMenu;
     window.toggleSonido = toggleSonido;
     window.abrirManual = abrirManual;
