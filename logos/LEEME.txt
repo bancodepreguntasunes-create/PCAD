@@ -1,0 +1,4 @@
+Coloca aquí los logos institucionales oficiales de Protección Civil (PNG con fondo transparente o blanco):
+  proteccion-civil-1.png
+  proteccion-civil-2.png
+Si falta alguno, simplemente no se muestra. Para agregar más logos, duplica una línea <img class="logo-inst"> en index.html.
