@@ -3,154 +3,144 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <meta name="theme-color" content="#071325">
+    <meta name="theme-color" content="#0a1a30">
     <meta name="description" content="Simulador táctico PCAD - UNES: Rescate, Siniestros, RCP y Primeros Auxilios.">
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%9A%91%3C/text%3E%3C/svg%3E">
     <title>Simulador de Operaciones PCAD | UNES</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Montserrat:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Roboto+Mono:wght@500;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --azul-pcad: #071325;
-            --azul-superficie: #0d1f38;
-            --azul-tarjeta: #132a4d;
-            --azul-borde: #1e3f6f;
+            /* Paleta Institucional: Azul Oscuro y Naranja */
+            --azul-profundo: #0a1a30;
+            --azul-superficie: #102542;
+            --azul-tarjeta: #163255;
+            --azul-borde: #23456d;
             --naranja-pcad: #FF6B00;
-            --naranja-hover: #FF8533;
-            --blanco: #F0F6FC;
-            --texto-suave: #9BB0C7;
-            --verde: #00E676;
-            --verde-suave: rgba(0, 230, 118, 0.15);
-            --rojo: #FF2E55;
-            --rojo-suave: rgba(255, 46, 85, 0.15);
-            --amarillo: #FFD600;
-            --comic-font: 'Bangers', cursive, sans-serif;
-            --fuente-mono: 'JetBrains Mono', monospace;
+            --naranja-hover: #E65C00;
+            --naranja-suave: rgba(255, 107, 0, 0.15);
+            --blanco: #F8FAFC;
+            --texto-suave: #94A3B8;
+            --verde-exito: #10B981;
+            --verde-suave: rgba(16, 185, 129, 0.15);
+            --rojo-alerta: #EF4444;
+            --rojo-suave: rgba(239, 68, 68, 0.15);
+            --amarillo: #F59E0B;
+            
+            --fuente-principal: 'Inter', sans-serif;
+            --fuente-mono: 'Roboto Mono', monospace;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Montserrat', sans-serif;
+            font-family: var(--fuente-principal);
             -webkit-tap-highlight-color: transparent;
         }
 
         body {
-            background-color: var(--azul-pcad);
+            background-color: var(--azul-profundo);
             color: var(--blanco);
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            background-image:
-                radial-gradient(circle at 50% 10%, rgba(255, 107, 0, 0.1) 0%, transparent 60%),
-                radial-gradient(circle at 10% 90%, rgba(13, 31, 56, 0.8) 0%, transparent 50%),
-                linear-gradient(180deg, #050d1a 0%, #071325 100%);
-            padding: 12px;
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(255, 107, 0, 0.05) 0%, transparent 50%),
+                linear-gradient(180deg, #071325 0%, #0a1a30 100%);
+            padding: 16px;
             overflow-x: hidden;
         }
 
         #app {
             width: 100%;
-            max-width: 1240px;
-            min-height: 92vh;
+            max-width: 1100px;
+            min-height: 90vh;
             max-height: 96vh;
-            background: rgba(13, 31, 56, 0.92);
-            backdrop-filter: blur(14px);
-            border: 3px solid #000;
-            box-shadow: 8px 8px 0px var(--naranja-pcad), 14px 14px 0px rgba(0,0,0,0.6);
-            border-radius: 20px;
+            background: var(--azul-superficie);
+            border: 1px solid var(--azul-borde);
+            border-radius: 12px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.05);
             display: flex;
             flex-direction: column;
             position: relative;
             overflow: hidden;
-            z-index: 1;
         }
 
-        /* HEADER */
+        /* HEADER PROFESIONAL */
         header {
-            background: linear-gradient(90deg, #09172c 0%, #0f2444 50%, #09172c 100%);
-            padding: 12px 24px;
-            border-bottom: 4px solid #000;
+            background: #0d1f38;
+            padding: 14px 24px;
+            border-bottom: 1px solid var(--azul-borde);
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 15px;
+            gap: 20px;
             z-index: 10;
         }
         .logo-area {
             display: flex;
             align-items: center;
-            gap: 14px;
+            gap: 16px;
             cursor: pointer;
         }
         .logos-inst {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
             flex-shrink: 0;
         }
         .logo-inst {
-            height: 46px;
+            height: 40px;
             width: auto;
-            max-width: 90px;
+            max-width: 80px;
             object-fit: contain;
             background: #fff;
-            border-radius: 8px;
-            padding: 3px;
+            border-radius: 6px;
+            padding: 4px;
         }
         .header-titulos h1 {
-            font-family: var(--comic-font);
-            font-size: 1.5rem;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            line-height: 1;
-            color: #fff;
-            text-shadow: 2px 2px 0px #000, 3px 3px 0px var(--naranja-pcad);
-        }
-        .header-titulos h1 span { color: var(--amarillo); }
-        .header-sub {
-            font-size: 0.72rem;
-            font-weight: 700;
-            color: var(--texto-suave);
+            font-size: 1.3rem;
+            font-weight: 800;
             letter-spacing: 0.5px;
+            text-transform: uppercase;
+            color: #fff;
+            line-height: 1.1;
+        }
+        .header-titulos h1 span { color: var(--naranja-pcad); }
+        .header-sub {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--texto-suave);
+            letter-spacing: 0.3px;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
             margin-top: 2px;
         }
         .status-dot {
             width: 8px; height: 8px; border-radius: 50%;
-            background: var(--verde); border: 1px solid #000;
-            box-shadow: 0 0 10px var(--verde); display: inline-block;
-            animation: pulseDot 1.8s infinite;
+            background: var(--verde-exito); border: none;
+            box-shadow: 0 0 8px var(--verde-exito); display: inline-block;
         }
-        @keyframes pulseDot {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.4; transform: scale(0.85); }
-        }
-        .header-actions { display: flex; align-items: center; gap: 10px; }
+        
+        .header-actions { display: flex; align-items: center; gap: 12px; }
         .btn-icon {
             background: var(--azul-tarjeta);
-            border: 2px solid #000;
-            box-shadow: 2px 2px 0px #000;
+            border: 1px solid var(--azul-borde);
             color: var(--blanco);
-            width: 40px; height: 40px;
-            border-radius: 10px;
+            width: 38px; height: 38px;
+            border-radius: 8px;
             display: flex; align-items: center; justify-content: center;
-            cursor: pointer; font-size: 1.15rem;
-            transition: all 0.2s;
+            cursor: pointer; font-size: 1.1rem;
+            transition: all 0.2s ease;
         }
         .btn-icon:hover {
-            transform: translate(-2px, -2px);
-            box-shadow: 4px 4px 0px var(--naranja-pcad);
-            color: var(--naranja-pcad);
-        }
-        .btn-icon:active {
-            transform: translate(1px, 1px);
-            box-shadow: 1px 1px 0px #000;
+            background: var(--naranja-pcad);
+            border-color: var(--naranja-pcad);
+            color: #fff;
         }
 
         /* PANTALLAS */
@@ -162,546 +152,424 @@
             overflow-y: auto;
         }
         .screen.active { display: flex; animation: fadeIn 0.3s ease; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
         /* MENÚ PRINCIPAL */
         .banner-intro {
-            background: linear-gradient(135deg, rgba(255, 107, 0, 0.16) 0%, rgba(13, 31, 56, 0.8) 100%);
-            border: 3px solid #000;
-            box-shadow: 4px 4px 0px #000;
-            border-radius: 14px;
+            background: linear-gradient(90deg, rgba(255, 107, 0, 0.1) 0%, rgba(16, 50, 85, 0) 100%);
+            border-left: 4px solid var(--naranja-pcad);
             padding: 16px 20px;
-            margin-bottom: 20px;
+            margin-bottom: 24px;
+            border-radius: 4px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 12px;
+            gap: 16px;
         }
         .banner-intro h2 {
-            font-family: var(--comic-font);
-            font-size: 1.8rem;
-            letter-spacing: 1px;
+            font-size: 1.4rem;
+            font-weight: 700;
             color: #fff;
-            text-shadow: 2px 2px 0px #000;
+            letter-spacing: 0.5px;
         }
-        .banner-intro p { color: var(--texto-suave); font-size: 0.85rem; margin-top: 2px; font-weight: 500; }
-        .stats-badge-group { display: flex; gap: 10px; }
+        .banner-intro p { color: var(--texto-suave); font-size: 0.9rem; margin-top: 4px; }
+        .stats-badge-group { display: flex; gap: 12px; }
         .stat-pill {
-            background: #09172c; border: 2px solid #000;
-            box-shadow: 2px 2px 0px var(--naranja-pcad);
-            padding: 6px 14px; border-radius: 20px;
-            font-size: 0.78rem; font-weight: 800;
-            display: flex; align-items: center; gap: 6px;
+            background: var(--azul-tarjeta);
+            border: 1px solid var(--azul-borde);
+            padding: 8px 16px; border-radius: 6px;
+            font-size: 0.8rem; font-weight: 600;
+            color: var(--texto-suave);
+            display: flex; align-items: center; gap: 8px;
         }
-        .stat-pill span { color: var(--amarillo); font-family: var(--fuente-mono); }
+        .stat-pill span { color: var(--naranja-pcad); font-family: var(--fuente-mono); font-weight: 700; }
 
         .menu-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 18px; flex: 1;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px; flex: 1;
         }
 
         .menu-card {
             background: var(--azul-tarjeta);
-            border: 3px solid #000;
-            box-shadow: 4px 4px 0px #000;
-            border-radius: 16px;
-            padding: 22px 20px;
+            border: 1px solid var(--azul-borde);
+            border-radius: 10px;
+            padding: 24px;
             cursor: pointer;
-            transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            display: flex; flex-direction: column; align-items: flex-start;
-            position: relative; overflow: hidden;
+            transition: all 0.2s ease;
+            display: flex; flex-direction: column;
+            position: relative;
         }
         .menu-card:hover {
-            transform: translate(-4px, -4px);
-            box-shadow: 8px 8px 0px var(--naranja-pcad);
-            background: #17355e;
+            transform: translateY(-4px);
+            border-color: var(--naranja-pcad);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
         }
-        .menu-card:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0px #000; }
         .menu-icon-wrap {
-            width: 56px; height: 56px; border-radius: 12px;
-            background: var(--naranja-pcad); border: 3px solid #000;
-            box-shadow: 3px 3px 0px #000;
+            width: 48px; height: 48px; border-radius: 8px;
+            background: rgba(255, 107, 0, 0.1);
             display: flex; align-items: center; justify-content: center;
-            font-size: 2rem; margin-bottom: 14px;
-            transition: transform 0.25s;
-        }
-        .menu-card:hover .menu-icon-wrap {
-            transform: rotate(-6deg) scale(1.1);
-            background: var(--amarillo);
+            font-size: 1.6rem; margin-bottom: 16px;
+            color: var(--naranja-pcad);
         }
         .menu-tag {
-            font-family: var(--comic-font);
-            font-size: 0.95rem; letter-spacing: 0.8px;
-            color: var(--naranja-pcad); margin-bottom: 2px;
-            text-shadow: 1px 1px 0px #000;
+            font-size: 0.75rem; font-weight: 700;
+            color: var(--naranja-pcad); letter-spacing: 1px;
+            text-transform: uppercase; margin-bottom: 8px;
         }
-        .menu-title { font-size: 1.15rem; font-weight: 800; color: var(--blanco); margin-bottom: 8px; }
+        .menu-title { font-size: 1.15rem; font-weight: 700; color: #fff; margin-bottom: 10px; }
         .menu-desc {
-            font-size: 0.82rem; color: var(--texto-suave);
-            line-height: 1.45; margin-bottom: 16px; flex: 1;
+            font-size: 0.85rem; color: var(--texto-suave);
+            line-height: 1.5; margin-bottom: 20px; flex: 1;
         }
         .menu-footer {
-            width: 100%; display: flex; justify-content: space-between; align-items: center;
-            font-size: 0.78rem; color: var(--blanco); font-weight: 800;
-            border-top: 2px dashed rgba(255, 255, 255, 0.15);
-            padding-top: 10px;
+            font-size: 0.8rem; color: var(--texto-suave); font-weight: 600;
+            display: flex; justify-content: space-between; align-items: center;
+            border-top: 1px solid var(--azul-borde); padding-top: 14px;
         }
-        .menu-footer span.arrow {
-            color: var(--amarillo); font-size: 1.2rem;
-            font-family: var(--comic-font);
-            transition: transform 0.2s;
-        }
-        .menu-card:hover .menu-footer span.arrow { transform: translateX(6px) scale(1.2); }
+        .menu-footer span.arrow { color: var(--naranja-pcad); font-size: 1.1rem; transition: transform 0.2s; }
+        .menu-card:hover .menu-footer span.arrow { transform: translateX(4px); }
 
         /* HUD */
         .hud {
             display: flex; justify-content: space-between; align-items: center;
-            flex-wrap: wrap; gap: 10px; margin-bottom: 16px;
-            font-weight: 700; font-size: 0.85rem;
+            flex-wrap: wrap; gap: 12px; margin-bottom: 20px;
+            font-weight: 600; font-size: 0.85rem;
         }
-        .hud-group { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+        .hud-group { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
         .hud-item {
             background: var(--azul-tarjeta);
-            padding: 8px 14px; border-radius: 12px;
-            border: 2px solid #000; box-shadow: 2px 2px 0px #000;
-            display: flex; align-items: center; gap: 6px;
+            padding: 8px 16px; border-radius: 6px;
+            border: 1px solid var(--azul-borde);
+            display: flex; align-items: center; gap: 8px;
+            color: var(--texto-suave);
         }
-        .hud-item span { color: var(--amarillo); font-family: var(--fuente-mono); font-weight: 800; }
+        .hud-item span { color: #fff; font-family: var(--fuente-mono); font-weight: 700; }
         .racha-badge {
-            background: linear-gradient(135deg, #FF6B00, #E53935);
-            border: 2px solid #000; box-shadow: 3px 3px 0px #000;
-            color: #fff; padding: 7px 14px; border-radius: 12px;
+            background: var(--naranja-suave);
+            border: 1px solid var(--naranja-pcad);
+            color: var(--naranja-pcad);
+            padding: 8px 16px; border-radius: 6px;
+            font-weight: 700; font-size: 0.85rem;
             display: flex; align-items: center; gap: 6px;
-            font-family: var(--comic-font); font-size: 1.1rem;
-            letter-spacing: 1px; text-shadow: 1px 1px 0px #000;
-            animation: pulseRacha 1.5s infinite;
         }
-        @keyframes pulseRacha { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.04); } }
 
         /* TIMER */
         .timer-container {
-            width: 100%; height: 10px; background: #000;
-            border: 2px solid #000; border-radius: 6px;
-            margin-bottom: 18px; overflow: hidden; display: none;
-            box-shadow: 2px 2px 0px var(--naranja-pcad);
+            width: 100%; height: 6px; background: var(--azul-borde);
+            border-radius: 3px; margin-bottom: 24px;
+            overflow: hidden; display: none;
         }
         .timer-bar {
-            height: 100%; width: 100%; background: var(--verde);
+            height: 100%; width: 100%; background: var(--naranja-pcad);
             transition: width 0.1s linear, background-color 0.3s;
         }
-        .timer-bar.urgente { animation: latido 0.5s infinite; }
-        @keyframes latido { 50% { filter: brightness(1.6); } }
 
         /* PREGUNTA */
         .pregunta-container {
             background: var(--azul-tarjeta);
-            padding: 22px 24px; border-radius: 16px;
-            border: 3px solid #000; border-left: 8px solid var(--naranja-pcad);
-            box-shadow: 5px 5px 0px #000; margin-bottom: 18px;
+            padding: 24px; border-radius: 10px;
+            border: 1px solid var(--azul-borde);
+            border-top: 4px solid var(--naranja-pcad);
+            margin-bottom: 20px;
         }
         .pregunta-categoria {
-            display: inline-block; font-family: var(--comic-font);
-            font-size: 1rem; color: var(--amarillo);
-            letter-spacing: 1px; margin-bottom: 8px;
-            text-shadow: 1px 1px 0px #000;
+            display: inline-block; font-size: 0.75rem; font-weight: 700;
+            color: var(--naranja-pcad); letter-spacing: 1px;
+            text-transform: uppercase; margin-bottom: 12px;
         }
         .pregunta-texto {
-            font-size: 1.12rem; font-weight: 700;
-            line-height: 1.45; color: var(--blanco);
+            font-size: 1.15rem; font-weight: 600;
+            line-height: 1.5; color: #fff;
         }
 
         /* OPCIONES */
-        .opciones-grid { display: flex; flex-direction: column; gap: 12px; margin-bottom: 18px; }
+        .opciones-grid { display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px; }
         .opcion {
             background: var(--azul-superficie);
-            border: 3px solid #000; box-shadow: 3px 3px 0px #000;
-            color: var(--blanco); padding: 14px 18px; border-radius: 12px;
-            cursor: pointer; font-size: 0.95rem; font-weight: 600;
+            border: 1px solid var(--azul-borde);
+            color: var(--blanco); padding: 16px 20px; border-radius: 8px;
+            cursor: pointer; font-size: 0.95rem; font-weight: 500;
             transition: all 0.2s ease;
-            display: flex; align-items: center; gap: 14px; text-align: left;
+            display: flex; align-items: center; gap: 16px; text-align: left;
         }
         .opcion:hover:not(.bloqueada) {
-            transform: translate(-3px, -3px);
-            box-shadow: 6px 6px 0px var(--naranja-pcad);
-            background: #142c4f;
+            background: var(--azul-tarjeta);
+            border-color: var(--naranja-pcad);
         }
         .opcion .letra {
             background: var(--azul-tarjeta);
-            min-width: 38px; height: 38px;
+            min-width: 32px; height: 32px;
             display: flex; justify-content: center; align-items: center;
-            border-radius: 8px; font-family: var(--comic-font);
-            font-size: 1.3rem; color: var(--amarillo);
-            border: 2px solid #000; box-shadow: 2px 2px 0px #000;
+            border-radius: 6px; font-family: var(--fuente-mono);
+            font-size: 1.1rem; font-weight: 700; color: var(--texto-suave);
+            border: 1px solid var(--azul-borde);
             flex-shrink: 0; transition: all 0.2s;
         }
+        .opcion:hover:not(.bloqueada) .letra {
+            color: var(--naranja-pcad);
+            border-color: var(--naranja-pcad);
+        }
         .opcion.correcta {
-            background: var(--verde-suave); border-color: #000;
-            box-shadow: 4px 4px 0px var(--verde);
-            color: #fff; transform: scale(1.01);
+            background: var(--verde-suave); border-color: var(--verde-exito);
+            color: #fff;
         }
-        .opcion.correcta .letra { background: var(--verde); color: #000; }
+        .opcion.correcta .letra { background: var(--verde-exito); color: #fff; border-color: var(--verde-exito); }
         .opcion.incorrecta {
-            background: var(--rojo-suave); border-color: #000;
-            box-shadow: 4px 4px 0px var(--rojo);
-            color: var(--texto-suave); opacity: 0.85;
+            background: var(--rojo-suave); border-color: var(--rojo-alerta);
+            color: #fff; opacity: 0.8;
         }
-        .opcion.incorrecta .letra { background: var(--rojo); color: #fff; }
+        .opcion.incorrecta .letra { background: var(--rojo-alerta); color: #fff; border-color: var(--rojo-alerta); }
         .opcion.bloqueada { cursor: default; }
 
         /* FEEDBACK */
         .feedback-box {
-            padding: 16px 20px; border-radius: 14px;
-            border: 3px solid #000; box-shadow: 4px 4px 0px #000;
-            display: none; margin-bottom: 18px;
-            font-size: 0.94rem; line-height: 1.45;
-            animation: fadeIn 0.25s;
+            padding: 16px 20px; border-radius: 8px;
+            display: none; margin-bottom: 24px;
+            font-size: 0.95rem; line-height: 1.5;
+            animation: fadeIn 0.2s;
+            border-left: 4px solid transparent;
         }
         .feedback-box.show { display: block; }
-        .feedback-box.ok { background: rgba(0, 230, 118, 0.2); color: #d1fae5; }
-        .feedback-box.fail { background: rgba(255, 46, 85, 0.22); color: #ffe4e6; }
-        .feedback-box .justificacion {
-            margin-top: 8px; font-size: 0.86rem;
-            opacity: 0.92; line-height: 1.4;
-        }
+        .feedback-box.ok { background: rgba(16, 185, 129, 0.1); border-left-color: var(--verde-exito); color: #d1fae5; }
+        .feedback-box.fail { background: rgba(239, 68, 68, 0.1); border-left-color: var(--rojo-alerta); color: #fee2e2; }
+        .feedback-box .justificacion { margin-top: 8px; font-size: 0.85rem; opacity: 0.9; }
 
         /* BOTONES */
         .action-row {
             display: flex; justify-content: space-between; align-items: center;
-            gap: 12px; margin-top: auto; padding-top: 10px;
+            gap: 16px; margin-top: auto; padding-top: 16px;
         }
         .btn-secondary {
-            background: var(--azul-superficie); color: var(--blanco);
-            border: 2px solid #000; box-shadow: 3px 3px 0px #000;
-            padding: 12px 20px; font-size: 0.86rem; font-weight: 800;
-            border-radius: 10px; cursor: pointer; transition: all 0.2s;
-            display: flex; align-items: center; gap: 6px;
+            background: transparent; color: var(--texto-suave);
+            border: 1px solid var(--azul-borde);
+            padding: 12px 24px; font-size: 0.85rem; font-weight: 600;
+            border-radius: 6px; cursor: pointer; transition: all 0.2s;
         }
-        .btn-secondary:hover {
-            transform: translate(-2px, -2px);
-            box-shadow: 5px 5px 0px var(--texto-suave);
-        }
-        .btn-secondary:active { transform: translate(1px, 1px); box-shadow: 1px 1px 0px #000; }
+        .btn-secondary:hover { background: var(--azul-tarjeta); color: #fff; }
+        
         .btn-primary {
-            background: var(--naranja-pcad); color: #000;
-            border: 3px solid #000; box-shadow: 4px 4px 0px #000;
-            padding: 12px 28px; font-family: var(--comic-font);
-            font-size: 1.25rem; letter-spacing: 1.2px;
-            border-radius: 12px; cursor: pointer; transition: all 0.2s;
-            text-transform: uppercase;
+            background: var(--naranja-pcad); color: #fff;
+            border: 1px solid var(--naranja-pcad);
+            padding: 12px 32px; font-size: 0.95rem; font-weight: 600;
+            border-radius: 6px; cursor: pointer; transition: all 0.2s;
             display: flex; align-items: center; gap: 8px;
         }
-        .btn-primary:hover:not(:disabled) {
-            background: var(--amarillo);
-            transform: translate(-3px, -3px);
-            box-shadow: 7px 7px 0px #000;
-        }
-        .btn-primary:active:not(:disabled) { transform: translate(2px, 2px); box-shadow: 1px 1px 0px #000; }
+        .btn-primary:hover:not(:disabled) { background: var(--naranja-hover); }
         .btn-primary:disabled {
-            background: #2b3b52; color: #64748b;
-            cursor: not-allowed; box-shadow: 2px 2px 0px #000; transform: none;
+            background: var(--azul-borde); color: var(--texto-suave);
+            border-color: var(--azul-borde); cursor: not-allowed;
         }
 
         /* ESTRUCTURAS */
         .comic-panel-container {
-            background: #0b1a30; border: 4px solid #000;
-            box-shadow: 8px 8px 0px #000; border-radius: 18px;
-            padding: 18px; display: flex; flex-direction: column;
+            background: var(--azul-tarjeta); border: 1px solid var(--azul-borde);
+            border-radius: 10px; padding: 24px; display: flex; flex-direction: column;
             align-items: center; justify-content: center;
-            position: relative; margin-bottom: 18px; overflow: hidden;
-            background-image:
-                radial-gradient(#1e3b66 10%, transparent 11%),
-                radial-gradient(#1e3b66 10%, transparent 11%);
-            background-size: 18px 18px;
-            background-position: 0 0, 9px 9px;
+            position: relative; margin-bottom: 20px;
         }
         .comic-vignette-tag {
-            position: absolute; top: 10px; left: 12px;
-            background: var(--amarillo); color: #000;
-            border: 2px solid #000; box-shadow: 2px 2px 0px #000;
-            padding: 3px 10px; font-family: var(--comic-font);
-            font-size: 0.95rem; letter-spacing: 0.8px;
-            transform: rotate(-2deg); z-index: 5;
+            position: absolute; top: 16px; left: 20px;
+            background: var(--naranja-suave); color: var(--naranja-pcad);
+            padding: 4px 12px; border-radius: 4px;
+            font-size: 0.75rem; font-weight: 700; letter-spacing: 1px;
         }
         .svg-canvas-wrap {
-            width: 100%; max-width: 480px; height: 250px;
+            width: 100%; max-width: 480px; height: 240px;
             display: flex; justify-content: center; align-items: center;
-            margin: 10px 0 14px;
-            filter: drop-shadow(4px 4px 0px #000);
+            margin: 20px 0;
         }
         .svg-canvas-wrap svg { width: 100%; height: 100%; overflow: visible; }
         .est-titulo-wrap {
             text-align: center; max-width: 680px;
-            background: rgba(9, 23, 44, 0.95);
-            border: 2px solid #000; box-shadow: 3px 3px 0px #000;
-            border-radius: 12px; padding: 12px 18px; width: 100%;
+            background: var(--azul-superficie);
+            border: 1px solid var(--azul-borde);
+            border-radius: 8px; padding: 16px 20px; width: 100%;
         }
-        .est-titulo {
-            font-family: var(--comic-font); color: var(--amarillo);
-            font-size: 1.45rem; letter-spacing: 1px;
-            margin-bottom: 4px; text-shadow: 1px 1px 0px #000;
-        }
-        .est-desc { color: var(--blanco); font-size: 0.9rem; line-height: 1.45; }
+        .est-titulo { font-size: 1.2rem; font-weight: 700; color: var(--naranja-pcad); margin-bottom: 8px; }
+        .est-desc { color: var(--texto-suave); font-size: 0.9rem; line-height: 1.5; }
+        
         .botones-decision {
             display: flex; gap: 16px; justify-content: center;
-            width: 100%; margin-top: 14px;
+            width: 100%; margin-top: 20px;
         }
         .btn-decision {
-            padding: 14px 34px; font-family: var(--comic-font);
-            font-size: 1.35rem; letter-spacing: 1.2px;
-            border: 3px solid #000; box-shadow: 5px 5px 0px #000;
-            border-radius: 14px; cursor: pointer; transition: all 0.2s;
-            text-transform: uppercase;
-            display: flex; align-items: center; gap: 10px;
-            flex: 1; max-width: 280px; justify-content: center;
+            padding: 14px 32px; font-size: 1rem; font-weight: 600;
+            border-radius: 8px; cursor: pointer; transition: all 0.2s;
+            display: flex; align-items: center; gap: 8px;
+            flex: 1; max-width: 260px; justify-content: center;
+            border: 1px solid transparent;
         }
-        .btn-seguro { background: var(--verde); color: #000; }
-        .btn-seguro:hover {
-            transform: translate(-4px, -4px);
-            box-shadow: 8px 8px 0px #000;
-            background: #2aff9b;
-        }
-        .btn-peligro { background: var(--rojo); color: #fff; text-shadow: 1px 1px 0px #000; }
-        .btn-peligro:hover {
-            transform: translate(-4px, -4px);
-            box-shadow: 8px 8px 0px #000;
-            background: #ff476d;
-        }
+        .btn-seguro { background: rgba(16, 185, 129, 0.1); color: var(--verde-exito); border-color: var(--verde-exito); }
+        .btn-seguro:hover { background: var(--verde-exito); color: #fff; }
+        .btn-peligro { background: rgba(239, 68, 68, 0.1); color: var(--rojo-alerta); border-color: var(--rojo-alerta); }
+        .btn-peligro:hover { background: var(--rojo-alerta); color: #fff; }
 
         /* DESPACHO */
         .despacho-grid {
             display: grid; grid-template-columns: 1fr 1fr;
-            gap: 18px; margin-bottom: 18px;
+            gap: 20px; margin-bottom: 20px;
         }
         .despacho-card {
-            background: var(--azul-superficie);
-            border: 3px solid #000; box-shadow: 4px 4px 0px #000;
-            border-radius: 14px; padding: 16px;
+            background: var(--azul-tarjeta);
+            border: 1px solid var(--azul-borde);
+            border-radius: 10px; padding: 20px;
         }
         .despacho-card h4 {
-            font-family: var(--comic-font); color: var(--amarillo);
-            font-size: 1.15rem; letter-spacing: 1px;
-            margin-bottom: 10px;
-            display: flex; align-items: center; gap: 8px;
-            text-shadow: 1px 1px 0px #000;
+            font-size: 1rem; font-weight: 700; color: #fff;
+            margin-bottom: 12px; display: flex; align-items: center; gap: 8px;
         }
         .radio-transcript {
             background: #050d1a;
-            border: 2px solid #193154; border-radius: 10px;
-            padding: 14px; font-family: var(--fuente-mono);
-            font-size: 0.85rem; color: #4ade80; line-height: 1.5;
-            position: relative;
+            border: 1px solid var(--azul-borde); border-radius: 6px;
+            padding: 16px; font-family: var(--fuente-mono);
+            font-size: 0.85rem; color: #a7f3d0; line-height: 1.6;
         }
         .radio-transcript::before {
-            content: "🔴 RX FREC: 156.800 MHz (VHF Ch 16)";
+            content: "RX FREC: 156.800 MHz (VHF Ch 16)";
             display: block; color: var(--texto-suave);
             font-size: 0.7rem; margin-bottom: 8px; font-weight: 700;
+            border-bottom: 1px solid var(--azul-borde); padding-bottom: 6px;
         }
 
         /* RESULTADOS */
         .resultado-box {
             background: var(--azul-tarjeta);
-            border: 4px solid #000; box-shadow: 8px 8px 0px #000;
-            border-radius: 20px; padding: 30px;
-            text-align: center; max-width: 650px; margin: auto;
+            border: 1px solid var(--azul-borde);
+            border-radius: 12px; padding: 40px;
+            text-align: center; max-width: 600px; margin: auto;
         }
         .rango-emblema {
-            width: 95px; height: 95px; margin: 0 auto 14px;
+            width: 80px; height: 80px; margin: 0 auto 20px;
             border-radius: 50%;
-            background: radial-gradient(circle, var(--amarillo), var(--naranja-pcad));
-            border: 3px solid #000; box-shadow: 4px 4px 0px #000;
+            background: var(--naranja-suave);
+            border: 2px solid var(--naranja-pcad);
             display: flex; align-items: center; justify-content: center;
-            font-size: 3rem; transform: rotate(-4deg);
+            font-size: 2.5rem;
         }
         .nota-grande {
-            font-family: var(--comic-font); font-size: 4.2rem;
-            color: #fff; line-height: 1; margin-bottom: 6px;
-            text-shadow: 3px 3px 0px #000, 5px 5px 0px var(--naranja-pcad);
+            font-size: 4rem; font-weight: 800;
+            color: #fff; line-height: 1; margin-bottom: 8px;
         }
-        .nota-grande span { font-size: 2rem; color: var(--amarillo); }
+        .nota-grande span { font-size: 1.5rem; color: var(--texto-suave); font-weight: 600; }
         .calificacion-unes {
-            font-family: var(--comic-font); font-size: 1.6rem;
-            letter-spacing: 1.5px; color: var(--amarillo);
-            text-shadow: 2px 2px 0px #000; margin-bottom: 16px;
+            font-size: 1.2rem; font-weight: 700;
+            color: var(--naranja-pcad); margin-bottom: 20px;
+            letter-spacing: 1px;
         }
         .resultado-stats {
             display: grid; grid-template-columns: repeat(3, 1fr);
-            gap: 12px; margin: 20px 0;
-            background: #09172c; padding: 16px; border-radius: 14px;
-            border: 2px solid #000; box-shadow: 3px 3px 0px #000;
+            gap: 16px; margin: 24px 0;
+            background: var(--azul-superficie); padding: 20px;
+            border-radius: 8px; border: 1px solid var(--azul-borde);
         }
-        .res-stat-val {
-            font-family: var(--comic-font); font-size: 2rem;
-            color: var(--amarillo); text-shadow: 1px 1px 0px #000;
-        }
-        .res-stat-lbl {
-            font-size: 0.72rem; color: var(--texto-suave);
-            text-transform: uppercase; font-weight: 800; margin-top: 2px;
-        }
+        .res-stat-val { font-size: 1.5rem; font-weight: 700; color: #fff; font-family: var(--fuente-mono); }
+        .res-stat-lbl { font-size: 0.75rem; color: var(--texto-suave); text-transform: uppercase; font-weight: 600; margin-top: 4px; }
 
         /* MODAL */
         .modal-overlay {
-            position: fixed; top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(4, 11, 22, 0.88);
-            backdrop-filter: blur(8px);
-            z-index: 150; display: none;
-            justify-content: center; align-items: center; padding: 16px;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(5, 13, 26, 0.8); backdrop-filter: blur(4px);
+            z-index: 150; display: none; justify-content: center; align-items: center; padding: 20px;
         }
         .modal-overlay.active { display: flex; }
         .modal-content {
-            background: var(--azul-tarjeta);
-            border: 4px solid #000; border-radius: 18px;
-            width: 100%; max-width: 680px; max-height: 85vh;
+            background: var(--azul-tarjeta); border: 1px solid var(--azul-borde);
+            border-radius: 12px; width: 100%; max-width: 600px; max-height: 85vh;
             display: flex; flex-direction: column; overflow: hidden;
-            box-shadow: 10px 10px 0px var(--naranja-pcad);
         }
         .modal-header {
-            background: #09172c; padding: 16px 22px;
-            border-bottom: 3px solid #000;
+            background: var(--azul-superficie); padding: 16px 24px;
+            border-bottom: 1px solid var(--azul-borde);
             display: flex; justify-content: space-between; align-items: center;
         }
-        .modal-header h3 {
-            font-family: var(--comic-font); color: var(--amarillo);
-            font-size: 1.4rem; letter-spacing: 1px; text-shadow: 1px 1px 0px #000;
-        }
+        .modal-header h3 { font-size: 1.1rem; font-weight: 700; color: #fff; }
         .modal-close {
-            background: var(--rojo); border: 2px solid #000;
-            box-shadow: 2px 2px 0px #000; color: #fff;
-            width: 32px; height: 32px; border-radius: 8px;
-            display: flex; justify-content: center; align-items: center;
-            font-size: 1.2rem; cursor: pointer;
+            background: transparent; border: none; color: var(--texto-suave);
+            font-size: 1.2rem; cursor: pointer; transition: color 0.2s;
         }
-        .modal-body {
-            padding: 22px; overflow-y: auto;
-            font-size: 0.88rem; line-height: 1.55; color: var(--blanco);
-        }
+        .modal-close:hover { color: var(--rojo-alerta); }
+        .modal-body { padding: 24px; overflow-y: auto; font-size: 0.9rem; line-height: 1.6; color: var(--texto-suave); }
         .manual-section {
-            margin-bottom: 18px;
-            background: var(--azul-superficie);
-            padding: 14px 18px; border-radius: 12px;
-            border: 2px solid #000; border-left: 6px solid var(--naranja-pcad);
-            box-shadow: 3px 3px 0px #000;
+            margin-bottom: 24px; background: var(--azul-superficie);
+            padding: 16px 20px; border-radius: 8px; border: 1px solid var(--azul-borde);
+            border-left: 3px solid var(--naranja-pcad);
         }
-        .manual-section h4 {
-            font-family: var(--comic-font); color: var(--amarillo);
-            font-size: 1.15rem; letter-spacing: 0.8px;
-            margin-bottom: 6px; text-shadow: 1px 1px 0px #000;
-        }
+        .manual-section h4 { font-size: 1rem; font-weight: 700; color: #fff; margin-bottom: 8px; }
 
         /* CHAT */
         #btn-chat {
-            position: fixed;
-            bottom: 16px; right: 16px;
-            width: 56px; height: 56px;
-            background: var(--amarillo);
-            color: #000;
-            border: 3px solid #000;
-            box-shadow: 5px 5px 0px #000;
-            border-radius: 50%;
-            cursor: pointer;
-            z-index: 99;
-            transition: all 0.25s;
+            position: fixed; bottom: 24px; right: 24px;
+            width: 52px; height: 52px;
+            background: var(--naranja-pcad); color: #fff;
+            border: none; border-radius: 50%;
+            cursor: pointer; z-index: 99;
+            transition: all 0.2s;
             display: flex; align-items: center; justify-content: center;
-            font-size: 1.6rem;
+            font-size: 1.4rem; box-shadow: 0 4px 12px rgba(0,0,0,0.3);
         }
-        #btn-chat:hover {
-            transform: translate(-3px, -3px) scale(1.05);
-            box-shadow: 8px 8px 0px var(--naranja-pcad);
-            background: #fff;
-        }
-        #btn-chat:active {
-            transform: translate(2px, 2px);
-            box-shadow: 2px 2px 0px #000;
-        }
+        #btn-chat:hover { background: var(--naranja-hover); transform: scale(1.05); }
+        
         #chat-container {
-            position: fixed;
-            bottom: 84px; right: 16px;
-            width: 380px; height: 520px;
-            max-width: calc(100vw - 32px);
-            max-height: calc(100vh - 100px);
-            background: var(--azul-pcad);
-            border: 3px solid #000;
-            border-radius: 18px;
-            display: none;
-            flex-direction: column;
-            z-index: 120;
-            box-shadow: 8px 8px 0px #000;
-            overflow: hidden;
+            position: fixed; bottom: 88px; right: 24px;
+            width: 360px; height: 500px;
+            max-width: calc(100vw - 48px); max-height: calc(100vh - 120px);
+            background: var(--azul-superficie);
+            border: 1px solid var(--azul-borde); border-radius: 12px;
+            display: none; flex-direction: column; z-index: 120;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5); overflow: hidden;
         }
         #chat-container.open { display: flex; }
         #chat-header {
-            background: #09172c; color: var(--blanco);
-            padding: 14px 18px; border-bottom: 3px solid #000;
+            background: var(--azul-tarjeta); padding: 16px;
+            border-bottom: 1px solid var(--azul-borde);
             display: flex; justify-content: space-between; align-items: center;
         }
-        #chat-header span.comic-title {
-            font-family: var(--comic-font);
-            font-size: 1.35rem; color: var(--amarillo);
-            letter-spacing: 1px; text-shadow: 1px 1px 0px #000;
-        }
+        #chat-header span { font-size: 1rem; font-weight: 700; color: #fff; }
         #chat-chips {
-            display: flex; gap: 6px; padding: 8px 12px;
-            background: #050d1a; overflow-x: auto;
-            border-bottom: 2px solid #000; white-space: nowrap;
+            display: flex; gap: 8px; padding: 12px;
+            background: var(--azul-superficie); overflow-x: auto;
+            border-bottom: 1px solid var(--azul-borde); white-space: nowrap;
         }
         .chip {
-            background: var(--azul-tarjeta);
-            border: 2px solid #000; box-shadow: 2px 2px 0px #000;
-            color: var(--blanco); padding: 4px 10px;
-            border-radius: 14px; font-size: 0.72rem;
-            cursor: pointer; transition: all 0.2s;
-            flex-shrink: 0; font-weight: 700;
+            background: var(--azul-tarjeta); border: 1px solid var(--azul-borde);
+            color: var(--texto-suave); padding: 6px 12px; border-radius: 6px;
+            font-size: 0.75rem; cursor: pointer; transition: all 0.2s; flex-shrink: 0;
         }
-        .chip:hover {
-            background: var(--amarillo); color: #000;
-            transform: translate(-1px, -1px);
-        }
+        .chip:hover { background: var(--naranja-suave); color: var(--naranja-pcad); border-color: var(--naranja-pcad); }
         #chat-messages {
-            flex: 1; padding: 16px; overflow-y: auto;
-            font-size: 0.86rem;
-            display: flex; flex-direction: column; gap: 12px;
+            flex: 1; padding: 16px; overflow-y: auto; font-size: 0.85rem;
+            display: flex; flex-direction: column; gap: 12px; background: #0d1f38;
         }
         .msg {
-            padding: 10px 14px; border-radius: 12px;
-            max-width: 86%; line-height: 1.4;
-            word-wrap: break-word;
-            border: 2px solid #000; box-shadow: 2px 2px 0px #000;
+            padding: 10px 14px; border-radius: 8px; max-width: 85%;
+            line-height: 1.4; word-wrap: break-word;
         }
-        .msg-bot {
-            background: var(--azul-tarjeta); color: var(--blanco);
-            align-self: flex-start; border-bottom-left-radius: 2px;
-        }
-        .msg-user {
-            background: var(--amarillo); color: #000;
-            align-self: flex-end; border-bottom-right-radius: 2px;
-            font-weight: 700;
-        }
+        .msg-bot { background: var(--azul-tarjeta); color: #fff; align-self: flex-start; border-bottom-left-radius: 2px; }
+        .msg-user { background: var(--naranja-pcad); color: #fff; align-self: flex-end; border-bottom-right-radius: 2px; }
         #chat-input-area {
-            display: flex; padding: 10px;
-            background: #09172c; border-top: 3px solid #000;
+            display: flex; padding: 12px; background: var(--azul-tarjeta);
+            border-top: 1px solid var(--azul-borde);
         }
         #chat-input {
-            flex: 1; padding: 10px 14px;
-            border: 2px solid #000; border-radius: 8px 0 0 8px;
-            outline: none; background: var(--azul-superficie);
-            color: var(--blanco); font-size: 0.85rem;
+            flex: 1; padding: 10px 14px; border: 1px solid var(--azul-borde);
+            border-radius: 6px 0 0 6px; outline: none; background: var(--azul-superficie);
+            color: #fff; font-size: 0.85rem;
         }
+        #chat-input:focus { border-color: var(--naranja-pcad); }
         #chat-send {
-            background: var(--naranja-pcad);
-            border: 2px solid #000; border-left: none;
-            color: #000; padding: 0 16px;
-            border-radius: 0 8px 8px 0;
-            cursor: pointer; font-weight: 900; font-size: 1.1rem;
+            background: var(--naranja-pcad); border: none; color: #fff;
+            padding: 0 16px; border-radius: 0 6px 6px 0; cursor: pointer;
+            font-weight: 700; font-size: 1rem; transition: background 0.2s;
         }
-        #chat-send:hover { background: var(--amarillo); }
+        #chat-send:hover { background: var(--naranja-hover); }
 
         /* ILUSTRACIONES */
         .ilus {
-            border: 4px solid #000; border-radius: 14px;
-            box-shadow: 6px 6px 0 #000; overflow: hidden;
-            background: #0d1f38; margin-bottom: 16px; line-height: 0;
+            border: 1px solid var(--azul-borde); border-radius: 10px;
+            overflow: hidden; background: var(--azul-tarjeta);
+            margin-bottom: 20px; line-height: 0;
         }
         .ilus:empty { display: none; }
         .ilus svg { width: 100%; height: auto; display: block; }
@@ -709,9 +577,8 @@
         /* RESPONSIVE */
         @media (min-width:900px), (orientation:landscape) and (min-width:600px) {
             #juego-screen.active, #despacho-screen.active {
-                display: grid;
-                grid-template-columns: minmax(300px, 42%) 1fr;
-                column-gap: 26px; align-content: start;
+                display: grid; grid-template-columns: minmax(300px, 40%) 1fr;
+                column-gap: 30px; align-content: start;
             }
             #juego-screen.active > *, #despacho-screen.active > * { grid-column: 2; }
             #juego-screen.active > .hud,
@@ -728,45 +595,22 @@
 
         @media (max-width: 768px) {
             body { padding: 0; align-items: flex-start; min-height: 100dvh; }
-            #app {
-                min-height: 100dvh;
-                border-radius: 0; border-width: 0;
-                box-shadow: none; overflow: visible;
-                padding-top: env(safe-area-inset-top);
-            }
-            .screen { padding: 14px 12px calc(14px + env(safe-area-inset-bottom)); }
-            header { padding: 10px 12px; gap: 8px; }
-            .header-titulos h1 { font-size: 1.15rem; }
-            .header-sub { font-size: .58rem; }
-            .btn-icon { width: 38px; height: 38px; }
-            .logo-inst { height: 34px; max-width: 64px; }
+            #app { min-height: 100dvh; border-radius: 0; border-width: 0; box-shadow: none; overflow: visible; }
+            .screen { padding: 16px 12px calc(16px + env(safe-area-inset-bottom)); }
+            header { padding: 12px; gap: 8px; }
+            .header-titulos h1 { font-size: 1.1rem; }
+            .header-sub { font-size: .65rem; }
+            .btn-icon { width: 34px; height: 34px; }
+            .logo-inst { height: 32px; max-width: 60px; }
             .menu-grid { grid-template-columns: 1fr; }
             .despacho-grid { grid-template-columns: 1fr; }
             .botones-decision { flex-direction: column; }
             .btn-decision { max-width: 100%; }
             .resultado-stats { grid-template-columns: 1fr; }
-            #btn-chat {
-                width: 48px; height: 48px;
-                bottom: calc(16px + env(safe-area-inset-bottom));
-                right: 12px; font-size: 1.4rem;
-            }
-            #chat-container {
-                width: calc(100vw - 16px);
-                right: 8px;
-                bottom: calc(80px + env(safe-area-inset-bottom));
-                height: min(70dvh, 520px);
-            }
-            .action-row {
-                position: sticky; bottom: 0; z-index: 15;
-                padding: 10px 0 calc(8px + env(safe-area-inset-bottom));
-                background: linear-gradient(transparent, var(--azul-superficie) 28%);
-                gap: 8px;
-            }
-            .action-row button { flex: 1; min-height: 48px; font-size: .88rem; }
-        }
-        @media (max-width: 420px) {
-            .header-sub { display: none; }
-            .header-titulos h1 { font-size: 1.05rem; }
+            #btn-chat { width: 48px; height: 48px; bottom: calc(16px + env(safe-area-inset-bottom)); right: 12px; font-size: 1.2rem; }
+            #chat-container { width: calc(100vw - 16px); right: 8px; bottom: calc(76px + env(safe-area-inset-bottom)); height: min(70dvh, 500px); }
+            .action-row { position: sticky; bottom: 0; z-index: 15; padding: 12px 0 calc(12px + env(safe-area-inset-bottom)); background: linear-gradient(transparent, var(--azul-superficie) 30%); gap: 12px; }
+            .action-row button { flex: 1; min-height: 48px; font-size: .85rem; }
         }
     </style>
 </head>
@@ -889,7 +733,7 @@
         <div class="action-row">
             <button class="btn-secondary" onclick="pedirPistaTutor()">💡 Pista</button>
             <button id="btn-siguiente" class="btn-primary" onclick="siguientePregunta()" disabled>
-                Siguiente ➔
+                Siguiente Pregunta ➔
             </button>
         </div>
     </div>
@@ -914,14 +758,14 @@
         <div id="estructuras-feedback" class="feedback-box"></div>
 
         <div id="estructuras-botones" class="botones-decision">
-            <button class="btn-decision btn-seguro" onclick="evaluarEstructura(false)">🛡️ Seguro</button>
-            <button class="btn-decision btn-peligro" onclick="evaluarEstructura(true)">⚠️ Peligro</button>
+            <button class="btn-decision btn-seguro" onclick="evaluarEstructura(false)">🛡️ Seguro / Habitable</button>
+            <button class="btn-decision btn-peligro" onclick="evaluarEstructura(true)">⚠️ Peligro / Evacuar</button>
         </div>
 
         <div class="action-row" id="estructuras-next-row" style="display: none;">
             <button class="btn-secondary" onclick="volverAlMenu()">Abandonar</button>
             <button id="btn-siguiente-estructura" class="btn-primary" onclick="siguienteEstructura()">
-                Siguiente ➔
+                Siguiente Escenario ➔
             </button>
         </div>
     </div>
@@ -943,7 +787,7 @@
             </div>
             <div class="despacho-card">
                 <h4>📋 Protocolo</h4>
-                <p id="despacho-mision-txt" style="font-size: 0.9rem; color: var(--blanco); line-height: 1.45;"></p>
+                <p id="despacho-mision-txt" style="font-size: 0.9rem; color: var(--texto-suave); line-height: 1.5;"></p>
             </div>
         </div>
 
@@ -953,7 +797,7 @@
         <div class="action-row">
             <button class="btn-secondary" onclick="volverAlMenu()">Cancelar</button>
             <button id="btn-siguiente-despacho" class="btn-primary" onclick="siguienteDespacho()" disabled>
-                Siguiente ➔
+                Siguiente Incidente ➔
             </button>
         </div>
     </div>
@@ -964,7 +808,7 @@
             <div class="rango-emblema" id="res-icono">🎖️</div>
             <div class="nota-grande"><span id="res-nota">18</span><span>/20</span></div>
             <div class="calificacion-unes" id="res-calificacion">SOBRESALIENTE</div>
-            <p id="res-mensaje" style="color: var(--texto-suave); font-size: 0.95rem; line-height: 1.4;"></p>
+            <p id="res-mensaje" style="color: var(--texto-suave); font-size: 0.95rem; line-height: 1.5;"></p>
 
             <div class="resultado-stats">
                 <div>
@@ -981,9 +825,9 @@
                 </div>
             </div>
 
-            <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 20px;">
+            <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-top: 24px;">
                 <button class="btn-secondary" onclick="volverAlMenu()">Menú Principal</button>
-                <button class="btn-primary" onclick="reiniciarModuloActual()">Reintentar</button>
+                <button class="btn-primary" onclick="reiniciarModuloActual()">Reintentar Módulo</button>
             </div>
         </div>
     </div>
@@ -993,23 +837,23 @@
 
     <div id="chat-container">
         <div id="chat-header">
-            <span class="comic-title">INSTRUCTOR TÁCTICO</span>
-            <span style="cursor:pointer; font-size: 1.4rem; font-weight: 900;" onclick="toggleChat()">✖</span>
+            <span>Instructor Táctico</span>
+            <span style="cursor:pointer; font-size: 1.2rem; color: var(--texto-suave);" onclick="toggleChat()">✖</span>
         </div>
         <div id="chat-chips">
             <div class="chip" onclick="enviarChip('RCP')">RCP Básico</div>
-            <div class="chip" onclick="enviarChip('Hemorragias')">Control Hemorragias</div>
+            <div class="chip" onclick="enviarChip('Hemorragias')">Hemorragias</div>
             <div class="chip" onclick="enviarChip('Triage')">Triage START</div>
             <div class="chip" onclick="enviarChip('Incendios')">Incendios</div>
-            <div class="chip" onclick="enviarChip('Estructuras')">Esqueleto vs piel</div>
+            <div class="chip" onclick="enviarChip('Estructuras')">Estructuras</div>
         </div>
         <div id="chat-messages">
             <div class="msg msg-bot">
-                Hola. Soy el instructor de PCAD. Pregúntame sobre RCP, rescate, siniestros o triage.
+                Bienvenido. Soy su instructor de PCAD. Consúlteme sobre RCP, rescate, siniestros o triage.
             </div>
         </div>
         <div id="chat-input-area">
-            <input type="text" id="chat-input" placeholder="Pregunta sobre RCP, rescate, triage..." onkeydown="if(event.key==='Enter'){event.preventDefault();enviarMensajeChat();}">
+            <input type="text" id="chat-input" placeholder="Escriba su consulta..." onkeydown="if(event.key==='Enter'){event.preventDefault();enviarMensajeChat();}">
             <button id="chat-send" onclick="enviarMensajeChat()">➤</button>
         </div>
     </div>
@@ -1018,32 +862,32 @@
     <div id="modal-manual" class="modal-overlay">
         <div class="modal-content">
             <div class="modal-header">
-                <h3>📖 MANUAL DE CAMPO PCAD</h3>
+                <h3>Manual de Campo PCAD</h3>
                 <button class="modal-close" onclick="cerrarManual()">✖</button>
             </div>
             <div class="modal-body">
                 <div class="manual-section">
-                    <h4>🩺 RCP Básico (Adulto)</h4>
+                    <h4>RCP Básico (Adulto)</h4>
                     <p>• <strong>Frecuencia:</strong> 100 a 120 compresiones por minuto.<br>
                     • <strong>Profundidad:</strong> Al menos 5 cm (2 pulgadas) en el centro del pecho.<br>
                     • <strong>Relación:</strong> 30 compresiones por 2 ventilaciones (30:2).<br>
                     • <strong>Cadena de supervivencia:</strong> Reconocimiento, RCP temprana, Desfibrilador (DEA), Soporte Vital Avanzado.</p>
                 </div>
                 <div class="manual-section">
-                    <h4>🩸 Control de Hemorragias</h4>
+                    <h4>Control de Hemorragias</h4>
                     <p>• <strong>Presión directa:</strong> Primer paso con apósito estéril.<br>
                     • <strong>Elevación:</strong> Elevar el miembro por encima del corazón.<br>
                     • <strong>Torniquete:</strong> Solo si la presión directa falla y hay riesgo vital. Anotar la hora de colocación.</p>
                 </div>
                 <div class="manual-section">
-                    <h4>🚑 Triage START</h4>
+                    <h4>Triage START</h4>
                     <p>• <strong>Verde (Prioridad 3):</strong> Lesiones menores, deambula.<br>
                     • <strong>Amarillo (Prioridad 2):</strong> Lesiones graves pero estables.<br>
                     • <strong>Rojo (Prioridad 1):</strong> Riesgo vital inmediato, requiere atención urgente.<br>
                     • <strong>Negro (Prioridad 0):</strong> Fallecido o lesiones incompatibles con la vida.</p>
                 </div>
                 <div class="manual-section">
-                    <h4>🏗️ Evaluación Post-Sismo</h4>
+                    <h4>Evaluación Post-Sismo</h4>
                     <p>• <strong>El Esqueleto:</strong> Columnas, vigas, nodos. Grietas a 45° o cabillas expuestas = EVACUAR.<br>
                     • <strong>La Piel:</strong> Tabiquería. Grietas en 'X' disipan energía sin colapso si el esqueleto está sano.</p>
                 </div>
@@ -1086,25 +930,22 @@ class AudioTactico {
     }
     acierto() {
         if (this.silencio) return;
-        this.beep(523.25, 'triangle', 0.1, 0.2);
-        setTimeout(() => this.beep(659.25, 'triangle', 0.12, 0.25), 90);
-        setTimeout(() => this.beep(783.99, 'sine', 0.2, 0.25), 180);
+        this.beep(523.25, 'sine', 0.1, 0.2);
+        setTimeout(() => this.beep(659.25, 'sine', 0.15, 0.2), 100);
     }
     error() {
         if (this.silencio) return;
-        this.beep(220, 'sawtooth', 0.15, 0.2);
-        setTimeout(() => this.beep(164.81, 'sawtooth', 0.25, 0.22), 120);
+        this.beep(220, 'sawtooth', 0.2, 0.15);
     }
-    click() { this.beep(800, 'sine', 0.03, 0.08); }
+    click() { this.beep(600, 'sine', 0.03, 0.05); }
     rogerBip() {
         if (this.silencio) return;
-        this.beep(1200, 'sine', 0.04, 0.15);
-        setTimeout(() => this.beep(1800, 'sine', 0.06, 0.18), 50);
+        this.beep(1000, 'sine', 0.05, 0.1);
     }
     fanfarria() {
         if (this.silencio) return;
         const notas = [523.25, 659.25, 783.99, 1046.50];
-        notas.forEach((n, i) => setTimeout(() => this.beep(n, 'triangle', 0.2, 0.25), i * 140));
+        notas.forEach((n, i) => setTimeout(() => this.beep(n, 'sine', 0.2, 0.2), i * 150));
     }
 }
 const sonido = new AudioTactico();
@@ -1117,401 +958,251 @@ function toggleSonido() {
 }
 
 /* =======================================================
-   NUEVO BANCO DE PREGUNTAS: PROTECCIÓN CIVIL Y RESCATE
+   BANCO DE PREGUNTAS (PROTECCIÓN CIVIL Y RESCATE)
    ======================================================= */
 const PREGUNTAS_NOVATO = [
     {
         materia: "Primeros Auxilios / RCP",
         pregunta: "¿Cuál es la frecuencia correcta de compresiones torácicas en un RCP para adultos?",
-        opciones: [
-            "60 a 80 compresiones por minuto.",
-            "80 a 100 compresiones por minuto.",
-            "100 a 120 compresiones por minuto.",
-            "140 a 160 compresiones por minuto."
-        ],
+        opciones: ["60 a 80 por minuto.", "80 a 100 por minuto.", "100 a 120 por minuto.", "140 a 160 por minuto."],
         correcta: 2,
-        justificacion: "Las guías internacionales de RCP establecen una frecuencia de 100 a 120 compresiones por minuto para adultos.",
-        pista: "Piensa en la canción de los Bee Gees 'Stayin' Alive', que tiene el ritmo perfecto (alrededor de 100-120)."
+        justificacion: "Las guías internacionales establecen 100-120 compresiones por minuto.",
+        pista: "Piense en el ritmo de 'Stayin' Alive'."
     },
     {
         materia: "Primeros Auxilios",
-        pregunta: "Ante una hemorragia externa severa en un brazo, ¿cuál es la primera acción a tomar?",
-        opciones: [
-            "Aplicar un torniquete de inmediato en la axila.",
-            "Lavar la herida con agua y jabón abundante.",
-            "Ejercer presión directa sobre la herida con un apósito estéril o tela limpia.",
-            "Darle de beber agua al paciente para hidratarlo."
-        ],
-        correcta: 2,
-        justificacion: "La presión directa sobre la herida es el método más rápido y efectivo para detener una hemorragia. El torniquete es el último recurso.",
-        pista: "Lo primero que tienes a mano para tapar el sangrado es la presión directa."
+        pregunta: "Ante una hemorragia externa severa, ¿cuál es la primera acción?",
+        opciones: ["Aplicar torniquete inmediato.", "Presión directa con apósito estéril.", "Lavar con agua y jabón.", "Dar agua al paciente."],
+        correcta: 1,
+        justificacion: "La presión directa es el método más rápido y efectivo. El torniquete es el último recurso.",
+        pista: "Lo primero es tapar el sangrado presionando."
     },
     {
         materia: "RCP",
-        pregunta: "En la relación compresiones/ventilaciones para un RCP de un adulto con un solo reanimador, ¿cuál es la secuencia?",
-        opciones: [
-            "15 compresiones y 1 ventilación.",
-            "30 compresiones y 2 ventilaciones.",
-            "5 compresiones y 1 ventilación.",
-            "10 compresiones y 2 ventilaciones."
-        ],
+        pregunta: "En RCP adulto con un reanimador, ¿cuál es la relación compresiones/ventilaciones?",
+        opciones: ["15:1", "30:2", "5:1", "10:2"],
         correcta: 1,
-        justificacion: "La relación estándar para adultos es de 30 compresiones seguidas de 2 ventilaciones de rescate.",
-        pista: "El número de compresiones es el mismo que los días de un mes comercial (30)."
+        justificacion: "La relación estándar es 30 compresiones por 2 ventilaciones.",
+        pista: "30 compresiones, 2 ventilaciones."
     },
     {
-        materia: "Rescate",
-        pregunta: "¿Qué significa el protocolo PAS en primeros auxilios?",
-        opciones: [
-            "Prevenir, Atender, Sanar.",
-            "Proteger, Avisar, Socorrer.",
-            "Pasar, Actuar, Salvar.",
-            "Planificar, Asistir, Seguir."
-        ],
+        materia: "Rescate / Protocolo",
+        pregunta: "¿Qué significa el protocolo PAS?",
+        opciones: ["Prevenir, Atender, Sanar.", "Proteger, Avisar, Socorrer.", "Pasar, Actuar, Salvar.", "Planificar, Asistir, Seguir."],
         correcta: 1,
-        justificacion: "PAS es la regla de oro: Proteger el lugar del accidente, Avisar a los servicios de emergencia y Socorrer a la víctima.",
-        pista: "La 'P' es de Proteger, la 'A' de Avisar."
+        justificacion: "PAS: Proteger el lugar, Avisar a emergencias, Socorrer a la víctima.",
+        pista: "Proteger, Avisar, Socorrer."
     },
     {
-        materia: "Primeros Auxilios / Atragantamiento",
-        pregunta: "Si una persona se está atragantando y puede toser con fuerza, ¿qué debes hacer?",
-        opciones: [
-            "Darle 5 golpes en la espalda inmediatamente.",
-            "Realizar la maniobra de Heimlich sin esperar.",
-            "Animarle a seguir tosiendo y vigilarla.",
-            "Darle un vaso de agua para empujar el objeto."
-        ],
+        materia: "Atragantamiento",
+        pregunta: "Si una persona se atraganta y puede toser con fuerza, ¿qué debe hacer?",
+        opciones: ["Dar 5 golpes en la espalda.", "Maniobra de Heimlich inmediata.", "Animarle a seguir tosiendo.", "Darle un vaso de agua."],
         correcta: 2,
-        justificacion: "Si la persona tose eficazmente, la vía aérea no está completamente obstruida. La tos es el mejor mecanismo para expulsar el objeto. No intervengas si tose.",
-        pista: "Si puede toser, el aire está pasando. Déjalo toser."
+        justificacion: "Si tose eficazmente, la vía aérea no está totalmente obstruida. No intervenga si tose.",
+        pista: "Si tose, el aire pasa. Déjelo toser."
     },
     {
         materia: "Quemaduras",
-        pregunta: "Ante una quemadura térmica de primer grado (enrojecimiento), ¿cuál es el tratamiento inicial?",
-        opciones: [
-            "Aplicar hielo directamente sobre la piel.",
-            "Romper las ampollas si se forman.",
-            "Enfriar la zona con agua corriente a temperatura ambiente durante 10-15 minutos.",
-            "Untar mantequilla o pasta de dientes."
-        ],
+        pregunta: "Tratamiento inicial para quemadura de primer grado:",
+        opciones: ["Aplicar hielo directo.", "Romper ampollas.", "Enfriar con agua a temperatura ambiente 10-15 min.", "Untar mantequilla."],
         correcta: 2,
-        justificacion: "El enfriamiento con agua corriente detiene el proceso de quemadura en los tejidos. Nunca se debe aplicar hielo directo ni remedios caseros.",
-        pista: "Usa agua a temperatura ambiente, nunca hielo directo."
+        justificacion: "El enfriamiento con agua detiene el proceso. Nunca hielo directo ni remedios caseros.",
+        pista: "Use agua a temperatura ambiente, nunca hielo."
     },
     {
         materia: "Evaluación de Víctima",
-        pregunta: "Al llegar a la escena de un accidente, ¿cuál es el primer paso antes de tocar al paciente?",
-        opciones: [
-            "Comprobar si el paciente respira.",
-            "Garantizar la seguridad de la escena (que no haya peligro para ti ni para la víctima).",
-            "Mover al paciente a un lugar seguro.",
-            "Buscar el botiquín de primeros auxilios."
-        ],
+        pregunta: "Al llegar a un accidente, ¿cuál es el primer paso?",
+        opciones: ["Comprobar respiración.", "Garantizar la seguridad de la escena.", "Mover al paciente.", "Buscar botiquín."],
         correcta: 1,
-        justificacion: "El primer paso de la regla PAS es 'Proteger'. Nunca debes convertirte en una segunda víctima. Evalúa el entorno (tráfico, fuego, cables).",
-        pista: "¿Es seguro el lugar? Ese es el primer paso antes de actuar."
+        justificacion: "El primer paso del PAS es Proteger. Nunca sea una segunda víctima.",
+        pista: "¿Es seguro el lugar? Ese es el primer paso."
     },
     {
-        materia: "Rescate / Fracturas",
-        pregunta: "Si sospechas que un paciente tiene una fractura en la pierna, ¿qué debes hacer?",
-        opciones: [
-            "Intentar alinear el hueso para que se vea derecho.",
-            "Inmovilizar la extremidad en la posición en que se encuentra y buscar ayuda médica.",
-            "Darle masajes en la zona para mejorar la circulación.",
-            "Obligar al paciente a caminar para probar si puede."
-        ],
+        materia: "Fracturas",
+        pregunta: "Ante sospecha de fractura de pierna, ¿qué debe hacer?",
+        opciones: ["Alinear el hueso.", "Inmovilizar en la posición encontrada.", "Dar masajes.", "Obligar a caminar."],
         correcta: 1,
-        justificacion: "Nunca se debe intentar realinear una fractura en el campo. Se debe inmovilizar tal cual está para evitar daño a nervios o vasos sanguíneos.",
-        pista: "Inmoviliza en la posición encontrada, no intentes acomodar el hueso."
+        justificacion: "Nunca realinee en el campo. Inmovilice tal cual para evitar daño a nervios.",
+        pista: "Inmovilice en la posición encontrada."
     },
     {
         materia: "RCP / DEA",
-        pregunta: "¿Cuándo se debe utilizar un Desfibrilador Externo Automático (DEA)?",
-        opciones: [
-            "Solo cuando el paciente se queja de dolor en el pecho.",
-            "Tan pronto como esté disponible en un paciente inconsciente que no respira.",
-            "Después de 30 minutos de RCP manual.",
-            "Únicamente si el paciente tiene una herida abierta."
-        ],
+        pregunta: "¿Cuándo utilizar un Desfibrilador Externo Automático (DEA)?",
+        opciones: ["Solo con dolor en el pecho.", "Tan pronto como esté disponible en inconsciente que no respira.", "Después de 30 min de RCP.", "Solo con heridas abiertas."],
         correcta: 1,
-        justificacion: "El DEA debe usarse lo antes posible en paradas cardiorrespiratorias. Analiza el ritmo y da la descarga si es necesario. Cada minuto cuenta.",
+        justificacion: "El DEA debe usarse lo antes posible en paradas cardiorrespiratorias.",
         pista: "Se usa lo antes posible cuando la víctima no respira."
     },
     {
-        materia: "Primeros Auxilios / Shock",
-        pregunta: "¿Cuál es la posición recomendada para una víctima que está en estado de shock (palidez, sudoración fría, pulso rápido)?",
-        opciones: [
-            "Sentado en una silla.",
-            "Acostado boca abajo.",
-            "Acostado boca arriba con las piernas elevadas unos 30 cm.",
-            "De pie para mejorar la circulación."
-        ],
+        materia: "Shock",
+        pregunta: "Posición recomendada para víctima en estado de shock:",
+        opciones: ["Sentado.", "Boca abajo.", "Boca arriba con piernas elevadas.", "De pie."],
         correcta: 2,
-        justificacion: "Elevar las piernas favorece el retorno venoso hacia el corazón y el cerebro, combatiendo la hipotensión del shock.",
+        justificacion: "Elevar las piernas favorece el retorno venoso y combate la hipotensión.",
         pista: "Elevar las piernas ayuda a que la sangre llegue al cerebro."
     },
     {
-        materia: "Rescate / Emergencias",
-        pregunta: "¿Cuál es el número de emergencias de Protección Civil y Administración de Desastres en Venezuela?",
-        opciones: [
-            "911",
-            "171",
-            "0800-PCAD",
-            "112"
-        ],
+        materia: "Emergencias",
+        pregunta: "Número de emergencias de Protección Civil en Venezuela:",
+        opciones: ["911", "171", "0800-PCAD", "112"],
         correcta: 1,
-        justificacion: "El 171 es el número de emergencias de Protección Civil en Venezuela (Venezolano de Emergencia).",
-        pista: "Es un número de tres dígitos que empieza por 1."
+        justificacion: "El 171 es el número de emergencias de Protección Civil en Venezuela.",
+        pista: "Empieza por 1 y tiene tres dígitos."
     },
     {
-        materia: "Primeros Auxilios / Convulsiones",
-        pregunta: "Durante una convulsión, ¿qué acción es la correcta?",
-        opciones: [
-            "Sujetar fuertemente a la persona para que no se mueva.",
-            "Meterle un objeto en la boca para que no se muerda la lengua.",
-            "Proteger la cabeza y apartar objetos peligrosos, dejando que la convulsión siga su curso.",
-            "Darle agua para que se le pase."
-        ],
+        materia: "Convulsiones",
+        pregunta: "Durante una convulsión, ¿qué acción es correcta?",
+        opciones: ["Sujetar fuertemente.", "Meter objeto en la boca.", "Proteger la cabeza y apartar objetos.", "Dar agua."],
         correcta: 2,
-        justificacion: "Nunca se debe inmovilizar a alguien durante una convulsión ni meterle cosas en la boca. Solo hay que proteger la cabeza y el entorno.",
-        pista: "Solo protege la cabeza, no sujetes ni metas nada en la boca."
+        justificacion: "Nunca inmovilice ni meta cosas en la boca. Solo proteja la cabeza.",
+        pista: "Solo proteja la cabeza, no sujete."
     },
     {
-        materia: "Rescate / Incendios",
-        pregunta: "¿Qué tipo de extintor se debe usar para apagar un fuego en un equipo eléctrico energizado (Clase C)?",
-        opciones: [
-            "Extintor de agua presurizada.",
-            "Extintor de polvo químico seco (PQS) o Dióxido de Carbono (CO2).",
-            "Extintor de espuma.",
-            "Cualquier extintor sirve."
-        ],
+        materia: "Incendios",
+        pregunta: "¿Qué extintor se usa para fuego eléctrico (Clase C)?",
+        opciones: ["Agua presurizada.", "PQS o CO2.", "Espuma.", "Cualquiera."],
         correcta: 1,
-        justificacion: "El agua y la espuma conducen electricidad y pueden electrocutar al operador. Se debe usar PQS o CO2, que no son conductores.",
-        pista: "No puedes usar agua en fuegos eléctricos. Busca PQS o CO2."
+        justificacion: "El agua conduce electricidad. Se debe usar PQS o CO2.",
+        pista: "No use agua en fuegos eléctricos. Use PQS o CO2."
     },
     {
-        materia: "Primeros Auxilios / Heridas",
-        pregunta: "Si una persona tiene un objeto clavado (como un cuchillo) en el abdomen, ¿qué debes hacer?",
-        opciones: [
-            "Retirar el objeto cuidadosamente para que sane.",
-            "Dejarlo clavado y estabilizarlo con apósitos alrededor para evitar que se mueva, buscando ayuda quirúrgica urgente.",
-            "Empujar el objeto más adentro para detener la hemorragia.",
-            "Intentar sacarlo y vendar la herida."
-        ],
+        materia: "Heridas",
+        pregunta: "Si hay un objeto clavado en el abdomen, ¿qué debe hacer?",
+        opciones: ["Retirarlo.", "Dejarlo clavado y estabilizarlo.", "Empujarlo más adentro.", "Sacarlo y vendar."],
         correcta: 1,
-        justificacion: "El objeto clavado está taponando la hemorragia. Si lo retiras, puede desangrarse. Debe ser retirado solo en quirófano.",
-        pista: "Nunca retires un objeto empalado, él está tapando el sangrado."
+        justificacion: "El objeto tapona la hemorragia. Debe ser retirado solo en quirófano.",
+        pista: "Nunca retire un objeto empalado."
     },
     {
-        materia: "RCP / Pediátrico",
-        pregunta: "En un RCP pediátrico (niño), ¿cómo se realizan las compresiones torácicas?",
-        opciones: [
-            "Con una sola mano o dos dedos, dependiendo del tamaño, a una profundidad aproximada de 5 cm.",
-            "Con las dos manos entrelazadas y mucha fuerza, igual que en adultos.",
-            "Solo con los dedos índice y pulgar, sin profundidad.",
-            "Con el puño cerrado."
-        ],
+        materia: "RCP Pediátrico",
+        pregunta: "En RCP pediátrico, ¿cómo se realizan las compresiones?",
+        opciones: ["Una mano o dos dedos, profundidad 5 cm.", "Dos manos entrelazadas y mucha fuerza.", "Solo dedos índice y pulgar.", "Con el puño."],
         correcta: 0,
-        justificacion: "En niños se usan una o dos manos (en bebés, dos dedos), con una profundidad de aproximadamente 1/3 del diámetro del tórax (unos 5 cm).",
-        pista: "En niños se usa menos fuerza y menos dedos/manos que en adultos."
+        justificacion: "En niños se usa una o dos manos (bebés dos dedos), con profundidad de 5 cm.",
+        pista: "En niños se usa menos fuerza que en adultos."
     }
 ];
 
 const PREGUNTAS_EXPERTO = [
     {
-        materia: "Rescate / Triage START",
-        pregunta: "En el sistema de Triage START, ¿qué color se asigna a un paciente con compromiso respiratorio severo pero que puede ser salvado con intervención inmediata?",
-        opciones: [
-            "Verde",
-            "Amarillo",
-            "Rojo",
-            "Negro"
-        ],
+        materia: "Triage START",
+        pregunta: "En Triage START, ¿qué color es para paciente crítico con posibilidad de sobrevivir?",
+        opciones: ["Verde", "Amarillo", "Rojo", "Negro"],
         correcta: 2,
-        justificacion: "El Rojo (Prioridad 1) es para pacientes críticos que requieren atención inmediata, pero tienen posibilidades de sobrevivir (ej. obstrucción de vía aérea, hemorragia masiva).",
-        pista: "El color de la alerta máxima y la urgencia vital."
+        justificacion: "El Rojo (Prioridad 1) es para pacientes críticos que requieren atención inmediata.",
+        pista: "El color de la urgencia vital."
     },
     {
-        materia: "Rescate / Inmovilización",
-        pregunta: "¿Cuál es el propósito principal de utilizar una tabla espinal y un collarín cervical en un paciente politraumatizado?",
-        opciones: [
-            "Mantener al paciente cómodo durante el traslado.",
-            "Inmovilizar la columna vertebral para evitar lesiones medulares secundarias.",
-            "Prevenir el vómito durante el transporte.",
-            "Facilitar la aplicación de RCP."
-        ],
+        materia: "Inmovilización",
+        pregunta: "Propósito de la tabla espinal y collarín cervical:",
+        opciones: ["Comodidad.", "Inmovilizar columna para evitar lesiones medulares.", "Prevenir vómito.", "Facilitar RCP."],
         correcta: 1,
-        justificacion: "La inmovilización espinal previene el movimiento de fracturas vertebrales que podrían seccionar o dañar la médula espinal, causando parálisis permanente.",
-        pista: "Su objetivo es proteger la médula espinal de daños mayores."
+        justificacion: "Previene el movimiento de fracturas vertebrales que podrían dañar la médula.",
+        pista: "Su objetivo es proteger la médula espinal."
     },
     {
-        materia: "Siniestros / Materiales Peligrosos",
-        pregunta: "En un derrame de material peligroso, ¿cuál es la zona donde existe el mayor riesgo de exposición y requiere el uso de trajes encapsulados?",
-        opciones: [
-            "Zona Caliente (Zona Roja).",
-            "Zona Tibia (Zona Amarilla).",
-            "Zona Fría (Zona Verde).",
-            "Zona de Descontaminación."
-        ],
+        materia: "Materiales Peligrosos",
+        pregunta: "Zona de mayor riesgo en derrame de material peligroso:",
+        opciones: ["Zona Caliente (Roja).", "Zona Tibia (Amarilla).", "Zona Fría (Verde).", "Zona de Descontaminación."],
         correcta: 0,
-        justificacion: "La Zona Caliente es el área de contaminación directa, donde la concentración del tóxico es máxima. Solo personal con protección Nivel A puede entrar.",
-        pista: "Es la zona de mayor peligro y temperatura de alerta."
+        justificacion: "La Zona Caliente es el área de contaminación directa.",
+        pista: "Es la zona de mayor peligro."
     },
     {
-        materia: "Rescate / Extricación Vehicular",
-        pregunta: "En un rescate vehicular, ¿cuál es el primer paso táctico antes de usar herramientas hidráulicas de corte (tijeras de rescate)?",
-        opciones: [
-            "Cortar el techo del vehículo inmediatamente.",
-            "Estabilizar el vehículo (cuñas, calzos) y desconectar la batería.",
-            "Romper todos los vidrios para ventilar.",
-            "Jalar al paciente hacia afuera por la ventana."
-        ],
+        materia: "Extricación Vehicular",
+        pregunta: "Primer paso antes de usar herramientas hidráulicas en rescate vehicular:",
+        opciones: ["Cortar techo.", "Estabilizar vehículo y desconectar batería.", "Romper vidrios.", "Jalar al paciente."],
         correcta: 1,
-        justificacion: "La estabilización evita que el vehículo se mueva y lesione al paciente o al rescatista. Desconectar la batería previene incendios o activación de airbags.",
-        pista: "El auto no debe moverse y debes cortar la energía (batería) antes de cortar metal."
+        justificacion: "Estabilizar evita movimientos y desconectar la batería previene incendios.",
+        pista: "El auto no debe moverse y debes cortar la energía."
     },
     {
         materia: "RCP Avanzado",
-        pregunta: "En un paro cardiorrespiratorio, ¿qué ritmo del DEA es susceptible de descarga eléctrica?",
-        opciones: [
-            "Asistolia (línea plana).",
-            "Actividad Eléctrica Sin Pulso (AESP).",
-            "Fibrilación Ventricular (FV) y Taquicardia Ventricular sin pulso (TVSP).",
-            "Bradicardia severa."
-        ],
+        pregunta: "¿Qué ritmo del DEA es susceptible de descarga?",
+        opciones: ["Asistolia.", "AESP.", "Fibrilación Ventricular y TVSP.", "Bradicardia."],
         correcta: 2,
-        justificacion: "El DEA solo descarga en ritmos desfibrilables: Fibrilación Ventricular y Taquicardia Ventricular sin pulso. En asistolia no se descarga.",
-        pista: "Es cuando el corazón tiembla inútilmente (fibrila) o late demasiado rápido sin bombear."
+        justificacion: "El DEA descarga en FV y TVSP. En asistolia no se descarga.",
+        pista: "Es cuando el corazón fibrila o late muy rápido sin bombear."
     },
     {
-        materia: "Siniestros / Incendios",
-        pregunta: "¿Cuál es el método de extinción de incendios que consiste en eliminar el oxígeno de la combustión?",
-        opciones: [
-            "Enfriamiento.",
-            "Sofocación.",
-            "Inhibición química.",
-            "Separación."
-        ],
+        materia: "Incendios",
+        pregunta: "Método de extinción que elimina el oxígeno:",
+        opciones: ["Enfriamiento.", "Sofocación.", "Inhibición química.", "Separación."],
         correcta: 1,
-        justificacion: "La sofocación (o ahogamiento) busca desplazar el oxígeno. Se logra con espuma, CO2, o tapando el fuego con una manta ignífuga.",
-        pista: "Se trata de 'ahogar' el fuego quitándole el aire."
+        justificacion: "La sofocación desplaza el oxígeno con espuma o CO2.",
+        pista: "Se trata de 'ahogar' el fuego."
     },
     {
-        materia: "Rescate / Alturas",
-        pregunta: "En un rescate en espacios confinados, ¿cuál es el peligro más común e inmediato?",
-        opciones: [
-            "Golpes por caída de objetos.",
-            "Atmósfera peligrosa (deficiencia de oxígeno o gases tóxicos).",
-            "Ruido excesivo.",
-            "Claustrofobia."
-        ],
+        materia: "Espacios Confinados",
+        pregunta: "Peligro más común e inmediato en espacios confinados:",
+        opciones: ["Golpes.", "Atmósfera peligrosa (falta de O2 o gases tóxicos).", "Ruido.", "Claustrofobia."],
         correcta: 1,
-        justificacion: "El peligro letal número uno en espacios confinados es la atmósfera. Puede haber falta de oxígeno o gases invisibles (H2S, CO) que causan la muerte en segundos.",
-        pista: "El aire que no ves es lo que mata más rápido en un espacio confinado."
+        justificacion: "El peligro letal número uno es la atmósfera.",
+        pista: "El aire que no ves es lo que mata más rápido."
     },
     {
-        materia: "Primeros Auxilios / Trauma",
-        pregunta: "Ante un paciente con sospecha de neumotórax a tensión (dificultad respiratoria severa tras trauma de tórax), ¿qué signo es clave?",
-        opciones: [
-            "Desviación de la tráquea hacia el lado sano y ausencia de ruidos respiratorios en el lado lesionado.",
-            "Sangrado abundante por la boca.",
-            "Pupilas dilatadas.",
-            "Pulso lento y fuerte."
-        ],
+        materia: "Trauma",
+        pregunta: "Signo clave de neumotórax a tensión:",
+        opciones: ["Desviación de tráquea y ausencia de ruidos respiratorios.", "Sangrado por boca.", "Pupilas dilatadas.", "Pulso lento."],
         correcta: 0,
-        justificacion: "El neumotórax a tensión empuja el mediastino. La tráquea se desvía al lado opuesto a la lesión y no hay entrada de aire en el pulmón afectado.",
-        pista: "La tráquea se desvía hacia el lado sano y el pecho no se expande."
+        justificacion: "La tráquea se desvía al lado sano y no hay entrada de aire.",
+        pista: "La tráquea se desvía hacia el lado sano."
     },
     {
-        materia: "Rescate / Cuerdas",
-        pregunta: "¿Cuál es el nudo de rescate más utilizado para asegurar a una víctima al arnés o camilla?",
-        opciones: [
-            "Nudo simple.",
-            "Nudo As de Guía (Bowline).",
-            "Nudo de rizo.",
-            "Nudo corredizo."
-        ],
+        materia: "Cuerdas",
+        pregunta: "Nudo de rescate más utilizado para asegurar a una víctima:",
+        opciones: ["Nudo simple.", "As de Guía (Bowline).", "Nudo de rizo.", "Nudo corredizo."],
         correcta: 1,
-        justificacion: "El As de Guía es un nudo fijo que no se corre bajo tensión y es fácil de desatar, ideal para asegurar personas.",
-        pista: "Es un nudo clásico de rescate que no se aprieta y es fácil de desatar."
+        justificacion: "El As de Guía es fijo y no se corre bajo tensión.",
+        pista: "Es un nudo clásico que no se aprieta."
     },
     {
-        materia: "Siniestros / Hazmat",
-        pregunta: "El código de colores del Rombo NFPA 704: ¿Qué indica el cuadrante de color Amarillo?",
-        opciones: [
-            "Riesgo de salud.",
-            "Inflamabilidad.",
-            "Reactividad o inestabilidad.",
-            "Riesgos especiales."
-        ],
+        materia: "Hazmat",
+        pregunta: "Rombo NFPA 704: ¿Qué indica el cuadrante Amarillo?",
+        opciones: ["Salud.", "Inflamabilidad.", "Reactividad.", "Riesgos especiales."],
         correcta: 2,
-        justificacion: "En NFPA 704: Azul=Salud, Rojo=Inflamabilidad, Amarillo=Reactividad/Inestabilidad, Blanco=Especial.",
-        pista: "El amarillo indica si el químico explota o reacciona violentamente."
+        justificacion: "Amarillo = Reactividad/Inestabilidad.",
+        pista: "Indica si el químico reacciona violentamente."
     },
     {
-        materia: "RCP / Soporte Vital",
-        pregunta: "¿Cuál es la causa más frecuente de paro cardiorrespiratorio en adultos?",
-        opciones: [
-            "Ahogamiento.",
-            "Fibrilación ventricular por enfermedad coronaria.",
-            "Sobredosis de drogas.",
-            "Traumatismo craneoencefálico."
-        ],
+        materia: "Soporte Vital",
+        pregunta: "Causa más frecuente de paro cardiorrespiratorio en adultos:",
+        opciones: ["Ahogamiento.", "Fibrilación ventricular por enfermedad coronaria.", "Sobredosis.", "Traumatismo."],
         correcta: 1,
-        justificacion: "La enfermedad cardiovascular y la isquemia miocárdica que lleva a FV son las causas principales en adultos.",
-        pista: "Está relacionado con el corazón y las arterias (infarto)."
+        justificacion: "La enfermedad cardiovascular es la causa principal.",
+        pista: "Relacionado con el corazón y las arterias."
     },
     {
-        materia: "Rescate / Búsqueda",
-        pregunta: "En la búsqueda de personas desaparecidas, ¿qué patrón de búsqueda se utiliza en áreas extensas y abiertas?",
-        opciones: [
-            "Búsqueda en línea o rastrillado.",
-            "Búsqueda en espiral.",
-            "Búsqueda en cuadrícula.",
-            "Búsqueda en zig-zag."
-        ],
+        materia: "Búsqueda",
+        pregunta: "Patrón de búsqueda en áreas extensas y abiertas:",
+        opciones: ["Línea o rastrillado.", "Espiral.", "Cuadrícula.", "Zig-zag."],
         correcta: 0,
-        justificacion: "El rastrillado (línea) cubre grandes áreas abiertas con rescatistas caminando en línea recta a una distancia donde puedan ver el suelo.",
-        pista: "Piensa en una fila de personas caminando en línea recta por un campo."
+        justificacion: "El rastrillado cubre grandes áreas con rescatistas en línea.",
+        pista: "Una fila de personas caminando en línea recta."
     },
     {
-        materia: "Siniestros / Derrames",
-        pregunta: "¿Cuál es el primer paso al llegar a un derrame de combustible en una carretera?",
-        opciones: [
-            "Encender bengalas para iluminar.",
-            "Asegurar el área, alejar a los curiosos y eliminar fuentes de ignición (no fumar, apagar motores).",
-            "Echar agua para diluir el combustible.",
-            "Intentar limpiarlo con trapos."
-        ],
+        materia: "Derrames",
+        pregunta: "Primer paso en derrame de combustible en carretera:",
+        opciones: ["Encender bengalas.", "Asegurar área y eliminar fuentes de ignición.", "Echar agua.", "Limpiar con trapos."],
         correcta: 1,
-        justificacion: "Los combustibles son altamente inflamables. El primer paso es evitar chispas, apagar motores y acordonar la zona.",
-        pista: "El combustible es inflamable: elimina cualquier chispa o fuego."
+        justificacion: "Evitar chispas y acordonar es la prioridad.",
+        pista: "El combustible es inflamable: elimine chispas."
     },
     {
-        materia: "Primeros Auxilios / Triage",
-        pregunta: "En un incidente con múltiples víctimas, ¿qué significa el color Negro en el triage?",
-        opciones: [
-            "Herido leve.",
-            "Herido grave.",
-            "Fallecido o lesiones incompatibles con la vida.",
-            "Paciente que no quiere ser atendido."
-        ],
+        materia: "Triage",
+        pregunta: "En incidente con múltiples víctimas, ¿qué significa el color Negro?",
+        opciones: ["Herido leve.", "Herido grave.", "Fallecido o lesión incompatible con la vida.", "No quiere atención."],
         correcta: 2,
-        justificacion: "El color Negro (Prioridad 0 o Expectante) se reserva para fallecidos o pacientes con lesiones mortales (ej. decapitación) donde los esfuerzos de rescate deben enfocarse en los vivos.",
-        pista: "Es el color de la muerte, no hay nada que hacer por esa víctima."
+        justificacion: "El Negro es para fallecidos o lesiones mortales.",
+        pista: "Es el color de la muerte."
     },
     {
-        materia: "Rescate / Cuerdas",
-        pregunta: "¿Para qué se utiliza una polea en un sistema de rescate con cuerdas?",
-        opciones: [
-            "Para cortar la cuerda.",
-            "Para ventaja mecánica, permitiendo levantar más peso con menos esfuerzo.",
-            "Para hacer nudos más resistentes.",
-            "Para evitar el desgaste de la cuerda."
-        ],
+        materia: "Rescate / Poleas",
+        pregunta: "¿Para qué se utiliza una polea en rescate?",
+        opciones: ["Cortar cuerda.", "Ventaja mecánica.", "Hacer nudos.", "Evitar desgaste."],
         correcta: 1,
-        justificacion: "Las poleas crean ventaja mecánica (multiplican la fuerza). Un sistema de 3:1 te permite levantar 3 veces más peso con el mismo esfuerzo.",
-        pista: "Sirven para multiplicar la fuerza y levantar peso más fácilmente."
+        justificacion: "Las poleas multiplican la fuerza para levantar peso.",
+        pista: "Sirven para multiplicar la fuerza."
     }
 ];
 
@@ -1570,56 +1261,36 @@ const ESCENARIOS_ESTRUCTURA = [
 ];
 
 /* =======================================================
-   ESCENARIOS DESPACHO (Adaptados a Rescate y Siniestros)
+   ESCENARIOS DESPACHO
    ======================================================= */
 const ESCENARIOS_DESPACHO = [
     {
         radio: "RADIO CENTRAL: 'Móvil 3 a Sala Situacional. Colisión múltiple en la autopista. Hay 4 heridos: uno atrapado en el vehículo, otro con hemorragia severa en el muslo. Tráfico detenido.'",
         pregunta: "¿Cuál es el despacho táctico inicial más adecuado?",
-        opciones: [
-            "Enviar una sola ambulancia para evaluar.",
-            "Despachar unidad de rescate vehicular con equipo hidráulico, ambulancias y unidad de tráfico.",
-            "Pedir a los conductores que muevan a los heridos.",
-            "Esperar a que llegue la policía para despejar."
-        ],
+        opciones: ["Enviar una sola ambulancia.", "Despachar unidad de rescate vehicular, ambulancias y unidad de tráfico.", "Pedir a conductores que muevan heridos.", "Esperar a la policía."],
         correcta: 1,
-        feedback: "Hay un atrapado (requiere rescate vehicular) y una hemorragia severa (requiere soporte vital). El despacho debe ser completo y rápido."
+        feedback: "Hay un atrapado y una hemorragia severa. El despacho debe ser completo y rápido."
     },
     {
-        radio: "RADIO CENTRAL: 'Atención: Incendio estructural en edificio residencial. Se reportan personas atrapadas en el piso 3. Humo negro denso saliendo por las ventanas.'",
-        pregunta: "¿Cuál es la prioridad táctica número uno en este despacho?",
-        opciones: [
-            "Apagar el fuego desde afuera con chorros de agua.",
-            "Controlar el tráfico vehicular.",
-            "Búsqueda y rescate de víctimas atrapadas en el interior.",
-            "Cortar la energía eléctrica del sector."
-        ],
+        radio: "RADIO CENTRAL: 'Atención: Incendio estructural en edificio residencial. Se reportan personas atrapadas en el piso 3. Humo negro denso.'",
+        pregunta: "¿Cuál es la prioridad táctica número uno?",
+        opciones: ["Apagar fuego desde afuera.", "Controlar tráfico.", "Búsqueda y rescate de víctimas.", "Cortar energía eléctrica."],
         correcta: 2,
-        feedback: "En incendios con personas atrapadas, la prioridad absoluta es el rescate (SALVAR VIDAS) antes de atacar el fuego."
+        feedback: "En incendios con personas atrapadas, la prioridad es el rescate (SALVAR VIDAS)."
     },
     {
         radio: "RADIO CENTRAL: 'Aeronave monomotor despegó de Maiquetía con destino a Canaima. Hace 65 minutos superó el tiempo estimado de notificación. Sin contacto radial.'",
         pregunta: "¿Qué fase del protocolo SAR debe declarar la sala?",
-        opciones: [
-            "DESTREFA (Desastre confirmado).",
-            "INCERFA (Incertidumbre), iniciando rastreo telefónico y verificación en pistas alternas.",
-            "Cerrar bitácora.",
-            "Misión concluida."
-        ],
+        opciones: ["DESTREFA.", "INCERFA, iniciando rastreo telefónico y verificación.", "Cerrar bitácora.", "Misión concluida."],
         correcta: 1,
-        feedback: "Es INCERFA. No hay confirmación de impacto pero sí un retraso que amerita indagación."
+        feedback: "Es INCERFA. No hay confirmación de impacto pero hay retraso."
     },
     {
-        radio: "RADIO CENTRAL: 'Sismo magnitud 6.2 en eje centro-norte costero. Hospital municipal con desprendimiento de cielo raso y pánico en emergencias.'",
+        radio: "RADIO CENTRAL: 'Sismo magnitud 6.2. Hospital municipal con desprendimiento de cielo raso y pánico en emergencias.'",
         pregunta: "¿Cuál es la primera instrucción para el equipo EDAN?",
-        opciones: [
-            "Descartar riesgos vitales (gas, electricidad), ordenar corte preventivo y evaluación rápida del esqueleto.",
-            "Continuar cirugías sin revisar vigas.",
-            "Publicar fotos personales antes de llegar.",
-            "Demoler inmediatamente sin peritaje."
-        ],
+        opciones: ["Descartar riesgos vitales, ordenar corte preventivo y evaluación rápida.", "Continuar cirugías.", "Publicar fotos.", "Demoler inmediatamente."],
         correcta: 0,
-        feedback: "Paso 1 post-sismo: asegurar el sitio. Cortar gas y electricidad para evitar incendios secundarios."
+        feedback: "Paso 1: asegurar el sitio. Cortar gas y electricidad para evitar incendios."
     }
 ];
 
@@ -1656,11 +1327,7 @@ function barajarPregunta(preguntaObj) {
     }
     const nuevasOpciones = indices.map(i => preguntaObj.opciones[i]);
     const nuevaPosCorrecta = indices.indexOf(preguntaObj.correcta);
-    return {
-        ...preguntaObj,
-        opciones: nuevasOpciones,
-        correcta: nuevaPosCorrecta
-    };
+    return { ...preguntaObj, opciones: nuevasOpciones, correcta: nuevaPosCorrecta };
 }
 
 function prepararBanco(basePreguntas) {
@@ -1674,7 +1341,7 @@ function prepararBanco(basePreguntas) {
 function cargarRecordLocal() {
     try {
         const record = localStorage.getItem('pcad_record') || '0';
-        const rango  = localStorage.getItem('pcad_rango')  || 'Aspirante TSU';
+        const rango  = localStorage.getItem('pcad_rango')  || 'Aspirante';
         const recEl = document.getElementById('menu-record-txt');
         const ranEl = document.getElementById('menu-rango-txt');
         if (recEl) recEl.innerText = `${record} pts`;
@@ -1699,10 +1366,8 @@ function cambiarPantalla(id) {
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
     const target = document.getElementById(id);
     if (target) target.classList.add('active');
-
     const btnChat = document.getElementById('btn-chat');
     if (btnChat) btnChat.style.display = (id === 'resultado-screen') ? 'none' : 'flex';
-
     detenerTimer();
 }
 
@@ -1716,14 +1381,8 @@ function volverAlMenu() {
 /* =======================================================
    MANUAL
    ======================================================= */
-function abrirManual() {
-    sonido.click();
-    document.getElementById('modal-manual').classList.add('active');
-}
-function cerrarManual() {
-    sonido.click();
-    document.getElementById('modal-manual').classList.remove('active');
-}
+function abrirManual() { sonido.click(); document.getElementById('modal-manual').classList.add('active'); }
+function cerrarManual() { sonido.click(); document.getElementById('modal-manual').classList.remove('active'); }
 
 /* =======================================================
    CHAT
@@ -1738,21 +1397,18 @@ function toggleChat() {
     }
 }
 
-function enviarChip(tema) {
-    document.getElementById('chat-input').value = tema;
-    enviarMensajeChat();
-}
+function enviarChip(tema) { document.getElementById('chat-input').value = tema; enviarMensajeChat(); }
 
 function pedirPistaTutor() {
     const chat = document.getElementById('chat-container');
     chat.classList.add('open');
     if (appState.modo && appState.banco[appState.indice]) {
         const p = appState.banco[appState.indice];
-        agregarMensajeChat(`Instructor, dame una pista sobre: ${p.materia}`, 'msg-user');
+        agregarMensajeChat(`Pista sobre: ${p.materia}`, 'msg-user');
         sonido.rogerBip();
-        setTimeout(() => agregarMensajeChat(`PISTA TÁCTICA: ${p.pista}`, 'msg-bot'), 500);
+        setTimeout(() => agregarMensajeChat(`PISTA: ${p.pista}`, 'msg-bot'), 500);
     } else {
-        agregarMensajeChat("¿En qué doctrina o procedimiento operacional necesitas apoyo?", 'msg-bot');
+        agregarMensajeChat("¿En qué doctrina operacional necesita apoyo?", 'msg-bot');
     }
     chat.scrollIntoView({ block: 'end', behavior: 'smooth' });
 }
@@ -1761,27 +1417,19 @@ function enviarMensajeChat() {
     const input = document.getElementById('chat-input');
     const raw = input.value.trim();
     if (!raw) return;
-
     agregarMensajeChat(raw, 'msg-user');
     input.value = "";
     sonido.rogerBip();
 
     const q = raw.toLowerCase();
-    let r = "No dispongo de una directriz exacta para ese término. Intenta con: 'RCP', 'hemorragia', 'triage', 'incendio', 'PAS' o 'estructura'.";
+    let r = "No poseo directriz exacta. Consulte: RCP, hemorragia, triage, incendio, PAS o estructura.";
 
-    if (q.includes('rcp') || q.includes('reanimacion') || q.includes('compresion')) {
-        r = "RCP BÁSICO:\n• Frecuencia: 100 a 120 compresiones/min.\n• Profundidad: 5 cm.\n• Relación: 30 compresiones por 2 ventilaciones.";
-    } else if (q.includes('hemorragia') || q.includes('sangre') || q.includes('sangrado')) {
-        r = "CONTROL DE HEMORRAGIAS:\n1. Presión directa con apósito estéril.\n2. Elevación del miembro.\n3. Torniquete solo si es riesgo vital y anotando la hora.";
-    } else if (q.includes('triage') || q.includes('start') || q.includes('clasificacion')) {
-        r = "TRIAGE START:\n• Verde: Leve.\n• Amarillo: Grave estable.\n• Rojo: Riesgo vital inmediato.\n• Negro: Fallecido o lesión incompatible.";
-    } else if (q.includes('incendio') || q.includes('fuego') || q.includes('extintor')) {
-        r = "INCENDIOS:\n• Fuego Clase C (eléctrico): usar PQS o CO2. NUNCA agua.\n• Prioridad táctica: Rescate de víctimas antes que atacar el fuego.";
-    } else if (q.includes('pas') || q.includes('proteger')) {
-        r = "PROTOCOLO PAS:\n• Proteger la escena.\n• Avisar a emergencias.\n• Socorrer a la víctima.";
-    } else if (q.includes('estructura') || q.includes('esqueleto')) {
-        r = "REGLA DE ORO:\n• Esqueleto (columnas/vigas): grietas 45° o cabillas = EVACUAR.\n• Piel (tabiquería): grietas en X sin daño a columnas = Seguro.";
-    }
+    if (q.includes('rcp') || q.includes('reanimacion')) r = "RCP BÁSICO:\n• Frecuencia: 100-120/min.\n• Profundidad: 5 cm.\n• Relación: 30 compresiones, 2 ventilaciones.";
+    else if (q.includes('hemorragia') || q.includes('sangre')) r = "HEMORRAGIAS:\n1. Presión directa.\n2. Elevación.\n3. Torniquete solo si es vital.";
+    else if (q.includes('triage') || q.includes('start')) r = "TRIAGE START:\n• Verde: Leve.\n• Amarillo: Grave estable.\n• Rojo: Riesgo vital.\n• Negro: Fallecido.";
+    else if (q.includes('incendio') || q.includes('fuego')) r = "INCENDIOS:\n• Clase C (eléctrico): PQS o CO2. NUNCA agua.\n• Prioridad: Rescate de víctimas.";
+    else if (q.includes('pas') || q.includes('proteger')) r = "PROTOCOLO PAS:\n• Proteger.\n• Avisar.\n• Socorrer.";
+    else if (q.includes('estructura') || q.includes('esqueleto')) r = "REGLA DE ORO:\n• Esqueleto (columnas): grietas 45° = EVACUAR.\n• Piel (tabiquería): grietas en X = Seguro si columnas sanas.";
 
     setTimeout(() => agregarMensajeChat(r, 'msg-bot'), 450);
 }
@@ -1802,15 +1450,12 @@ function iniciarJuegoTeorico(nivel) {
     sonido.click();
     appState.modo = nivel;
     const base = (nivel === 'novato') ? PREGUNTAS_NOVATO : PREGUNTAS_EXPERTO;
-    
     appState.banco = prepararBanco(base);
-    
     appState.indice = 0;
     appState.puntos = 0;
     appState.racha = 0;
     appState.maxRacha = 0;
     appState.tiempoInicio = Date.now();
-
     cambiarPantalla('juego-screen');
     cargarPregunta();
 }
@@ -1818,7 +1463,6 @@ function iniciarJuegoTeorico(nivel) {
 function cargarPregunta() {
     appState.respondida = false;
     const p = appState.banco[appState.indice];
-
     document.getElementById('materia-txt').innerText = p.materia;
     document.getElementById('categoria-badge').innerText = `MÓDULO: ${appState.modo.toUpperCase()} • ${p.materia.toUpperCase()}`;
     document.getElementById('progreso-txt').innerText = `${appState.indice + 1}/${appState.banco.length}`;
@@ -1840,13 +1484,11 @@ function cargarPregunta() {
     const feedback = document.getElementById('feedback-container');
     feedback.className = 'feedback-box';
     feedback.innerHTML = '';
-
     document.getElementById('btn-siguiente').disabled = true;
 
     if (typeof ponerIlustracionJuego === 'function') {
-        ponerIlustracionJuego(p.pregunta);
+        ponerIlustracionJuego(p.materia);
     }
-
     iniciarTimerPregunta();
 }
 
@@ -1858,28 +1500,19 @@ function iniciarTimerPregunta() {
     if (!wrap || !bar) return;
     wrap.style.display = 'block';
     bar.style.width = '100%';
-    bar.style.backgroundColor = 'var(--verde)';
+    bar.style.backgroundColor = 'var(--naranja-pcad)';
 
     appState.timerId = setInterval(() => {
         appState.tiempoRestante -= 0.1;
         const pct = Math.max(0, (appState.tiempoRestante / 30) * 100);
         bar.style.width = `${pct}%`;
-
-        if (pct < 30) bar.style.backgroundColor = 'var(--rojo)';
-        else if (pct < 60) bar.style.backgroundColor = 'var(--amarillo)';
-
-        if (appState.tiempoRestante <= 0) {
-            detenerTimer();
-            tiempoAgotado();
-        }
+        if (pct < 30) bar.style.backgroundColor = 'var(--rojo-alerta)';
+        if (appState.tiempoRestante <= 0) { detenerTimer(); tiempoAgotado(); }
     }, 100);
 }
 
 function detenerTimer() {
-    if (appState.timerId) {
-        clearInterval(appState.timerId);
-        appState.timerId = null;
-    }
+    if (appState.timerId) { clearInterval(appState.timerId); appState.timerId = null; }
     const wrap = document.getElementById('timer-bar-wrap');
     if (wrap) wrap.style.display = 'none';
 }
@@ -1890,10 +1523,8 @@ function tiempoAgotado() {
     const p = appState.banco[appState.indice];
     const opcionesDOM = document.getElementById('opciones-container').children;
     bloquearOpciones();
-
     appState.racha = 0;
     document.getElementById('racha-txt').innerText = '0';
-
     if (opcionesDOM[p.correcta]) opcionesDOM[p.correcta].classList.add('correcta');
     const feedback = document.getElementById('feedback-container');
     feedback.className = 'feedback-box show fail';
@@ -1910,7 +1541,6 @@ function bloquearOpciones() {
 function seleccionarOpcion(idx, btnElem) {
     if (appState.respondida) return;
     bloquearOpciones();
-
     const p = appState.banco[appState.indice];
     const opcionesDOM = document.getElementById('opciones-container').children;
     const feedback = document.getElementById('feedback-container');
@@ -1918,27 +1548,22 @@ function seleccionarOpcion(idx, btnElem) {
     if (idx === p.correcta) {
         sonido.acierto();
         btnElem.classList.add('correcta');
-
         appState.racha++;
         if (appState.racha > appState.maxRacha) appState.maxRacha = appState.racha;
-
         const bonusVelocidad = Math.round(appState.tiempoRestante * 0.5);
         const multiRacha = appState.racha >= 3 ? 1.5 : 1;
         const ptsGanados = Math.round((10 + bonusVelocidad) * multiRacha);
         appState.puntos += ptsGanados;
-
         feedback.className = 'feedback-box show ok';
         feedback.innerHTML = `<strong>Respuesta correcta (+${ptsGanados} pts)</strong><div class="justificacion">${p.justificacion}</div>`;
     } else {
         sonido.error();
         btnElem.classList.add('incorrecta');
         if (opcionesDOM[p.correcta]) opcionesDOM[p.correcta].classList.add('correcta');
-
         appState.racha = 0;
         feedback.className = 'feedback-box show fail';
         feedback.innerHTML = `<strong>Respuesta incorrecta</strong><div class="justificacion">Opción correcta: Letra ${['A','B','C','D'][p.correcta]}.<br>${p.justificacion}</div>`;
     }
-
     document.getElementById('puntos-txt').innerText = appState.puntos;
     document.getElementById('racha-txt').innerText = appState.racha;
     document.getElementById('btn-siguiente').disabled = false;
@@ -1947,11 +1572,8 @@ function seleccionarOpcion(idx, btnElem) {
 function siguientePregunta() {
     sonido.click();
     appState.indice++;
-    if (appState.indice < appState.banco.length) {
-        cargarPregunta();
-    } else {
-        mostrarResultadosFinales('teorico');
-    }
+    if (appState.indice < appState.banco.length) cargarPregunta();
+    else mostrarResultadosFinales('teorico');
 }
 
 /* =======================================================
@@ -1964,34 +1586,25 @@ function iniciarJuegoEstructuras() {
     appState.indiceEst = 0;
     appState.aciertosEst = 0;
     appState.tiempoInicio = Date.now();
-
     cambiarPantalla('estructuras-screen');
     cargarEscenarioEstructural();
 }
 
 function generarSvgComic(tipo) {
-    // ... (Mismo código SVG que en la respuesta anterior)
+    // SVG profesional simplificado para estructuras
     switch(tipo) {
         case 'corte_columna':
             return `<svg viewBox="0 0 400 240" xmlns="http://www.w3.org/2000/svg">
-                <defs><pattern id="dots1" width="12" height="12" patternUnits="userSpaceOnUse"><circle cx="3" cy="3" r="1.5" fill="#FF8533" opacity="0.3"/></pattern></defs>
-                <rect x="10" y="10" width="380" height="220" fill="#0E2344" stroke="#000" stroke-width="4" rx="8"/>
-                <rect x="10" y="10" width="380" height="220" fill="url(#dots1)"/>
-                <rect x="165" y="30" width="90" height="180" fill="#000" rx="4"/>
-                <rect x="155" y="24" width="90" height="180" fill="#64748B" stroke="#000" stroke-width="5" rx="4"/>
-                <path d="M165,35 L235,35 M165,45 L235,45 M165,55 L235,55" stroke="#334155" stroke-width="3"/>
-                <path d="M152,145 L175,125 L190,135 L220,95 L248,75" stroke="#000" stroke-width="12" stroke-linecap="round" fill="none"/>
-                <path d="M152,145 L175,125 L190,135 L220,95 L248,75" stroke="#FF2E55" stroke-width="6" stroke-linecap="round" fill="none"/>
-                <polygon points="170,110 185,115 178,125" fill="#334155" stroke="#000" stroke-width="2"/>
-                <polygon points="215,80 230,85 220,95" fill="#334155" stroke="#000" stroke-width="2"/>
-                <g transform="translate(250, 45) rotate(12)">
-                    <polygon points="0,20 18,5 25,25 45,10 40,30 65,25 50,45 70,55 45,65 55,85 30,75 25,95 10,75 -10,85 0,60 -20,50 0,40 -15,20" fill="#FFD600" stroke="#000" stroke-width="4"/>
-                    <text x="25" y="55" fill="#FF2E55" font-family="Montserrat,sans-serif" font-weight="800" font-size="22" text-anchor="middle">CRACK!</text>
-                </g>
-                <rect x="25" y="170" width="130" height="36" fill="#FF2E55" stroke="#000" stroke-width="3" rx="6" transform="rotate(-4 25 170)"/>
-                <text x="90" y="194" fill="#FFF" font-family="Montserrat,sans-serif" font-weight="800" font-size="14" text-anchor="middle">CIZALLE A 45°</text>
+                <rect x="10" y="10" width="380" height="220" fill="#102542" stroke="#23456d" stroke-width="2" rx="8"/>
+                <rect x="155" y="24" width="90" height="180" fill="#64748B" stroke="#0a1a30" stroke-width="3" rx="4"/>
+                <path d="M165,35 L235,35 M165,45 L235,45 M165,55 L235,55" stroke="#334155" stroke-width="2"/>
+                <path d="M152,145 L175,125 L190,135 L220,95 L248,75" stroke="#FF6B00" stroke-width="6" stroke-linecap="round" fill="none"/>
+                <polygon points="170,110 185,115 178,125" fill="#334155"/>
+                <polygon points="215,80 230,85 220,95" fill="#334155"/>
+                <text x="200" y="220" fill="#fff" font-family="Inter,sans-serif" font-weight="700" font-size="14" text-anchor="middle">FALLA POR CORTE A 45°</text>
             </svg>`;
-        // ... (resto de casos igual)
+        // ... (resto de casos igual, adaptando colores)
+        default: return '';
     }
 }
 
@@ -2000,15 +1613,13 @@ function cargarEscenarioEstructural() {
     document.getElementById('estructuras-progreso').innerText = `${appState.indiceEst + 1}/${appState.escenariosEst.length}`;
     document.getElementById('est-aciertos-txt').innerText = appState.aciertosEst;
     document.getElementById('est-sub-txt').innerText = esc.subtitulo;
-    document.getElementById('comic-vignette-tag').innerText = `PANEL #${appState.indiceEst + 1} • ${esc.subtitulo.toUpperCase()}`;
+    document.getElementById('comic-vignette-tag').innerText = `PANEL #${appState.indiceEst + 1}`;
     document.getElementById('dibujo-svg-container').innerHTML = generarSvgComic(esc.tipo);
     document.getElementById('est-titulo').innerText = esc.titulo;
     document.getElementById('est-desc').innerText = esc.descripcion;
-
     const fb = document.getElementById('estructuras-feedback');
     fb.className = 'feedback-box';
     fb.innerHTML = '';
-
     document.getElementById('estructuras-botones').style.display = 'flex';
     document.getElementById('estructuras-next-row').style.display = 'none';
 }
@@ -2017,7 +1628,6 @@ function evaluarEstructura(decisionEvacuar) {
     const esc = appState.escenariosEst[appState.indiceEst];
     const fb = document.getElementById('estructuras-feedback');
     const acerto = (decisionEvacuar === esc.esPeligro);
-
     if (acerto) {
         sonido.acierto();
         appState.aciertosEst++;
@@ -2028,7 +1638,6 @@ function evaluarEstructura(decisionEvacuar) {
         fb.className = 'feedback-box show fail';
         fb.innerHTML = `<strong>Evaluación incorrecta</strong><div class="justificacion">${esc.feedback}</div>`;
     }
-
     document.getElementById('est-aciertos-txt').innerText = appState.aciertosEst;
     document.getElementById('estructuras-botones').style.display = 'none';
     document.getElementById('estructuras-next-row').style.display = 'flex';
@@ -2037,11 +1646,8 @@ function evaluarEstructura(decisionEvacuar) {
 function siguienteEstructura() {
     sonido.click();
     appState.indiceEst++;
-    if (appState.indiceEst < appState.escenariosEst.length) {
-        cargarEscenarioEstructural();
-    } else {
-        mostrarResultadosFinales('estructuras');
-    }
+    if (appState.indiceEst < appState.escenariosEst.length) cargarEscenarioEstructural();
+    else mostrarResultadosFinales('estructuras');
 }
 
 /* =======================================================
@@ -2055,7 +1661,6 @@ function iniciarDespachoEDAN() {
     appState.indiceDespacho = 0;
     appState.puntosDespacho = 0;
     appState.tiempoInicio = Date.now();
-
     cambiarPantalla('despacho-screen');
     cargarEscenarioDespacho();
 }
@@ -2066,7 +1671,6 @@ function cargarEscenarioDespacho() {
     document.getElementById('despacho-puntos').innerText = `${appState.puntosDespacho} pts`;
     document.getElementById('despacho-radio-txt').innerText = esc.radio;
     document.getElementById('despacho-mision-txt').innerText = esc.pregunta;
-
     const cont = document.getElementById('despacho-opciones');
     cont.innerHTML = '';
     const letras = ['A', 'B', 'C', 'D'];
@@ -2077,24 +1681,18 @@ function cargarEscenarioDespacho() {
         btn.onclick = () => seleccionarDespacho(idx, btn);
         cont.appendChild(btn);
     });
-
     const fb = document.getElementById('despacho-feedback');
     fb.className = 'feedback-box';
     fb.innerHTML = '';
     document.getElementById('btn-siguiente-despacho').disabled = true;
-
-    if (typeof ponerIlustracionDespacho === 'function') {
-        ponerIlustracionDespacho(esc.radio);
-    }
+    if (typeof ponerIlustracionDespacho === 'function') ponerIlustracionDespacho();
 }
 
 function seleccionarDespacho(idx, btnElem) {
     const esc = appState.escenariosDespacho[appState.indiceDespacho];
     const opcionesDOM = document.getElementById('despacho-opciones').children;
     const fb = document.getElementById('despacho-feedback');
-
     Array.from(opcionesDOM).forEach(o => o.classList.add('bloqueada'));
-
     if (idx === esc.correcta) {
         sonido.acierto();
         btnElem.classList.add('correcta');
@@ -2108,7 +1706,6 @@ function seleccionarDespacho(idx, btnElem) {
         fb.className = 'feedback-box show fail';
         fb.innerHTML = `<strong>Despacho deficiente</strong><div class="justificacion">${esc.feedback}</div>`;
     }
-
     document.getElementById('despacho-puntos').innerText = `${appState.puntosDespacho} pts`;
     document.getElementById('btn-siguiente-despacho').disabled = false;
 }
@@ -2116,11 +1713,8 @@ function seleccionarDespacho(idx, btnElem) {
 function siguienteDespacho() {
     sonido.click();
     appState.indiceDespacho++;
-    if (appState.indiceDespacho < appState.escenariosDespacho.length) {
-        cargarEscenarioDespacho();
-    } else {
-        mostrarResultadosFinales('despacho');
-    }
+    if (appState.indiceDespacho < appState.escenariosDespacho.length) cargarEscenarioDespacho();
+    else mostrarResultadosFinales('despacho');
 }
 
 /* =======================================================
@@ -2130,10 +1724,7 @@ function mostrarResultadosFinales(tipo) {
     sonido.fanfarria();
     detenerTimer();
     cambiarPantalla('resultado-screen');
-
-    let nota20 = 0;
-    let efectividad = 0;
-    let totalPuntos = 0;
+    let nota20 = 0, efectividad = 0, totalPuntos = 0;
 
     if (tipo === 'teorico') {
         nota20 = Math.min(20, Math.round((appState.puntos / (appState.banco.length * 15)) * 20));
@@ -2151,35 +1742,13 @@ function mostrarResultadosFinales(tipo) {
         efectividad = Math.round((appState.puntosDespacho / (total * 25)) * 100);
         totalPuntos = appState.puntosDespacho;
     }
-
     const tiempoTotal = Math.round((Date.now() - appState.tiempoInicio) / 1000);
+    let califTexto = "INSUFICIENTE", mensaje = "Repase los manuales operacionales.", rango = "Aspirante", emblema = "📋";
 
-    let califTexto = "INSUFICIENTE";
-    let mensaje = "Necesitas repasar a fondo los manuales operacionales de Protección Civil y los protocolos SAR.";
-    let rango = "Aspirante";
-    let emblema = "📋";
-
-    if (nota20 >= 19) {
-        califTexto = "EXCELENTE (MENCIÓN HONORÍFICA)";
-        mensaje = "¡Rendimiento táctico insuperable! Demuestras solvencia operativa integral como Comisionado PCAD.";
-        rango = "Comisionado de Operaciones";
-        emblema = "⭐";
-    } else if (nota20 >= 16) {
-        califTexto = "SOBRESALIENTE";
-        mensaje = "Excelente dominio técnico de la doctrina UNES. Apto para liderar comisiones en terreno.";
-        rango = "Inspector PCAD";
-        emblema = "🎖️";
-    } else if (nota20 >= 13) {
-        califTexto = "BUENO (APROBADO)";
-        mensaje = "Cumples con el perfil de TSU en Operaciones de Protección Civil. Refuerza temas específicos.";
-        rango = "Oficial de Operaciones";
-        emblema = "🛡️";
-    } else if (nota20 >= 10) {
-        califTexto = "REGULAR (APROBADO MÍNIMO)";
-        mensaje = "Aprobado con observaciones. Se sugiere estudiar el glosario táctico y el manual de estructuras.";
-        rango = "Discente TSU";
-        emblema = "⚠️";
-    }
+    if (nota20 >= 19) { califTexto = "EXCELENTE"; mensaje = "Rendimiento táctico insuperable."; rango = "Comisionado"; emblema = "⭐"; }
+    else if (nota20 >= 16) { califTexto = "SOBRESALIENTE"; mensaje = "Excelente dominio técnico."; rango = "Inspector PCAD"; emblema = "🎖️"; }
+    else if (nota20 >= 13) { califTexto = "BUENO"; mensaje = "Cumple con el perfil."; rango = "Oficial"; emblema = "🛡️"; }
+    else if (nota20 >= 10) { califTexto = "REGULAR"; mensaje = "Aprobado con observaciones."; rango = "Discente"; emblema = "⚠️"; }
 
     document.getElementById('res-icono').innerText = emblema;
     document.getElementById('res-nota').innerText = nota20;
@@ -2188,79 +1757,97 @@ function mostrarResultadosFinales(tipo) {
     document.getElementById('res-puntos').innerText = totalPuntos;
     document.getElementById('res-efectividad').innerText = `${efectividad}%`;
     document.getElementById('res-tiempo').innerText = `${tiempoTotal}s`;
-
     guardarRecord(totalPuntos, rango);
 }
 
 function reiniciarModuloActual() {
     sonido.click();
-    if (appState.modo === 'novato' || appState.modo === 'experto') {
-        iniciarJuegoTeorico(appState.modo);
-    } else if (appState.modo === 'estructuras') {
-        iniciarJuegoEstructuras();
-    } else if (appState.modo === 'despacho') {
-        iniciarDespachoEDAN();
-    } else {
-        volverAlMenu();
-    }
+    if (appState.modo === 'novato' || appState.modo === 'experto') iniciarJuegoTeorico(appState.modo);
+    else if (appState.modo === 'estructuras') iniciarJuegoEstructuras();
+    else if (appState.modo === 'despacho') iniciarDespachoEDAN();
+    else volverAlMenu();
 }
 
 /* =======================================================
-   ILUSTRACIONES CÓMIC POR PREGUNTA
+   ILUSTRACIONES PROFESIONALES POR MATERIA
    ======================================================= */
 (function () {
-    const E = (c, x, y, s) => `<text x="${x}" y="${y}" font-size="${s}" text-anchor="middle">${c}</text>`;
-    const T = (t, x, y, s, f = '#fff') =>
-        `<text x="${x}" y="${y}" font-family="Montserrat,sans-serif" font-weight="800" font-size="${s}" text-anchor="middle" fill="${f}" stroke="#0b1b33" stroke-width="3" paint-order="stroke">${t}</text>`;
-    const K = 'stroke="#0b1b33" stroke-width="2.5" stroke-linejoin="round"';
-
-    function marco(body, cap) {
-        return `<svg viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="${cap}">
-            <defs><linearGradient id="gf" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0" stop-color="#14396b"/><stop offset="1" stop-color="#0a1e3b"/>
-            </linearGradient></defs>
-            <rect width="400" height="220" fill="url(#gf)"/>
-            ${body}
-            <g transform="translate(0 182)">
-                <rect width="400" height="38" fill="#0b1b33" fill-opacity=".94"/>
-                <rect width="5" height="38" fill="#FF6B00"/>
-                <text x="18" y="25" font-family="Montserrat,sans-serif" font-weight="700" font-size="14" letter-spacing=".6" fill="#fff">${cap}</text>
-            </g>
-        </svg>`;
-    }
-
-    const D = {
-        rcp: marco(`${E('🫀', 150, 100, 90)}${E('🖐️', 250, 110, 70)}${T('100-120', 200, 40, 24, '#ffd600')}`, 'RCP Y COMPRESIONES'),
-        hemorragia: marco(`${E('🩸', 150, 100, 90)}${E('🩹', 250, 100, 80)}`, 'CONTROL DE HEMORRAGIAS'),
-        pas: marco(`${E('🛡️', 120, 100, 80)}${E('📞', 200, 100, 80)}${E('🤝', 280, 100, 80)}`, 'PROTOCOLO PAS'),
-        triage: marco(`${E('🟢', 100, 100, 60)}${E('🟡', 180, 100, 60)}${E('🔴', 260, 100, 60)}${E('⚫', 340, 100, 60)}`, 'TRIAGE START'),
-        extintor: marco(`${E('🔥', 150, 100, 90)}${E('🧯', 250, 100, 80)}`, 'COMBATE DE INCENDIOS'),
-        inmovilizar: marco(`${E('🦴', 150, 100, 90)}${E('🩹', 250, 100, 80)}`, 'INMOVILIZACIÓN'),
-        base: marco(`${E('🚨', 130, 105, 100)}${E('🧭', 270, 100, 90)}`, 'OPERACIONES PCAD')
+    // Ilustraciones SVG estilizadas, serias y profesionales
+    const SVGS = {
+        rcp: `<svg viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg">
+            <rect width="400" height="220" fill="#102542"/>
+            <circle cx="200" cy="110" r="80" fill="none" stroke="#FF6B00" stroke-width="2" stroke-dasharray="4 4"/>
+            <path d="M180 90 L200 110 L220 90" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round"/>
+            <path d="M170 130 L200 150 L230 130" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round"/>
+            <text x="200" y="200" fill="#FF6B00" font-family="Inter,sans-serif" font-weight="700" font-size="16" text-anchor="middle">100 - 120 COMPRESIONES / MIN</text>
+        </svg>`,
+        hemorragia: `<svg viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg">
+            <rect width="400" height="220" fill="#102542"/>
+            <path d="M200 40 C200 40 160 90 160 120 A40 40 0 0 0 240 120 C240 90 200 40 200 40 Z" fill="#EF4444"/>
+            <rect x="190" y="130" width="20" height="60" fill="#fff"/>
+            <rect x="180" y="130" width="40" height="10" fill="#FF6B00"/>
+            <text x="200" y="210" fill="#fff" font-family="Inter,sans-serif" font-weight="600" font-size="14" text-anchor="middle">PRESIÓN DIRECTA</text>
+        </svg>`,
+        pas: `<svg viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg">
+            <rect width="400" height="220" fill="#102542"/>
+            <circle cx="120" cy="110" r="30" fill="none" stroke="#FF6B00" stroke-width="3"/>
+            <text x="120" y="115" fill="#FF6B00" font-family="Inter,sans-serif" font-weight="800" font-size="20" text-anchor="middle">P</text>
+            <circle cx="200" cy="110" r="30" fill="none" stroke="#FF6B00" stroke-width="3"/>
+            <text x="200" y="115" fill="#FF6B00" font-family="Inter,sans-serif" font-weight="800" font-size="20" text-anchor="middle">A</text>
+            <circle cx="280" cy="110" r="30" fill="none" stroke="#FF6B00" stroke-width="3"/>
+            <text x="280" y="115" fill="#FF6B00" font-family="Inter,sans-serif" font-weight="800" font-size="20" text-anchor="middle">S</text>
+            <text x="200" y="190" fill="#fff" font-family="Inter,sans-serif" font-weight="600" font-size="14" text-anchor="middle">PROTEGER · AVISAR · SOCORRER</text>
+        </svg>`,
+        triage: `<svg viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg">
+            <rect width="400" height="220" fill="#102542"/>
+            <rect x="80" y="80" width="40" height="60" fill="#10B981" rx="4"/>
+            <rect x="140" y="80" width="40" height="60" fill="#F59E0B" rx="4"/>
+            <rect x="200" y="80" width="40" height="60" fill="#EF4444" rx="4"/>
+            <rect x="260" y="80" width="40" height="60" fill="#1F2937" stroke="#fff" stroke-width="1" rx="4"/>
+            <text x="200" y="190" fill="#fff" font-family="Inter,sans-serif" font-weight="600" font-size="14" text-anchor="middle">TRIAGE START</text>
+        </svg>`,
+        incendio: `<svg viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg">
+            <rect width="400" height="220" fill="#102542"/>
+            <path d="M200 40 Q220 80 200 100 Q180 80 200 40 Z" fill="#EF4444"/>
+            <path d="M200 60 Q210 90 200 110 Q190 90 200 60 Z" fill="#F59E0B"/>
+            <rect x="160" y="120" width="80" height="40" fill="#FF6B00" rx="4"/>
+            <text x="200" y="150" fill="#fff" font-family="Inter,sans-serif" font-weight="800" font-size="12" text-anchor="middle">PQS / CO2</text>
+            <text x="200" y="200" fill="#fff" font-family="Inter,sans-serif" font-weight="600" font-size="14" text-anchor="middle">FUEGO CLASE C</text>
+        </svg>`,
+        estructura: `<svg viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg">
+            <rect width="400" height="220" fill="#102542"/>
+            <rect x="150" y="40" width="100" height="140" fill="#64748B" rx="4"/>
+            <rect x="140" y="30" width="120" height="20" fill="#64748B"/>
+            <path d="M170 80 L230 120 M230 80 L170 120" stroke="#FF6B00" stroke-width="4" stroke-linecap="round"/>
+            <text x="200" y="200" fill="#fff" font-family="Inter,sans-serif" font-weight="600" font-size="14" text-anchor="middle">EVALUACIÓN ESTRUCTURAL</text>
+        </svg>`,
+        default: `<svg viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg">
+            <rect width="400" height="220" fill="#102542"/>
+            <circle cx="200" cy="110" r="40" fill="none" stroke="#FF6B00" stroke-width="3"/>
+            <path d="M180 110 L200 90 L220 110" fill="none" stroke="#FF6B00" stroke-width="4" stroke-linecap="round"/>
+            <text x="200" y="190" fill="#fff" font-family="Inter,sans-serif" font-weight="600" font-size="14" text-anchor="middle">OPERACIONES PCAD</text>
+        </svg>`
     };
 
-    const R = [
-        [/RCP|compresiones|reanimaci/i, 'rcp'],
-        [/hemorragia|sangre|sangrado/i, 'hemorragia'],
-        [/PAS|Proteger, Avisar/i, 'pas'],
-        [/Triage|START|color/i, 'triage'],
-        [/Incendio|fuego|extintor/i, 'extintor'],
-        [/fractura|inmoviliz/i, 'inmovilizar'],
-        [/Rescate|vehicular|alturas/i, 'base']
-    ];
-
-    function ponerIlustracionJuego(txt) {
+    function ponerIlustracionJuego(materia) {
         const el = document.getElementById('ilus-juego');
         if (!el) return;
-        const k = (R.find(r => r[0].test(txt)) || [0, 'base'])[1];
-        el.innerHTML = D[k] || D.base;
+        const m = materia.toLowerCase();
+        let k = 'default';
+        if (m.includes('rcp') || m.includes('reanimacion')) k = 'rcp';
+        else if (m.includes('hemorragia')) k = 'hemorragia';
+        else if (m.includes('pas') || m.includes('protocolo')) k = 'pas';
+        else if (m.includes('triage')) k = 'triage';
+        else if (m.includes('incendio') || m.includes('fuego')) k = 'incendio';
+        else if (m.includes('estructura') || m.includes('esqueleto')) k = 'estructura';
+        
+        el.innerHTML = SVGS[k];
     }
 
-    function ponerIlustracionDespacho(txt) {
+    function ponerIlustracionDespacho() {
         const el = document.getElementById('ilus-despacho');
         if (!el) return;
-        // Para despacho, siempre usamos una ilustración de radio/emergencia
-        el.innerHTML = D.base;
+        el.innerHTML = SVGS.default;
     }
 
     window.ponerIlustracionJuego = ponerIlustracionJuego;
@@ -2275,20 +1862,15 @@ window.addEventListener('keydown', (e) => {
         const tag = e.target.tagName;
         if (e.target.id === 'chat-input' || tag === 'BUTTON' || tag === 'TEXTAREA' || tag === 'INPUT') return;
     }
-
     const key = e.key.toUpperCase();
     const opciones = document.querySelectorAll('.screen.active .opcion:not(.bloqueada)');
-
     if (['1', '2', '3', '4', 'A', 'B', 'C', 'D'].includes(key)) {
         const indexMap = { '1': 0, 'A': 0, '2': 1, 'B': 1, '3': 2, 'C': 2, '4': 3, 'D': 3 };
         const targetIdx = indexMap[key];
         if (opciones[targetIdx]) opciones[targetIdx].click();
     } else if (e.key === 'Enter' || e.key === ' ') {
         const btnSiguiente = document.querySelector('.screen.active .btn-primary:not(:disabled)');
-        if (btnSiguiente) {
-            e.preventDefault();
-            btnSiguiente.click();
-        }
+        if (btnSiguiente) { e.preventDefault(); btnSiguiente.click(); }
     } else if (e.key === 'Escape') {
         cerrarManual();
         const chat = document.getElementById('chat-container');
